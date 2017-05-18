@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-05-17T22:18:36Z</date>
+    <date>2017-05-18T06:08:20Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -540,7 +540,7 @@
                     <multiplier>0</multiplier>
                     <snmp_oid>.1.3.6.1.4.1.6574.1.5.4.0</snmp_oid>
                     <key>Syno.upgradeAvailable</key>
-                    <delay>3600</delay>
+                    <delay>86400</delay>
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
@@ -1057,6 +1057,9 @@ Canceling(10)</description>
                     <name>Template ICMP Ping</name>
                 </template>
                 <template>
+                    <name>Template SNMP Disks</name>
+                </template>
+                <template>
                     <name>Template SNMP Interfaces</name>
                 </template>
                 <template>
@@ -1191,7 +1194,7 @@ Canceling(10)</description>
             <priority>1</priority>
             <description/>
             <type>0</type>
-            <manual_close>0</manual_close>
+            <manual_close>1</manual_close>
             <dependencies/>
             <tags/>
         </trigger>
