@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-05-22T00:57:03Z</date>
+    <date>2017-05-22T04:39:10Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -941,9 +941,9 @@
                     <name>Fans</name>
                     <type>4</type>
                     <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
-                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.4.1.14823.2.2.1.2.1.17.1.1]</snmp_oid>
-                    <key>aos.fan.[{#SNMPVALUE}]</key>
-                    <delay>3600</delay>
+                    <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2]</snmp_oid>
+                    <key>aos.fan.[{#SNMPINDEX}]</key>
+                    <delay>10</delay>
                     <status>0</status>
                     <allowed_hosts/>
                     <snmpv3_contextname/>
@@ -976,8 +976,8 @@
                             <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
                             <multiplier>0</multiplier>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.fanStatus.[{#SNMPVALUE}]</key>
-                            <delay>3600</delay>
+                            <key>aos.fanStatus.[{#SNMPINDEX}]</key>
+                            <delay>60</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -1010,12 +1010,31 @@
                                     <name>System Health</name>
                                 </application>
                             </applications>
-                            <valuemap/>
+                            <valuemap>
+                                <name>AOS Device Status</name>
+                            </valuemap>
                             <logtimefmt/>
                             <application_prototypes/>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes/>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Template ArubaOS:aos.fanStatus.[{#SNMPINDEX}].last()}=2</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Failed Fan {#SNMPINDEX} on {HOST.NAME}</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>4</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                    </trigger_prototypes>
                     <graph_prototypes/>
                     <host_prototypes/>
                 </discovery_rule>
@@ -1237,9 +1256,9 @@
                     <name>PSU</name>
                     <type>4</type>
                     <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
-                    <snmp_oid>discovery[{#SNMPINDEX},1.3.6.1.4.1.14823.2.2.1.2.1.18.1.1]</snmp_oid>
-                    <key>aos.psu.[{#SNMPVALUE}]</key>
-                    <delay>3600</delay>
+                    <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2]</snmp_oid>
+                    <key>aos.psu.[{#SNMPINDEX}]</key>
+                    <delay>10</delay>
                     <status>0</status>
                     <allowed_hosts/>
                     <snmpv3_contextname/>
@@ -1272,12 +1291,12 @@
                             <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
                             <multiplier>0</multiplier>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.psuStatus.[{#SNMPVALUE}]</key>
-                            <delay>3600</delay>
+                            <key>aos.psuStatus.[{#SNMPINDEX}]</key>
+                            <delay>30</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -1306,12 +1325,31 @@
                                     <name>System Health</name>
                                 </application>
                             </applications>
-                            <valuemap/>
+                            <valuemap>
+                                <name>AOS Device Status</name>
+                            </valuemap>
                             <logtimefmt/>
                             <application_prototypes/>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes/>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Template ArubaOS:aos.psuStatus.[{#SNMPINDEX}].last()}=2</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Failed/Missing PSU {#SNMPINDEX} on {HOST.NAME}</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>4</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                    </trigger_prototypes>
                     <graph_prototypes/>
                     <host_prototypes/>
                 </discovery_rule>
@@ -1667,6 +1705,19 @@
         </trigger>
     </triggers>
     <value_maps>
+        <value_map>
+            <name>AOS Device Status</name>
+            <mappings>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>active</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>inactive</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
         <value_map>
             <name>AOS Storage Type</name>
             <mappings>
