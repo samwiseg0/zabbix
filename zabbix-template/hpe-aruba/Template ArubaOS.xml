@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-05-22T20:56:13Z</date>
+    <date>2017-05-22T21:25:45Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -755,7 +755,7 @@
                     <snmpv3_privpassphrase/>
                     <formula>1</formula>
                     <delay_flex/>
-                    <params>last(aos.sysTotalUsers)/({$WLC_TOTAL_AP}/100)</params>
+                    <params>last(aos.sysTotalAPs)/({$WLC_TOTAL_AP}/100)</params>
                     <ipmi_sensor/>
                     <data_type>0</data_type>
                     <authtype>0</authtype>
