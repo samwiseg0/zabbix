@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-09-19T05:05:46Z</date>
+    <date>2017-09-19T05:23:48Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -450,49 +450,6 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Memory free percentage</name>
-                    <type>15</type>
-                    <snmp_community/>
-                    <multiplier>0</multiplier>
-                    <snmp_oid/>
-                    <key>aruba.cppm.sys.mem.free.per</key>
-                    <delay>60</delay>
-                    <history>90</history>
-                    <trends>365</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
-                    <units>%</units>
-                    <delta>0</delta>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <formula>1</formula>
-                    <delay_flex/>
-                    <params>(last(aruba.cppm.sys.mem.total)-(last(aruba.cppm.sys.mem.free)))/(last(aruba.cppm.sys.mem.total)/100)</params>
-                    <ipmi_sensor/>
-                    <data_type>0</data_type>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
-                    <applications>
-                        <application>
-                            <name>Memory</name>
-                        </application>
-                    </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                </item>
-                <item>
                     <name>Total memory</name>
                     <type>4</type>
                     <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
@@ -517,6 +474,49 @@
                     <formula>1</formula>
                     <delay_flex/>
                     <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>Memory</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                </item>
+                <item>
+                    <name>Memory used percentage</name>
+                    <type>15</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>aruba.cppm.sys.mem.used.per</key>
+                    <delay>60</delay>
+                    <history>90</history>
+                    <trends>365</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units>%</units>
+                    <delta>0</delta>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params>(last(aruba.cppm.sys.mem.total)-(last(aruba.cppm.sys.mem.free)))/(last(aruba.cppm.sys.mem.total)/100)</params>
                     <ipmi_sensor/>
                     <data_type>0</data_type>
                     <authtype>0</authtype>
@@ -846,49 +846,6 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Storage free percentage</name>
-                    <type>15</type>
-                    <snmp_community/>
-                    <multiplier>0</multiplier>
-                    <snmp_oid/>
-                    <key>aruba.cppm.sys.stor.free.per</key>
-                    <delay>60</delay>
-                    <history>90</history>
-                    <trends>365</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
-                    <units>%</units>
-                    <delta>0</delta>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <formula>1</formula>
-                    <delay_flex/>
-                    <params>(last(aruba.cppm.sys.stor.total)-(last(aruba.cppm.sys.stor.free)))/(last(aruba.cppm.sys.stor.total)/100)</params>
-                    <ipmi_sensor/>
-                    <data_type>0</data_type>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
-                    <applications>
-                        <application>
-                            <name>Storage</name>
-                        </application>
-                    </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                </item>
-                <item>
                     <name>Total storage</name>
                     <type>4</type>
                     <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
@@ -913,6 +870,49 @@
                     <formula>1</formula>
                     <delay_flex/>
                     <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>Storage</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                </item>
+                <item>
+                    <name>Storage used percentage</name>
+                    <type>15</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>aruba.cppm.sys.stor.used.per</key>
+                    <delay>60</delay>
+                    <history>90</history>
+                    <trends>365</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units>%</units>
+                    <delta>0</delta>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params>(last(aruba.cppm.sys.stor.total)-(last(aruba.cppm.sys.stor.free)))/(last(aruba.cppm.sys.stor.total)/100)</params>
                     <ipmi_sensor/>
                     <data_type>0</data_type>
                     <authtype>0</authtype>
@@ -2639,7 +2639,7 @@
     </templates>
     <triggers>
         <trigger>
-            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.mem.free.per.last(0)}&lt;10</expression>
+            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.mem.used.per.last(0)}&gt;90</expression>
             <recovery_mode>0</recovery_mode>
             <recovery_expression/>
             <name>Available memory is less than 10% on {HOST.NAME}</name>
@@ -2654,14 +2654,14 @@
             <dependencies>
                 <dependency>
                     <name>Available memory is less than 20% on {HOST.NAME}</name>
-                    <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.mem.free.per.last(0)}&lt;20</expression>
+                    <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.mem.used.per.last(0)}&gt;80</expression>
                     <recovery_expression/>
                 </dependency>
             </dependencies>
             <tags/>
         </trigger>
         <trigger>
-            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.mem.free.per.last(0)}&lt;20</expression>
+            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.mem.used.per.last(0)}&gt;80</expression>
             <recovery_mode>0</recovery_mode>
             <recovery_expression/>
             <name>Available memory is less than 20% on {HOST.NAME}</name>
@@ -2677,7 +2677,7 @@
             <tags/>
         </trigger>
         <trigger>
-            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.stor.free.per.last(0)}&lt;10</expression>
+            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.stor.used.per.last(0)}&gt;90</expression>
             <recovery_mode>0</recovery_mode>
             <recovery_expression/>
             <name>Available storage is less than 10% on {HOST.NAME}</name>
@@ -2692,14 +2692,14 @@
             <dependencies>
                 <dependency>
                     <name>Available storage is less than 20% on {HOST.NAME}</name>
-                    <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.stor.free.per.last(0)}&lt;20</expression>
+                    <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.stor.used.per.last(0)}&gt;80</expression>
                     <recovery_expression/>
                 </dependency>
             </dependencies>
             <tags/>
         </trigger>
         <trigger>
-            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.stor.free.per.last(0)}&lt;20</expression>
+            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.sys.stor.used.per.last(0)}&gt;80</expression>
             <recovery_mode>0</recovery_mode>
             <recovery_expression/>
             <name>Available storage is less than 20% on {HOST.NAME}</name>
