@@ -47,7 +47,8 @@ https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/hpe-aruba/cppm
 
 ## Ubound DNS
 * Histogram as queries per second
-* Histogram as AAAA queries	 	
+* Histogram as total queries
+* AAAA queries	 	
 * AD flag	 	
 *	ANY queries	 	
 *	A queries	 	
