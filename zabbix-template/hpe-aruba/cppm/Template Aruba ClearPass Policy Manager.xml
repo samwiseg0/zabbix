@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-09-19T05:23:48Z</date>
+    <date>2017-09-19T20:04:46Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -85,7 +85,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -131,7 +131,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -177,7 +177,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -223,7 +223,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -266,7 +266,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -309,7 +309,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -352,7 +352,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -395,7 +395,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -438,7 +438,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -481,7 +481,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -524,7 +524,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -567,7 +567,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -610,7 +610,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -653,7 +653,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -699,7 +699,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -745,7 +745,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -791,7 +791,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -834,7 +834,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -877,7 +877,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -920,7 +920,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -963,7 +963,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1006,7 +1006,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1049,7 +1049,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1092,7 +1092,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1135,7 +1135,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1178,7 +1178,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1221,7 +1221,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1264,7 +1264,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1307,7 +1307,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1350,7 +1350,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1393,7 +1393,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1436,7 +1436,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1479,7 +1479,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1522,7 +1522,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1565,7 +1565,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>1</inventory_link>
                     <applications>
@@ -1608,7 +1608,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1651,7 +1651,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>16</inventory_link>
                     <applications>
@@ -1694,7 +1694,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <description/>
                     <inventory_link>0</inventory_link>
                     <applications>
@@ -1708,7 +1708,7 @@
             </items>
             <discovery_rules>
                 <discovery_rule>
-                    <name>Apps</name>
+                    <name>Apps-Protocols</name>
                     <type>4</type>
                     <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
                     <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.1.6.1.1.3.1.1.2]</snmp_oid>
@@ -1731,7 +1731,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <filter>
                         <evaltype>0</evaltype>
                         <formula/>
@@ -1772,7 +1772,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -1816,7 +1816,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -1874,7 +1874,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <filter>
                         <evaltype>0</evaltype>
                         <formula/>
@@ -1915,7 +1915,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -1959,7 +1959,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2003,7 +2003,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description>Time taken (ms) for Policy authorizations.</description>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2047,7 +2047,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2062,7 +2062,7 @@
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.ps.authz.time[{#SNMPVALUE}][{#SNMPINDEX}].avg(3m)}&gt;=120</expression>
+                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.ps.authz.time[{#SNMPVALUE}][{#SNMPINDEX}].avg(3m)}&gt;={$AUTHZ_TIME}</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
                             <name>Authorization response time from {#SNMPVALUE} is high on {HOST.NAME}</name>
@@ -2078,7 +2078,7 @@
                             <tags/>
                         </trigger_prototype>
                         <trigger_prototype>
-                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.ps.authz.fail[{#SNMPVALUE}][{#SNMPINDEX}].change(5m)}&gt;=10</expression>
+                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.ps.authz.fail[{#SNMPVALUE}][{#SNMPINDEX}].change(5m)}&gt;={$HIGH_FAILED_AUTHZ}</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
                             <name>Failed authorizations from {#SNMPVALUE} is high on {HOST.NAME}</name>
@@ -2121,7 +2121,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <filter>
                         <evaltype>0</evaltype>
                         <formula/>
@@ -2162,7 +2162,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2177,7 +2177,7 @@
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.ppe.time[{#SNMPVALUE}][{#SNMPINDEX}].avg(3m)}&gt;=120</expression>
+                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.ppe.time[{#SNMPVALUE}][{#SNMPINDEX}].avg(3m)}&gt;={$POLICY_EVAL_TIME}</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
                             <name>Policy evaluation for {#SNMPVALUE} is high on {HOST.NAME}</name>
@@ -2220,7 +2220,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <filter>
                         <evaltype>0</evaltype>
                         <formula/>
@@ -2261,7 +2261,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2305,7 +2305,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2349,7 +2349,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2393,7 +2393,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2408,7 +2408,7 @@
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.rad.auth.fail[{#SNMPVALUE}][{#SNMPINDEX}].change(5m)}&gt;=10</expression>
+                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.rad.auth.fail[{#SNMPVALUE}][{#SNMPINDEX}].change(5m)}&gt;={$HIGH_FAILED_RAD}</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
                             <name>Failed RADIUS Auth from {#SNMPVALUE} is high on {HOST.NAME}</name>
@@ -2424,7 +2424,7 @@
                             <tags/>
                         </trigger_prototype>
                         <trigger_prototype>
-                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.rad.auth.time[{#SNMPVALUE}][{#SNMPINDEX}].avg(3m)}&gt;=120</expression>
+                            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.rad.auth.time[{#SNMPVALUE}][{#SNMPINDEX}].avg(3m)}&gt;={$RAD_TIME}</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
                             <name>RADIUS auth response time from {#SNMPVALUE} is high on {HOST.NAME}</name>
@@ -2467,7 +2467,7 @@
                     <password/>
                     <publickey/>
                     <privatekey/>
-                    <port/>
+                    <port>{$SNMP_PORT}</port>
                     <filter>
                         <evaltype>0</evaltype>
                         <formula/>
@@ -2508,7 +2508,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2552,7 +2552,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2596,7 +2596,7 @@
                             <password/>
                             <publickey/>
                             <privatekey/>
-                            <port/>
+                            <port>{$SNMP_PORT}</port>
                             <description/>
                             <inventory_link>0</inventory_link>
                             <applications>
@@ -2723,7 +2723,7 @@
             <correlation_tag/>
             <url/>
             <status>0</status>
-            <priority>3</priority>
+            <priority>2</priority>
             <description/>
             <type>0</type>
             <manual_close>0</manual_close>
@@ -2788,6 +2788,22 @@
             <url/>
             <status>0</status>
             <priority>1</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>
+        <trigger>
+            <expression>{Template Aruba ClearPass Policy Manager:aruba.cppm.auth.sys.total.tailed.change(5m)}&gt;={$SYS_TOTAL_FAILED}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>System wide failed requests is high on {HOST.NAME}</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>0</status>
+            <priority>0</priority>
             <description/>
             <type>0</type>
             <manual_close>0</manual_close>
