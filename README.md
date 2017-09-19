@@ -1,6 +1,5 @@
 # Custom Zabbix Templates
-## Templates
-#### Aruba ClearPass Policy Manager
+## Aruba ClearPass Policy Manager
 * LLD for Apps/Protocols
   * Throughput for Apps/Protocols (db,RADIUS,tacacs,etc.)
   * Listening port for Apps/Protocols
@@ -27,10 +26,15 @@ In order for many of the triggers to work there are several macros that need to 
 Host Specific Macros:
 
 {$AUTHZ_TIME} #Time in ms for authorizations to complete for each source
+
 {$HIGH_FAILED_AUTHZ} #Number of failed authorization requests
+
 {$POLICY_EVAL_TIME} #Time in ms for a policy evaluation to complete for each source
+
 {$RAD_TIME} #Time in ms for RADIUS to complete for each source
+
 {$HIGH_FAILED_RAD} #Number of failed RADIUS requests
+
 {$SYS_TOTAL_FAILED} #Number of failed system wide requests
 
 NOTE:
@@ -41,7 +45,7 @@ Template/Supporting Files:
 https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/hpe-aruba/cppm
 ```
 
-#### Ubound DNS
+## Ubound DNS
 * Histogram as queries per second
 * Histogram as AAAA queries	 	
 * AD flag	 	
@@ -86,7 +90,7 @@ Template/Supporting Files:
 https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/unbound
 ```
 
-#### Aruba OS WLC 6.5+
+## Aruba OS WLC 6.5+
 * LLD for Storage
 * LLD for Fans
 * LLD for PSU
@@ -125,7 +129,7 @@ Template/Supporting Files:
 https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/hpe-aruba/wifi
 ```
 
-#### APC UPS (Updated)
+## APC UPS (Updated)
 Updated version of https://share.zabbix.com/power-ups/apc/apc-ups     
 Temperature, battery status, output load and more.
 
@@ -134,7 +138,7 @@ Template/Supporting Files:
 https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/apc_ups
 ```
 
-#### HP Procurve Aruba 3810M
+## HP Procurve Aruba 3810M
 Basic Monitoring including:
 * Dynamic Interface Discovery
 * Dynamic Inventory Discovery
@@ -145,7 +149,7 @@ Template/Supporting Files:
 https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/hpe-aruba/switches
 ```
 
-#### Synology DSM 5+ (Updated)
+## Synology DSM 5+ (Updated)
 Cleaned Up template that is originally from https://share.zabbix.com/storage-devices/synology/synology-dsm-5
 
 Basic Monitoring including:
