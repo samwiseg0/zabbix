@@ -1054,7 +1054,7 @@ Canceling(10)</description>
             <macros/>
             <templates>
                 <template>
-                    <name>Template ICMP Ping</name>
+                    <name>Template Module ICMP Ping</name>
                 </template>
                 <template>
                     <name>Template SNMP Disks</name>
