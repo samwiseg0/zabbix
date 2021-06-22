@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>3.4</version>
-    <date>2018-02-01T23:20:51Z</date>
+    <version>5.0</version>
+    <date>2021-06-22T09:54:03Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -11,7 +11,14 @@
         <template>
             <template>Template ArubaOS</template>
             <name>Template ArubaOS</name>
-            <description/>
+            <templates>
+                <template>
+                    <name>Template Module ICMP Ping</name>
+                </template>
+                <template>
+                    <name>Template Module Interfaces SNMP</name>
+                </template>
+            </templates>
             <groups>
                 <group>
                     <name>Templates</name>
@@ -49,623 +56,230 @@
             <items>
                 <item>
                     <name>Base MAC</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.7.0</snmp_oid>
                     <key>aos.baseMAC</key>
                     <delay>1d</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Config ID</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.23.0</snmp_oid>
                     <key>aos.configID</key>
                     <delay>5m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
+                    <triggers>
+                        <trigger>
+                            <expression>{change(0)}&gt;=1</expression>
+                            <name>Config has changed on {HOST.NAME}</name>
+                            <priority>INFO</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>Hardware Version</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.27.0</snmp_oid>
                     <key>aos.hardwareVer</key>
                     <delay>1d</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Hostname</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.1.0</snmp_oid>
                     <key>aos.hostName</key>
                     <delay>1d</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>IP Address</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.3.0</snmp_oid>
                     <key>aos.ip</key>
                     <delay>1d</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>IPv6 Address</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.14.0</snmp_oid>
                     <key>aos.ipv6</key>
                     <delay>1d</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Switch Local License Count</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.7.0</snmp_oid>
                     <key>aos.localLics</key>
                     <delay>1d</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Memory Free</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.11.1.4.1</snmp_oid>
                     <key>aos.memFree</key>
                     <delay>5m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
                     <units>B</units>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>Memory</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
                     <preprocessing>
                         <step>
-                            <type>1</type>
+                            <type>MULTIPLIER</type>
                             <params>1000</params>
                         </step>
                     </preprocessing>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Memory Total</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.11.1.2.1</snmp_oid>
                     <key>aos.memTotal</key>
                     <delay>5m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
                     <units>B</units>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>Memory</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
                     <preprocessing>
                         <step>
-                            <type>1</type>
+                            <type>MULTIPLIER</type>
                             <params>1000</params>
                         </step>
                     </preprocessing>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Memory Used</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.11.1.3.1</snmp_oid>
                     <key>aos.memUsed</key>
                     <delay>5m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
                     <units>B</units>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>Memory</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
                     <preprocessing>
                         <step>
-                            <type>1</type>
+                            <type>MULTIPLIER</type>
                             <params>1000</params>
                         </step>
                     </preprocessing>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Memory Used Percent</name>
-                    <type>15</type>
-                    <snmp_community/>
-                    <snmp_oid/>
+                    <type>CALCULATED</type>
                     <key>aos.memUsedPer</key>
                     <delay>5m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
                     <units>%</units>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
                     <params>last(aos.memUsed)/(last(aos.memTotal)/100)</params>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>Memory</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
+                    <triggers>
+                        <trigger>
+                            <expression>{avg(5m)}&gt;90</expression>
+                            <name>High Memory Usage on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>Model</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.2.0</snmp_oid>
                     <key>aos.model</key>
                     <delay>1d</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Reboot Reason</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.25.0</snmp_oid>
                     <key>aos.rebootReason</key>
                     <delay>5m</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>4</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>TEXT</value_type>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Software Version</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.28.0</snmp_oid>
                     <key>aos.softwareVer</key>
                     <delay>1d</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Switch Role</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.4.0</snmp_oid>
                     <key>aos.switchRole</key>
                     <delay>1d</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Information</name>
@@ -674,449 +288,202 @@
                     <valuemap>
                         <name>AOS Switch Roles</name>
                     </valuemap>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Switch Serial Number</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.12.0</snmp_oid>
                     <key>aos.switchSerial</key>
                     <delay>1d</delay>
-                    <history>90d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Information</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Platform AP Usage Percentage</name>
-                    <type>15</type>
-                    <snmp_community/>
-                    <snmp_oid/>
+                    <type>CALCULATED</type>
                     <key>aos.sysAPUsage</key>
-                    <delay>1m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
                     <units>%</units>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
                     <params>last(aos.sysTotalAPs)/({$WLC_TOTAL_AP}/100)</params>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
+                    <triggers>
+                        <trigger>
+                            <expression>{avg(5m)}&gt;80</expression>
+                            <name>Platform AP Capacity Usage is High on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>Platform AP Capacity Usage is Very High on {HOST.NAME}</name>
+                                    <expression>{Template ArubaOS:aos.sysAPUsage.avg(5m)}&gt;90</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{avg(5m)}&gt;90</expression>
+                            <name>Platform AP Capacity Usage is Very High on {HOST.NAME}</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>System Temperature</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.10.0</snmp_oid>
                     <key>aos.sysTemp</key>
                     <delay>5m</delay>
                     <history>300d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>CHAR</value_type>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
+                    <triggers>
+                        <trigger>
+                            <expression>{str(CRITICAL)}</expression>
+                            <name>Temperature Alert CRITICAL on {HOST.NAME}</name>
+                            <priority>DISASTER</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{str(MAJOR)}</expression>
+                            <name>Temperature Alert MAJOR on {HOST.NAME}</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{str(MINOR)}</expression>
+                            <name>Temperature Alert MINOR on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>Total Number of APs</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.1.0</snmp_oid>
                     <key>aos.sysTotalAPs</key>
-                    <delay>1m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Total Number of Associations</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.2.0</snmp_oid>
                     <key>aos.sysTotalAssociations</key>
-                    <delay>1m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>Total Number of Users</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.14.1.1.0</snmp_oid>
                     <key>aos.sysTotalUsers</key>
-                    <delay>1m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
                 <item>
                     <name>System Uptime</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.2.1.1.3.0</snmp_oid>
                     <key>aos.sysUptime</key>
-                    <delay>1m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>0</value_type>
-                    <allowed_hosts/>
+                    <value_type>FLOAT</value_type>
                     <units>s</units>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
                     <preprocessing>
                         <step>
-                            <type>1</type>
+                            <type>MULTIPLIER</type>
                             <params>.01</params>
                         </step>
                     </preprocessing>
-                    <jmx_endpoint/>
-                    <master_item/>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&lt;600</expression>
+                            <name>{HOST.NAME} has been restarted</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>Platform User Usage Percentage</name>
-                    <type>15</type>
-                    <snmp_community/>
-                    <snmp_oid/>
+                    <type>CALCULATED</type>
                     <key>aos.sysUserUsage</key>
-                    <delay>1m</delay>
-                    <history>90d</history>
-                    <trends>365d</trends>
-                    <status>0</status>
-                    <value_type>3</value_type>
-                    <allowed_hosts/>
                     <units>%</units>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
                     <params>last(aos.sysTotalUsers)/({$WLC_TOTAL_USER}/100)</params>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
                     <applications>
                         <application>
                             <name>System Health</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
+                    <triggers>
+                        <trigger>
+                            <expression>{avg(5m)}&gt;80</expression>
+                            <name>Platform User Capacity Usage is High on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>Platform User Capacity Usage is Very High on {HOST.NAME}</name>
+                                    <expression>{Template ArubaOS:aos.sysUserUsage.avg(5m)}&gt;90</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                        <trigger>
+                            <expression>{avg(5m)}&gt;90</expression>
+                            <name>Platform User Capacity Usage is Very High on {HOST.NAME}</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <name>Controller Traps</name>
-                    <type>17</type>
-                    <snmp_community/>
-                    <snmp_oid/>
+                    <type>SNMP_TRAP</type>
                     <key>snmptrap.fallback</key>
                     <delay>0</delay>
                     <history>7d</history>
                     <trends>0</trends>
-                    <status>0</status>
-                    <value_type>4</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
+                    <value_type>TEXT</value_type>
                     <applications>
                         <application>
                             <name>SNMP Trap</name>
                         </application>
                     </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                    <preprocessing/>
-                    <jmx_endpoint/>
-                    <master_item/>
                 </item>
             </items>
             <discovery_rules>
                 <discovery_rule>
                     <name>Access Points</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#APNAME},.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.3]</snmp_oid>
                     <key>aos.ap.[{#APNAME}]</key>
                     <delay>1h</delay>
-                    <status>0</status>
-                    <allowed_hosts/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <filter>
-                        <evaltype>0</evaltype>
-                        <formula/>
-                        <conditions/>
-                    </filter>
                     <lifetime>1h</lifetime>
-                    <description/>
                     <item_prototypes>
                         <item_prototype>
                             <name>AP Active/Standby - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.41.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apAcStand.[{#APNAME}]</key>
                             <delay>2m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>3</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
@@ -1125,294 +492,95 @@
                             <valuemap>
                                 <name>AOS AP Active</name>
                             </valuemap>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>AP Bootstraps - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.20.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apBootstraps.[{#APNAME}]</key>
                             <delay>2m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>Backup Switch IP Address - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.40.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apBSWIP.[{#APNAME}]</key>
                             <delay>1h</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>4</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>TEXT</value_type>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>AP Group - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.4.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apGroup.[{#APNAME}]</key>
                             <delay>6h</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>4</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>TEXT</value_type>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>IP Address - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.2.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apIP.[{#APNAME}]</key>
                             <delay>6h</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>4</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>TEXT</value_type>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>AP Reboots - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.21.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apReboots.[{#APNAME}]</key>
                             <delay>2m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>AP Serial - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.6.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apSerial.[{#APNAME}]</key>
                             <delay>24h</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>4</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>TEXT</value_type>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>AP Status - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.19.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apStatus.[{#APNAME}]</key>
                             <delay>2m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>3</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
@@ -1421,158 +589,62 @@
                             <valuemap>
                                 <name>AOS AP Status</name>
                             </valuemap>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>Switch IP Address - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.39.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apSWIP.[{#APNAME}]</key>
                             <delay>1h</delay>
                             <history>10d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>4</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>TEXT</value_type>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>AP Type - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.13.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apType.[{#APNAME}]</key>
                             <delay>24h</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>4</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>TEXT</value_type>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>AP Uptime - {#APNAME}</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.12.{#SNMPINDEX}</snmp_oid>
                             <key>aos.apUptime.[{#APNAME}]</key>
                             <delay>2m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
+                            <value_type>FLOAT</value_type>
                             <units>uptime</units>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Access Points</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
                             <preprocessing>
                                 <step>
-                                    <type>1</type>
+                                    <type>MULTIPLIER</type>
                                     <params>0.01</params>
                                 </step>
                             </preprocessing>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
                             <expression>{Template ArubaOS:aos.apBootstraps.[{#APNAME}].diff()}=1 and {Template ArubaOS:aos.apAcStand.[{#APNAME}].last(#3)}=1 and {Template ArubaOS:aos.apBootstraps.[{#APNAME}].last()}&lt;&gt;0 and {Template ArubaOS:aos.apStatus.[{#APNAME}].last(#3)}&lt;&gt;2</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
                             <name>{#APNAME} Bootstrap number has changed</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>2</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
+                            <priority>WARNING</priority>
                             <dependencies>
                                 <dependency>
                                     <name>{#APNAME} is DOWN</name>
@@ -1582,40 +654,22 @@
                                 <dependency>
                                     <name>{#APNAME} Uptime has changed</name>
                                     <expression>{Template ArubaOS:aos.apUptime.[{#APNAME}].last(0)}&lt;200 and {Template ArubaOS:aos.apStatus.[{#APNAME}].nodata(240)}=0 and {Template ArubaOS:aos.apAcStand.[{#APNAME}].last(#3)}=1 and {Template ArubaOS:aos.apStatus.[{#APNAME}].last()}&lt;&gt;2</expression>
-                                    <recovery_expression/>
                                 </dependency>
                             </dependencies>
-                            <tags/>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{Template ArubaOS:aos.apStatus.[{#APNAME}].change()}&gt;.5 and {Template ArubaOS:aos.apAcStand.[{#APNAME}].last(#3)}=0 and {Template ArubaOS:aos.apIP.[{#APNAME}].nodata(120)}=1</expression>
-                            <recovery_mode>1</recovery_mode>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
                             <recovery_expression>{Template ArubaOS:aos.apStatus.[{#APNAME}].last(0)}=1</recovery_expression>
                             <name>{#APNAME} is DOWN</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>4</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>1</manual_close>
-                            <dependencies/>
-                            <tags/>
+                            <priority>HIGH</priority>
+                            <manual_close>YES</manual_close>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{Template ArubaOS:aos.apUptime.[{#APNAME}].last(0)}&lt;200 and {Template ArubaOS:aos.apStatus.[{#APNAME}].nodata(240)}=0 and {Template ArubaOS:aos.apAcStand.[{#APNAME}].last(#3)}=1 and {Template ArubaOS:aos.apStatus.[{#APNAME}].last()}&lt;&gt;2</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
                             <name>{#APNAME} Uptime has changed</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>2</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>1</manual_close>
+                            <priority>WARNING</priority>
+                            <manual_close>YES</manual_close>
                             <dependencies>
                                 <dependency>
                                     <name>{#APNAME} is DOWN</name>
@@ -1623,117 +677,41 @@
                                     <recovery_expression>{Template ArubaOS:aos.apStatus.[{#APNAME}].last(0)}=1</recovery_expression>
                                 </dependency>
                             </dependencies>
-                            <tags/>
                         </trigger_prototype>
                     </trigger_prototypes>
-                    <graph_prototypes/>
-                    <host_prototypes/>
-                    <jmx_endpoint/>
                 </discovery_rule>
                 <discovery_rule>
                     <name>Auth Servers</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.3]</snmp_oid>
                     <key>aos.authServer.[{#SNMPVALUE}]</key>
                     <delay>1h</delay>
-                    <status>0</status>
-                    <allowed_hosts/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <filter>
-                        <evaltype>0</evaltype>
-                        <formula/>
-                        <conditions/>
-                    </filter>
-                    <lifetime>30d</lifetime>
-                    <description/>
                     <item_prototypes>
                         <item_prototype>
                             <name>Server Failed Auths $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.11.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authFailedAuths.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
-                            <delay>1m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <key>aos.authFailedAuths.[{#SNMPVALUE}]</key>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{change()}&gt;20</expression>
+                                    <name>High Failed Auths {#SNMPVALUE} on {HOST.NAME}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Auth Server In Service $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.8.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authInService.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
-                            <delay>1m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <key>aos.authInService.[{#SNMPVALUE}]</key>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
@@ -1742,84 +720,35 @@
                             <valuemap>
                                 <name>AOS Inservice</name>
                             </valuemap>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}=2</expression>
+                                    <name>Auth Server {#SNMPVALUE} out of service on {HOST.NAME}</name>
+                                    <priority>DISASTER</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Server Response Time $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.13.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authResponseTime.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
+                            <key>aos.authResponseTime.[{#SNMPVALUE}]</key>
                             <delay>5m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
+                            <value_type>FLOAT</value_type>
                             <units>ms</units>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>Auth Server State $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.7.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authServerState.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
+                            <key>aos.authServerState.[{#SNMPVALUE}]</key>
                             <delay>10m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
@@ -1828,42 +757,14 @@
                             <valuemap>
                                 <name>AOS Server State</name>
                             </valuemap>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>Auth Server Type $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.4.1.14823.2.2.1.8.1.1.1.2.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authServerType.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
+                            <key>aos.authServerType.[{#SNMPVALUE}]</key>
                             <delay>1d</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
@@ -1872,459 +773,145 @@
                             <valuemap>
                                 <name>AOS Server Type</name>
                             </valuemap>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>Server Outstanding Requests $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.14.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authSrvOutstandReq.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
-                            <delay>1m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <key>aos.authSrvOutstandReq.[{#SNMPVALUE}]</key>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{change()}&gt;20</expression>
+                                    <name>High Outstanding Requests {#SNMPVALUE} on {HOST.NAME}</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Server Timeouts $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.12.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authSrvTimeouts.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
-                            <delay>1m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <key>aos.authSrvTimeouts.[{#SNMPVALUE}]</key>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{change()}&gt;10</expression>
+                                    <name>Server {#SNMPVALUE} Timeouts on {HOST.NAME}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Server Uptime $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.15.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authSrvUptime.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
+                            <key>aos.authSrvUptime.[{#SNMPVALUE}]</key>
                             <delay>5m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
+                            <value_type>FLOAT</value_type>
                             <units>s</units>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;600</expression>
+                                    <name>Server {#SNMPVALUE} Uptime Changed on {HOST.NAME}</name>
+                                    <priority>WARNING</priority>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>{HOST.NAME} has been restarted</name>
+                                            <expression>{Template ArubaOS:aos.sysUptime.last()}&lt;600</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <name>Server Success Auths $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.10.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.authSuccessAuths.[{#SNMPVALUE}][{#SNMPINDEX}]</key>
+                            <key>aos.authSuccessAuths.[{#SNMPVALUE}]</key>
                             <delay>5m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>Auth Servers</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
                             <preprocessing>
                                 <step>
-                                    <type>1</type>
+                                    <type>MULTIPLIER</type>
                                     <params>1</params>
                                 </step>
                             </preprocessing>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.authInService.[{#SNMPVALUE}][{#SNMPINDEX}].last()}=2</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>Auth Server {#SNMPVALUE} out of service on {HOST.NAME}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>5</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies/>
-                            <tags/>
-                        </trigger_prototype>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.authFailedAuths.[{#SNMPVALUE}][{#SNMPINDEX}].change()}&gt;20</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>High Failed Auths {#SNMPVALUE} on {HOST.NAME}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>4</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies/>
-                            <tags/>
-                        </trigger_prototype>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.authSrvOutstandReq.[{#SNMPVALUE}][{#SNMPINDEX}].change()}&gt;20</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>High Outstanding Requests {#SNMPVALUE} on {HOST.NAME}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>3</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies/>
-                            <tags/>
-                        </trigger_prototype>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.authSrvTimeouts.[{#SNMPVALUE}][{#SNMPINDEX}].change()}&gt;10</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>Server {#SNMPVALUE} Timeouts on {HOST.NAME}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>4</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies/>
-                            <tags/>
-                        </trigger_prototype>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.authSrvUptime.[{#SNMPVALUE}][{#SNMPINDEX}].last()}&lt;600</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>Server {#SNMPVALUE} Uptime Changed on {HOST.NAME}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>2</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies>
-                                <dependency>
-                                    <name>{HOST.NAME} has been restarted</name>
-                                    <expression>{Template ArubaOS:aos.sysUptime.last()}&lt;600</expression>
-                                    <recovery_expression/>
-                                </dependency>
-                            </dependencies>
-                            <tags/>
-                        </trigger_prototype>
-                    </trigger_prototypes>
-                    <graph_prototypes/>
-                    <host_prototypes/>
-                    <jmx_endpoint/>
                 </discovery_rule>
                 <discovery_rule>
                     <name>CPU</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.1.1.9.1.2]</snmp_oid>
                     <key>aos.cpu.[{#SNMPVALUE}]</key>
                     <delay>1h</delay>
-                    <status>0</status>
-                    <allowed_hosts/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <filter>
-                        <evaltype>0</evaltype>
-                        <formula/>
-                        <conditions/>
-                    </filter>
-                    <lifetime>30d</lifetime>
-                    <description/>
                     <item_prototypes>
                         <item_prototype>
                             <name>CPU Utilization $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.9.1.3.{#SNMPINDEX}</snmp_oid>
                             <key>aos.cpuUtil.[{#SNMPVALUE}]</key>
                             <delay>30s</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>3</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>CPU</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{avg(5m)}&gt;80</expression>
+                                    <name>High CPU on {HOST.NAME}, {#SNMPVALUE}</name>
+                                    <priority>WARNING</priority>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>Very High CPU on {HOST.NAME}, {#SNMPVALUE}</name>
+                                            <expression>{Template ArubaOS:aos.cpuUtil.[{#SNMPVALUE}].avg(5m)}&gt;90</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{avg(5m)}&gt;90</expression>
+                                    <name>Very High CPU on {HOST.NAME}, {#SNMPVALUE}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.cpuUtil.[{#SNMPVALUE}].avg(5m)}&gt;80</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>High CPU on {HOST.NAME}, {#SNMPVALUE}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>2</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies>
-                                <dependency>
-                                    <name>Very High CPU on {HOST.NAME}, {#SNMPVALUE}</name>
-                                    <expression>{Template ArubaOS:aos.cpuUtil.[{#SNMPVALUE}].avg(5m)}&gt;90</expression>
-                                    <recovery_expression/>
-                                </dependency>
-                            </dependencies>
-                            <tags/>
-                        </trigger_prototype>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.cpuUtil.[{#SNMPVALUE}].avg(5m)}&gt;90</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>Very High CPU on {HOST.NAME}, {#SNMPVALUE}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>4</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies/>
-                            <tags/>
-                        </trigger_prototype>
-                    </trigger_prototypes>
-                    <graph_prototypes/>
-                    <host_prototypes/>
-                    <jmx_endpoint/>
                 </discovery_rule>
                 <discovery_rule>
                     <name>Fans</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2]</snmp_oid>
                     <key>aos.fan.[{#SNMPINDEX}]</key>
                     <delay>1h</delay>
-                    <status>0</status>
-                    <allowed_hosts/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <filter>
-                        <evaltype>0</evaltype>
-                        <formula/>
-                        <conditions/>
-                    </filter>
-                    <lifetime>30d</lifetime>
-                    <description/>
                     <item_prototypes>
                         <item_prototype>
                             <name>Fan $1 Status</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2.{#SNMPINDEX}</snmp_oid>
                             <key>aos.fanStatus.[{#SNMPINDEX}]</key>
                             <delay>5m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>3</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>System Health</name>
@@ -2333,303 +920,95 @@
                             <valuemap>
                                 <name>AOS Device Status</name>
                             </valuemap>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}=2</expression>
+                                    <name>Failed Fan {#SNMPINDEX} on {HOST.NAME}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.fanStatus.[{#SNMPINDEX}].last()}=2</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>Failed Fan {#SNMPINDEX} on {HOST.NAME}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>4</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies/>
-                            <tags/>
-                        </trigger_prototype>
-                    </trigger_prototypes>
-                    <graph_prototypes/>
-                    <host_prototypes/>
-                    <jmx_endpoint/>
                 </discovery_rule>
                 <discovery_rule>
                     <name>Licenses</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.6]</snmp_oid>
                     <key>aos.lics.[{#SNMPVALUE}]</key>
                     <delay>1h</delay>
-                    <status>0</status>
-                    <allowed_hosts/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <filter>
-                        <evaltype>0</evaltype>
-                        <formula/>
-                        <conditions/>
-                    </filter>
-                    <lifetime>30d</lifetime>
-                    <description/>
                     <item_prototypes>
                         <item_prototype>
                             <name>License $2</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.2.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.lic.[{#SNMPINDEX}][{#SNMPVALUE}]</key>
+                            <key>aos.lic.[{#SNMPVALUE}]</key>
                             <delay>1d</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>4</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>TEXT</value_type>
                             <applications>
                                 <application>
                                     <name>Licenses</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>License Expire $2</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.4.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.licExpire.[{#SNMPINDEX}][{#SNMPVALUE}]</key>
+                            <key>aos.licExpire.[{#SNMPVALUE}]</key>
                             <delay>1d</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>1</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>CHAR</value_type>
                             <applications>
                                 <application>
                                     <name>Licenses</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>License Flags $2</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.5.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.licFlags.[{#SNMPINDEX}][{#SNMPVALUE}]</key>
+                            <key>aos.licFlags.[{#SNMPVALUE}]</key>
                             <delay>1d</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>1</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>CHAR</value_type>
                             <applications>
                                 <application>
                                     <name>Licenses</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>License Installed Date $2</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.3.{#SNMPINDEX}</snmp_oid>
-                            <key>aos.licsInstalled.[{#SNMPINDEX}][{#SNMPVALUE}]</key>
+                            <key>aos.licsInstalled.[{#SNMPVALUE}]</key>
                             <delay>1d</delay>
-                            <history>90d</history>
                             <trends>0</trends>
-                            <status>0</status>
-                            <value_type>1</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>CHAR</value_type>
                             <applications>
                                 <application>
                                     <name>Licenses</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes/>
-                    <graph_prototypes/>
-                    <host_prototypes/>
-                    <jmx_endpoint/>
                 </discovery_rule>
                 <discovery_rule>
                     <name>PSU</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2]</snmp_oid>
                     <key>aos.psu.[{#SNMPINDEX}]</key>
                     <delay>1h</delay>
-                    <status>0</status>
-                    <allowed_hosts/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <filter>
-                        <evaltype>0</evaltype>
-                        <formula/>
-                        <conditions/>
-                    </filter>
-                    <lifetime>30d</lifetime>
-                    <description/>
                     <item_prototypes>
                         <item_prototype>
                             <name>PSU $1 Status</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2.{#SNMPINDEX}</snmp_oid>
                             <key>aos.psuStatus.[{#SNMPINDEX}]</key>
                             <delay>5m</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>0</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
+                            <value_type>FLOAT</value_type>
                             <applications>
                                 <application>
                                     <name>System Health</name>
@@ -2638,144 +1017,48 @@
                             <valuemap>
                                 <name>AOS Device Status</name>
                             </valuemap>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}=2</expression>
+                                    <name>Failed/Missing PSU {#SNMPINDEX} on {HOST.NAME}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.psuStatus.[{#SNMPINDEX}].last()}=2</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>Failed/Missing PSU {#SNMPINDEX} on {HOST.NAME}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>4</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies/>
-                            <tags/>
-                        </trigger_prototype>
-                    </trigger_prototypes>
-                    <graph_prototypes/>
-                    <host_prototypes/>
-                    <jmx_endpoint/>
                 </discovery_rule>
                 <discovery_rule>
                     <name>Storage</name>
-                    <type>4</type>
-                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.5]</snmp_oid>
                     <key>aos.storage.[{#SNMPVALUE}]</key>
                     <delay>1h</delay>
-                    <status>0</status>
-                    <allowed_hosts/>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <filter>
-                        <evaltype>0</evaltype>
-                        <formula/>
-                        <conditions/>
-                    </filter>
-                    <lifetime>30d</lifetime>
-                    <description/>
                     <item_prototypes>
                         <item_prototype>
                             <name>Storage Size $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.3.{#SNMPINDEX}</snmp_oid>
                             <key>aos.storageSize.[{#SNMPVALUE}]</key>
                             <delay>1h</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>3</value_type>
-                            <allowed_hosts/>
                             <units>B</units>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Storage</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
                             <preprocessing>
                                 <step>
-                                    <type>1</type>
+                                    <type>MULTIPLIER</type>
                                     <params>1000000</params>
                                 </step>
                             </preprocessing>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>Storage Type $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.2.{#SNMPINDEX}</snmp_oid>
                             <key>aos.storageType.[{#SNMPVALUE}]</key>
                             <delay>1h</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>3</value_type>
-                            <allowed_hosts/>
-                            <units/>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Storage</name>
@@ -2784,334 +1067,62 @@
                             <valuemap>
                                 <name>AOS Storage Type</name>
                             </valuemap>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>Storage Used $1</name>
-                            <type>4</type>
-                            <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                            <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.4.{#SNMPINDEX}</snmp_oid>
                             <key>aos.storageUsed.[{#SNMPVALUE}]</key>
                             <delay>1h</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>3</value_type>
-                            <allowed_hosts/>
                             <units>B</units>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
-                            <params/>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Storage</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
                             <preprocessing>
                                 <step>
-                                    <type>1</type>
+                                    <type>MULTIPLIER</type>
                                     <params>1000000</params>
                                 </step>
                             </preprocessing>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
                         </item_prototype>
                         <item_prototype>
                             <name>Storage Used Percentage $1</name>
-                            <type>15</type>
-                            <snmp_community/>
-                            <snmp_oid/>
+                            <type>CALCULATED</type>
                             <key>aos.storageUsedPer.[{#SNMPVALUE}]</key>
                             <delay>1h</delay>
-                            <history>90d</history>
-                            <trends>365d</trends>
-                            <status>0</status>
-                            <value_type>3</value_type>
-                            <allowed_hosts/>
                             <units>%</units>
-                            <snmpv3_contextname/>
-                            <snmpv3_securityname/>
-                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                            <snmpv3_authpassphrase/>
-                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                            <snmpv3_privpassphrase/>
                             <params>last(aos.storageUsed.[{#SNMPVALUE}])/(last(aos.storageSize.[{#SNMPVALUE}])/100)</params>
-                            <ipmi_sensor/>
-                            <authtype>0</authtype>
-                            <username/>
-                            <password/>
-                            <publickey/>
-                            <privatekey/>
-                            <port/>
-                            <description/>
-                            <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>Storage</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
-                            <preprocessing/>
-                            <jmx_endpoint/>
-                            <application_prototypes/>
-                            <master_item_prototype/>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{avg(5m)}&gt;80.0</expression>
+                                    <name>High Storage Usage on {HOST.NAME}, {#SNMPVALUE}</name>
+                                    <priority>WARNING</priority>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>Very High Storage Usage on {HOST.NAME}, {#SNMPVALUE}</name>
+                                            <expression>{Template ArubaOS:aos.storageUsedPer.[{#SNMPVALUE}].avg(5m)}&gt;90.0</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{avg(5m)}&gt;90.0</expression>
+                                    <name>Very High Storage Usage on {HOST.NAME}, {#SNMPVALUE}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.storageUsedPer.[{#SNMPVALUE}].avg(5m)}&gt;80.0</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>High Storage Usage on {HOST.NAME}, {#SNMPVALUE}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>2</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies>
-                                <dependency>
-                                    <name>Very High Storage Usage on {HOST.NAME}, {#SNMPVALUE}</name>
-                                    <expression>{Template ArubaOS:aos.storageUsedPer.[{#SNMPVALUE}].avg(5m)}&gt;90.0</expression>
-                                    <recovery_expression/>
-                                </dependency>
-                            </dependencies>
-                            <tags/>
-                        </trigger_prototype>
-                        <trigger_prototype>
-                            <expression>{Template ArubaOS:aos.storageUsedPer.[{#SNMPVALUE}].avg(5m)}&gt;90.0</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
-                            <name>Very High Storage Usage on {HOST.NAME}, {#SNMPVALUE}</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
-                            <url/>
-                            <status>0</status>
-                            <priority>4</priority>
-                            <description/>
-                            <type>0</type>
-                            <manual_close>0</manual_close>
-                            <dependencies/>
-                            <tags/>
-                        </trigger_prototype>
-                    </trigger_prototypes>
-                    <graph_prototypes/>
-                    <host_prototypes/>
-                    <jmx_endpoint/>
                 </discovery_rule>
             </discovery_rules>
-            <httptests/>
-            <macros/>
-            <templates>
-                <template>
-                    <name>Template Module ICMP Ping</name>
-                </template>
-                <template>
-                    <name>Template Module Interfaces SNMPv2</name>
-                </template>
-            </templates>
-            <screens/>
         </template>
     </templates>
-    <triggers>
-        <trigger>
-            <expression>{Template ArubaOS:aos.configID.change(0)}&gt;=1</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Config has changed on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>1</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.memUsedPer.avg(5m)}&gt;90</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>High Memory Usage on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>2</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.sysAPUsage.avg(5m)}&gt;80</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Platform AP Capacity Usage is High on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>2</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies>
-                <dependency>
-                    <name>Platform AP Capacity Usage is Very High on {HOST.NAME}</name>
-                    <expression>{Template ArubaOS:aos.sysAPUsage.avg(5m)}&gt;90</expression>
-                    <recovery_expression/>
-                </dependency>
-            </dependencies>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.sysAPUsage.avg(5m)}&gt;90</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Platform AP Capacity Usage is Very High on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>4</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.sysUserUsage.avg(5m)}&gt;80</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Platform User Capacity Usage is High on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>2</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies>
-                <dependency>
-                    <name>Platform User Capacity Usage is Very High on {HOST.NAME}</name>
-                    <expression>{Template ArubaOS:aos.sysUserUsage.avg(5m)}&gt;90</expression>
-                    <recovery_expression/>
-                </dependency>
-            </dependencies>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.sysUserUsage.avg(5m)}&gt;90</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Platform User Capacity Usage is Very High on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>4</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.sysTemp.str(CRITICAL)}</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Temperature Alert CRITICAL on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>5</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.sysTemp.str(MAJOR)}</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Temperature Alert MAJOR on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>4</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.sysTemp.str(MINOR)}</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Temperature Alert MINOR on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>2</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template ArubaOS:aos.sysUptime.last()}&lt;600</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>{HOST.NAME} has been restarted</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>3</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-    </triggers>
     <value_maps>
         <value_map>
             <name>AOS AP Active</name>
