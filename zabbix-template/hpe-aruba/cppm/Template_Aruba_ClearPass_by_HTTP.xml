@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2022-08-17T14:55:11Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template Aruba ClearPass by HTTP</template>
+            <name>Template Aruba ClearPass by HTTP</name>
+            <description>This template expects an API user with &quot;client_secret&quot; as the authentication method.&#13;
+&#13;
+The following macros are mandatory:&#13;
+&#13;
+{$CPPM_API_CLIENT}&#13;
+{$CPPM_API_FQDN}&#13;
+{$CPPM_API_SECRET}&#13;
+&#13;
+Please take care to set the discovery interval below the authentication time for the API Client user.</description>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>CPPM certificates</name>
+                </application>
+                <application>
+                    <name>CPPM license</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>CPPM token discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>cppm.certificates.discovery.token</key>
+                    <delay>{$CPPM_DISCOVERY_UPDATE_INTERVAL}</delay>
+                    <description>This discovery rule doesn't do a lot of discovering.&#13;
+&#13;
+It's main use is logging in to the API, retrieving the OAUTH &quot;Bearer&quot; token and updating the data retrieval item's authorization header with this token.&#13;
+&#13;
+The update interval should be below the API client login expiry ( which is 8 hours by default).&#13;
+&#13;
+This template expects an API user with &quot;client_secret&quot; as the authentication method.</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>CPPM HTTPS certificate expiry</name>
+                            <type>DEPENDENT</type>
+                            <key>clearpass.certificates.expiry[https,{#DUMMY}]</key>
+                            <delay>0</delay>
+                            <units>s</units>
+                            <applications>
+                                <application>
+                                    <name>CPPM certificates</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$._embedded.items[?(@.service_name == 'HTTPS')].expiry_date</params>
+                                </step>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <params>/*
+This script converts the certificate expiry date to the number
+of seconds left before expiry.
+
+Steps:
+* Convert date/time string to ISO 8601, discard the timezone.
+* Parse the converted date/time.
+* Substract the current date/time from the expiry date/time and.
+* Convert the differrence from milliseconds to seconds.
+*/
+
+// Pad a number with a leading zero if &lt; 10.
+function pad(n) {
+    return (n &lt; 10) ? (&quot;0&quot; + n) : n;
+}
+
+// Convert month name to month number.
+function month_to_number(month) {
+  return('January___February__March_____April_____May_______June______July______August____September_October___November__December__'.indexOf(month) / 10 + 1)
+}
+
+// Extract date/time from a string in the format: [&quot;Jul 29, 2025 10:23:34 CEST&quot;].
+// We'll ignore the timezone.
+parsed = value.match(/^\[&quot;(\w+)\s+(\d+),\s+(\d+)\s+(\d\d:\d\d:\d\d)/);
+
+yyyy = parsed[3];
+mm = pad(month_to_number(parsed[1]));
+dd = parsed[2];
+hhhhhh = parsed[4];
+
+// Construct ISO 8601 datetime format.
+iso_date = yyyy + &quot;-&quot; + mm + &quot;-&quot; + dd + &quot;T&quot; + hhhhhh
+
+// Current date/time.
+now = new Date()
+// Substract current date/time from expiry and divide by 1000.
+diff = parseInt((Date.parse(iso_date)-now.getTime()) / 1000)
+
+return(diff);</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>cppm.certificates[{#DUMMY}]</key>
+                            </master_item>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$CPPM_CERT_EXPIRY_1}</expression>
+                                    <name>CPPM HTTPS certificate will expire within {$CPPM_CERT_EXPIRY_1}</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$CPPM_CERT_EXPIRY_2}</expression>
+                                    <name>CPPM HTTPS certificate will expire within {$CPPM_CERT_EXPIRY_2}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM RADIUS certificate expiry</name>
+                            <type>DEPENDENT</type>
+                            <key>clearpass.certificates.expiry[radius,{#DUMMY}]</key>
+                            <delay>0</delay>
+                            <units>s</units>
+                            <applications>
+                                <application>
+                                    <name>CPPM certificates</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$._embedded.items[?(@.service_name == 'RADIUS')].expiry_date</params>
+                                </step>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <params>/*
+This script converts the certificate expiry date to the number
+of seconds left before expiry.
+
+Steps:
+* Convert date/time string to ISO 8601, discard the timezone.
+* Parse the converted date/time.
+* Substract the current date/time from the expiry date/time and.
+* Convert the differrence from milliseconds to seconds.
+*/
+
+// Pad a number with a leading zero if &lt; 10.
+function pad(n) {
+    return (n &lt; 10) ? (&quot;0&quot; + n) : n;
+}
+
+// Convert month name to month number.
+function month_to_number(month) {
+  return('January___February__March_____April_____May_______June______July______August____September_October___November__December__'.indexOf(month) / 10 + 1)
+}
+
+// Extract date/time from a string in the format: [&quot;Jul 29, 2025 10:23:34 CEST&quot;].
+// We'll ignore the timezone.
+parsed = value.match(/^\[&quot;(\w+)\s+(\d+),\s+(\d+)\s+(\d\d:\d\d:\d\d)/);
+
+yyyy = parsed[3];
+mm = pad(month_to_number(parsed[1]));
+dd = parsed[2];
+hhhhhh = parsed[4];
+
+// Construct ISO 8601 datetime format.
+iso_date = yyyy + &quot;-&quot; + mm + &quot;-&quot; + dd + &quot;T&quot; + hhhhhh
+
+// Current date/time.
+now = new Date()
+// Substract current date/time from expiry and divide by 1000.
+diff = parseInt((Date.parse(iso_date)-now.getTime()) / 1000)
+
+return(diff);</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>cppm.certificates[{#DUMMY}]</key>
+                            </master_item>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$CPPM_CERT_EXPIRY_1}</expression>
+                                    <name>CPPM RADIUS certificate will expire within {$CPPM_CERT_EXPIRY_1}</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$CPPM_CERT_EXPIRY_2}</expression>
+                                    <name>CPPM RADIUS certificate will expire within {$CPPM_CERT_EXPIRY_2}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM RadSec certificate expiry</name>
+                            <type>DEPENDENT</type>
+                            <key>clearpass.certificates.expiry[radsec,{#DUMMY}]</key>
+                            <delay>0</delay>
+                            <units>s</units>
+                            <applications>
+                                <application>
+                                    <name>CPPM certificates</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$._embedded.items[?(@.service_name == 'RadSec')].expiry_date</params>
+                                </step>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <params>/*
+This script converts the certificate expiry date to the number
+of seconds left before expiry.
+
+Steps:
+* Convert date/time string to ISO 8601, discard the timezone.
+* Parse the converted date/time.
+* Substract the current date/time from the expiry date/time and.
+* Convert the differrence from milliseconds to seconds.
+*/
+
+// Pad a number with a leading zero if &lt; 10.
+function pad(n) {
+    return (n &lt; 10) ? (&quot;0&quot; + n) : n;
+}
+
+// Convert month name to month number.
+function month_to_number(month) {
+  return('January___February__March_____April_____May_______June______July______August____September_October___November__December__'.indexOf(month) / 10 + 1)
+}
+
+// Extract date/time from a string in the format: [&quot;Jul 29, 2025 10:23:34 CEST&quot;].
+// We'll ignore the timezone.
+parsed = value.match(/^\[&quot;(\w+)\s+(\d+),\s+(\d+)\s+(\d\d:\d\d:\d\d)/);
+
+yyyy = parsed[3];
+mm = pad(month_to_number(parsed[1]));
+dd = parsed[2];
+hhhhhh = parsed[4];
+
+// Construct ISO 8601 datetime format.
+iso_date = yyyy + &quot;-&quot; + mm + &quot;-&quot; + dd + &quot;T&quot; + hhhhhh
+
+// Current date/time.
+now = new Date()
+// Substract current date/time from expiry and divide by 1000.
+diff = parseInt((Date.parse(iso_date)-now.getTime()) / 1000)
+
+return(diff);</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>cppm.certificates[{#DUMMY}]</key>
+                            </master_item>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$CPPM_CERT_EXPIRY_1}</expression>
+                                    <name>CPPM RadSec certificate will expire within {$CPPM_CERT_EXPIRY_1}</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;{$CPPM_CERT_EXPIRY_2}</expression>
+                                    <name>CPPM RadSec certificate will expire within {$CPPM_CERT_EXPIRY_2}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM HTTPS certificate validity</name>
+                            <type>DEPENDENT</type>
+                            <key>clearpass.certificates.validity[https,{#DUMMY}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>CPPM certificates</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$._embedded.items[?(@.service_name == 'HTTPS')].validity</params>
+                                </step>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>(\w+)
+\1</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>cppm.certificates[{#DUMMY}]</key>
+                            </master_item>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{regexp(^Valid$)}=0</expression>
+                                    <name>CPPM HTTPS certificate invalid</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM RADIUS certificate validity</name>
+                            <type>DEPENDENT</type>
+                            <key>clearpass.certificates.validity[radius,{#DUMMY}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>CPPM certificates</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$._embedded.items[?(@.service_name == 'RADIUS')].validity</params>
+                                </step>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>(\w+)
+\1</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>cppm.certificates[{#DUMMY}]</key>
+                            </master_item>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{regexp(^Valid$)}=0</expression>
+                                    <name>CPPM RADIUS certificate invalid</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM RadSec certificate validity</name>
+                            <type>DEPENDENT</type>
+                            <key>clearpass.certificates.validity[radsec,{#DUMMY}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>CPPM certificates</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$._embedded.items[?(@.service_name == 'RadSec')].validity</params>
+                                </step>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>(\w+)
+\1</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>cppm.certificates[{#DUMMY}]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM Access license count</name>
+                            <type>DEPENDENT</type>
+                            <key>clearpass.license.count[access,{#DUMMY}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>CPPM license</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$.items[?(@.license_type == 'Access')].licensed_count</params>
+                                </step>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>(\d+)
+\1</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>cppm.license.summary[{#DUMMY}]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM Access license usage</name>
+                            <type>DEPENDENT</type>
+                            <key>clearpass.license.usage[access,{#DUMMY}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>CPPM license</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$.items[?(@.license_type == 'Access')].used_count</params>
+                                </step>
+                                <step>
+                                    <type>REGEX</type>
+                                    <params>(\d+)
+\1</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>cppm.license.summary[{#DUMMY}]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM server certs</name>
+                            <type>HTTP_AGENT</type>
+                            <key>cppm.certificates[{#DUMMY}]</key>
+                            <delay>1h</delay>
+                            <history>0</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Main item for certificate monitoring.&#13;
+The dependent items extract data for the individual server certificates.&#13;
+&#13;
+The discovery rule updates the OAUTH &quot;Bearer&quot; token ( Authorization in the header ) every time it runs.</description>
+                            <applications>
+                                <application>
+                                    <name>CPPM certificates</name>
+                                </application>
+                            </applications>
+                            <url>https://{$CPPM_API_FQDN}/api/server-cert</url>
+                            <headers>
+                                <header>
+                                    <name>Authorization</name>
+                                    <value>Bearer {#SINGLETON}</value>
+                                </header>
+                            </headers>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{nodata(3h)}=1</expression>
+                                    <name>No data for item cppm.certificates</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>CPPM license summary</name>
+                            <type>HTTP_AGENT</type>
+                            <key>cppm.license.summary[{#DUMMY}]</key>
+                            <delay>1h</delay>
+                            <history>0</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Main item for license monitoring.&#13;
+The dependent items extract data for the individual licenses.&#13;
+&#13;
+The discovery rule updates the OAUTH &quot;Bearer&quot; token ( Authorization in the header ) every time it runs.</description>
+                            <applications>
+                                <application>
+                                    <name>CPPM license</name>
+                                </application>
+                            </applications>
+                            <url>https://{$CPPM_API_FQDN}/api/application-license/summary</url>
+                            <headers>
+                                <header>
+                                    <name>Authorization</name>
+                                    <value>Bearer {#SINGLETON}</value>
+                                </header>
+                            </headers>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{nodata(3h)}=1</expression>
+                                    <name>No data for item cppm.license.summary</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Template Aruba ClearPass by HTTP:clearpass.license.usage[access,{#DUMMY}].last()} &gt; {Template Aruba ClearPass by HTTP:clearpass.license.count[access,{#DUMMY}].last()}</expression>
+                            <name>CPPM Access license usage too high</name>
+                            <priority>WARNING</priority>
+                        </trigger_prototype>
+                    </trigger_prototypes>
+                    <url>https://{$CPPM_API_FQDN}/api/oauth</url>
+                    <posts>{&#13;
+  &quot;grant_type&quot;: &quot;client_credentials&quot;,&#13;
+  &quot;client_id&quot;: &quot;{$CPPM_API_CLIENT}&quot;,&#13;
+  &quot;client_secret&quot;: &quot;{$CPPM_API_SECRET}&quot;&#13;
+}</posts>
+                    <post_type>JSON</post_type>
+                    <request_method>POST</request_method>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <params>$.access_token</params>
+                        </step>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <params>return JSON.stringify(value != &quot;[]&quot; ? [{'{#SINGLETON}': value, '{#DUMMY}': 'dummy'}] : []);</params>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$CPPM_API_CLIENT}</macro>
+                    <description>API client user/identity.</description>
+                </macro>
+                <macro>
+                    <macro>{$CPPM_API_FQDN}</macro>
+                    <description>CPPM server address.</description>
+                </macro>
+                <macro>
+                    <macro>{$CPPM_API_SECRET}</macro>
+                    <description>API client secret.</description>
+                </macro>
+                <macro>
+                    <macro>{$CPPM_CERT_EXPIRY_1}</macro>
+                    <value>14d</value>
+                    <description>First certificate expiry threshold.</description>
+                </macro>
+                <macro>
+                    <macro>{$CPPM_CERT_EXPIRY_2}</macro>
+                    <value>7d</value>
+                    <description>Second certificate expiry threshold.</description>
+                </macro>
+                <macro>
+                    <macro>{$CPPM_DISCOVERY_UPDATE_INTERVAL}</macro>
+                    <value>3h</value>
+                    <description>Update interval for discovery.</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
