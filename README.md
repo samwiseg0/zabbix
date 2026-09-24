@@ -104,6 +104,29 @@ so override them on each host as needed.
 
 Link Zabbix's `Linux by SNMP` template as well for CPU, memory and disk.
 
+### ClearPass certificates and licenses over HTTP
+
+`zabbix-template/hpe-aruba/cppm/Aruba ClearPass by HTTP.yaml` reads the ClearPass REST API.
+
+* LLD for the enabled server certificates of each node (RADIUS, HTTPS, RadSec, Database)
+* Certificate expiry, with a warning at 30 days and a high problem at 7 days
+* Certificate validity
+* LLD for application licenses, with a warning above 90% usage
+
+One script item logs in and fetches everything in one run, once an hour. The template stores no
+token. Link it to every ClearPass node, next to the SNMP template. License counts are cluster-wide,
+so each node reports the same license values.
+
+It needs a ClearPass API client with the client_credentials grant. An operator profile with only the
+privileges `apigility`, `#cppm_certificates` and `#cppm_licenses` is enough. That profile was tested
+on ClearPass 6.12. It reads both endpoints and gets 403 everywhere else.
+
+Set `{$CPPM.API.CLIENT}` and `{$CPPM.API.SECRET}` on each host. The API defaults to
+`https://{HOST.CONN}`. Set `{$CPPM.API.URL}` to reach it another way. Zabbix 7.0 does not verify the
+ClearPass TLS certificate in script items, so reach the API over a trusted network.
+
+The checks come from the ClearPass by HTTP template by [argusb](https://github.com/argusb/zabbix).
+
 ## HP ProCurve Aruba 3810M
 
 `zabbix-template/hpe-aruba/switches/Template Aruba 3810M.yaml`

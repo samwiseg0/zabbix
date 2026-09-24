@@ -1,0 +1,258 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 6b36e299257d4b7d9cd3ac612a5e4111
+      template: 'Aruba ClearPass by HTTP'
+      name: 'Aruba ClearPass by HTTP'
+      description: |
+        Monitors Aruba ClearPass Policy Manager certificate expiry and license usage over the ClearPass REST API.
+        One script item logs in and fetches all data in one run. The template stores no token.
+        Link it to every ClearPass node. Each node reports its own server certificates.
+        License counts are cluster-wide, so each linked node reports the same license values.
+        
+        Set {$CPPM.API.CLIENT} and {$CPPM.API.SECRET}.
+        Set {$CPPM.API.URL} only when the API is not at https://{HOST.CONN}.
+        
+        Create a read-only API client in ClearPass Guest with the client_credentials grant.
+        Its operator profile must grant API access plus read access to certificates and licenses.
+        The script does not verify the ClearPass TLS certificate. Reach the API over a trusted network.
+        
+        Based on the ClearPass by HTTP template by argusb (github.com/argusb/zabbix).
+      groups:
+        - name: Templates
+      items:
+        - uuid: 4515e1c0d45444e3bd429e06f7a7315d
+          name: 'ClearPass API data'
+          type: SCRIPT
+          key: cppm.api.get
+          delay: 1h
+          history: 7d
+          value_type: TEXT
+          trends: '0'
+          params: |
+            var p = JSON.parse(value);
+            var base = (p.url || 'https://' + p.host).replace(/\/+$/, '');
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            
+            function call(path, body, token) {
+                var req = new HttpRequest();
+                var res;
+                req.addHeader('Accept: application/json');
+                if (token) {
+                    req.addHeader('Authorization: Bearer ' + token);
+                }
+                if (body) {
+                    req.addHeader('Content-Type: application/json');
+                    res = req.post(base + path, JSON.stringify(body));
+                } else {
+                    res = req.get(base + path);
+                }
+                if (req.getStatus() !== 200) {
+                    throw 'ClearPass API ' + base + path + ' returned HTTP ' + req.getStatus();
+                }
+                return JSON.parse(res);
+            }
+            
+            // Ignores the timezone abbreviation, so expiry can be off by the zone offset.
+            function expiry(s) {
+                var m = /^(\w{3})\w*\s+(\d{1,2}),\s+(\d{4})\s+(\d{1,2}):(\d{2}):(\d{2})/.exec(s || '');
+                var mon = m ? months.indexOf(m[1]) : -1;
+                return mon < 0 ? null : Date.UTC(+m[3], mon, +m[2], +m[4], +m[5], +m[6]) / 1000;
+            }
+            
+            var token = call('/api/oauth', {
+                grant_type: 'client_credentials',
+                client_id: p.client_id,
+                client_secret: p.client_secret
+            }).access_token;
+            if (!token) {
+                throw 'ClearPass API ' + base + '/api/oauth returned no access_token';
+            }
+            var certs = call('/api/server-cert', null, token)._embedded || {};
+            var licenses = call('/api/application-license/summary', null, token);
+            
+            return JSON.stringify({
+                certs: (certs.items || []).map(function (c) {
+                    return {service: c.service_name, enabled: c.enabled, validity: c.validity, expiry: expiry(c.expiry_date)};
+                }),
+                licenses: (licenses.items || []).map(function (l) {
+                    return {type: l.license_type, count: l.licensed_count, used: l.used_count};
+                })
+            });
+          description: 'Logs in to the ClearPass API and returns the certificates of this node and the license summary as JSON. All other items read from this item.'
+          timeout: 30s
+          parameters:
+            - name: client_id
+              value: '{$CPPM.API.CLIENT}'
+            - name: client_secret
+              value: '{$CPPM.API.SECRET}'
+            - name: host
+              value: '{HOST.CONN}'
+            - name: url
+              value: '{$CPPM.API.URL}'
+          tags:
+            - tag: Application
+              value: 'ClearPass API'
+          triggers:
+            - uuid: 8d00729a6b5c4c4594790cc474746113
+              expression: 'nodata(/Aruba ClearPass by HTTP/cppm.api.get,{$CPPM.API.NODATA})=1'
+              name: 'ClearPass API data not received on {HOST.NAME}'
+              priority: WARNING
+              description: 'The ClearPass API data item returned no value for {$CPPM.API.NODATA}. Check the error on that item. Then check the API client in ClearPass and the API URL, client and secret macros.'
+      discovery_rules:
+        - uuid: b8e4dac286e14cd5a57b1ce68d11af51
+          name: Certificates
+          type: DEPENDENT
+          key: cppm.cert.discovery
+          delay: '0'
+          filter:
+            conditions:
+              - macro: '{#ENABLED}'
+                value: ^(true|1)$
+                formulaid: A
+          description: 'Discovers the enabled server certificates of this node.'
+          item_prototypes:
+            - uuid: 3fef0e4701134c7e9fb400802d3be645
+              name: '{#SERVICE} certificate expiry'
+              type: DEPENDENT
+              key: 'cppm.cert.expiry[{#SERVICE}]'
+              delay: '0'
+              value_type: FLOAT
+              units: unixtime
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.certs[?(@.service=="{#SERVICE}")].expiry.first()'
+              master_item:
+                key: cppm.api.get
+              tags:
+                - tag: Application
+                  value: 'ClearPass Certificates'
+              trigger_prototypes:
+                - uuid: ec56e8fc893f4938baca07ddc8077289
+                  expression: '(last(/Aruba ClearPass by HTTP/cppm.cert.expiry[{#SERVICE}])-now())/86400<{$CPPM.CERT.EXPIRY.CRIT}'
+                  name: '{#SERVICE} certificate expires in less than {$CPPM.CERT.EXPIRY.CRIT} days on {HOST.NAME}'
+                  opdata: 'Expires: {ITEM.LASTVALUE1}'
+                  priority: HIGH
+                - uuid: d3011f7f7b734941a1295f733604ef6b
+                  expression: '(last(/Aruba ClearPass by HTTP/cppm.cert.expiry[{#SERVICE}])-now())/86400<{$CPPM.CERT.EXPIRY.WARN}'
+                  name: '{#SERVICE} certificate expires in less than {$CPPM.CERT.EXPIRY.WARN} days on {HOST.NAME}'
+                  opdata: 'Expires: {ITEM.LASTVALUE1}'
+                  priority: WARNING
+                  dependencies:
+                    - name: '{#SERVICE} certificate expires in less than {$CPPM.CERT.EXPIRY.CRIT} days on {HOST.NAME}'
+                      expression: '(last(/Aruba ClearPass by HTTP/cppm.cert.expiry[{#SERVICE}])-now())/86400<{$CPPM.CERT.EXPIRY.CRIT}'
+                - uuid: 59f475ac2bc443c3bbe7d5dd079d9127
+                  expression: 'nodata(/Aruba ClearPass by HTTP/cppm.cert.expiry[{#SERVICE}],{$CPPM.API.NODATA})=1'
+                  name: '{#SERVICE} certificate expiry not received on {HOST.NAME}'
+                  priority: WARNING
+                  description: 'The expiry item received no value. Check the error on that item. ClearPass may have changed its date format.'
+                  dependencies:
+                    - name: 'ClearPass API data not received on {HOST.NAME}'
+                      expression: 'nodata(/Aruba ClearPass by HTTP/cppm.api.get,{$CPPM.API.NODATA})=1'
+            - uuid: 7712334c62c64d49bcfe2aebdc6d6fe5
+              name: '{#SERVICE} certificate validity'
+              type: DEPENDENT
+              key: 'cppm.cert.validity[{#SERVICE}]'
+              delay: '0'
+              value_type: CHAR
+              trends: '0'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.certs[?(@.service=="{#SERVICE}")].validity.first()'
+              master_item:
+                key: cppm.api.get
+              tags:
+                - tag: Application
+                  value: 'ClearPass Certificates'
+              trigger_prototypes:
+                - uuid: 410e8e44aa384cc5818b5b9ee9c4efc4
+                  expression: 'find(/Aruba ClearPass by HTTP/cppm.cert.validity[{#SERVICE}],,"regexp","^Valid$")=0'
+                  name: '{#SERVICE} certificate is not valid on {HOST.NAME}'
+                  opdata: 'Validity: {ITEM.LASTVALUE1}'
+                  priority: HIGH
+          master_item:
+            key: cppm.api.get
+          lld_macro_paths:
+            - lld_macro: '{#ENABLED}'
+              path: $.enabled
+            - lld_macro: '{#SERVICE}'
+              path: $.service
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.certs
+        - uuid: e5e867972f8f4f86b515776880f41e1d
+          name: Licenses
+          type: DEPENDENT
+          key: cppm.license.discovery
+          delay: '0'
+          description: 'Discovers the application license types.'
+          item_prototypes:
+            - uuid: 1314d38d476344b9acd06fb615de2708
+              name: '{#LICENSE} licenses total'
+              type: DEPENDENT
+              key: 'cppm.license.count[{#LICENSE}]'
+              delay: '0'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.licenses[?(@.type=="{#LICENSE}")].count.first()'
+              master_item:
+                key: cppm.api.get
+              tags:
+                - tag: Application
+                  value: 'ClearPass Licenses'
+            - uuid: 65749ede326449d589dff70ddfa3f78f
+              name: '{#LICENSE} licenses used'
+              type: DEPENDENT
+              key: 'cppm.license.used[{#LICENSE}]'
+              delay: '0'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.licenses[?(@.type=="{#LICENSE}")].used.first()'
+              master_item:
+                key: cppm.api.get
+              tags:
+                - tag: Application
+                  value: 'ClearPass Licenses'
+          trigger_prototypes:
+            - uuid: e771f7a361a3427ab02d56edccba649a
+              expression: 'last(/Aruba ClearPass by HTTP/cppm.license.count[{#LICENSE}])>0 and last(/Aruba ClearPass by HTTP/cppm.license.used[{#LICENSE}])*100>{$CPPM.LICENSE.PUSED.MAX}*last(/Aruba ClearPass by HTTP/cppm.license.count[{#LICENSE}])'
+              name: '{#LICENSE} license usage is above {$CPPM.LICENSE.PUSED.MAX}% on {HOST.NAME}'
+              opdata: 'Used: {ITEM.LASTVALUE2} of {ITEM.LASTVALUE1}'
+              priority: WARNING
+          master_item:
+            key: cppm.api.get
+          lld_macro_paths:
+            - lld_macro: '{#LICENSE}'
+              path: $.type
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.licenses
+      macros:
+        - macro: '{$CPPM.API.CLIENT}'
+          description: 'Client ID of the ClearPass API client.'
+        - macro: '{$CPPM.API.NODATA}'
+          value: 3h
+          description: 'Time without API data before the no-data trigger fires.'
+        - macro: '{$CPPM.API.SECRET}'
+          type: SECRET_TEXT
+          description: 'Client secret of the ClearPass API client.'
+        - macro: '{$CPPM.API.URL}'
+          description: 'ClearPass base URL without the /api path, for example https://cppm.example.com. Empty means https://{HOST.CONN}.'
+        - macro: '{$CPPM.CERT.EXPIRY.CRIT}'
+          value: '7'
+          description: 'Days before certificate expiry that raise a high problem.'
+        - macro: '{$CPPM.CERT.EXPIRY.WARN}'
+          value: '30'
+          description: 'Days before certificate expiry that raise a warning.'
+        - macro: '{$CPPM.LICENSE.PUSED.MAX}'
+          value: '90'
+          description: 'License usage in percent that raises a warning.'
