@@ -1,0 +1,397 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 0e128fab3d44489bbb588f7ccdeee160
+      template: 'Template Aruba 3810M'
+      name: 'Template Aruba 3810M'
+      groups:
+        - name: Templates
+      items:
+        - uuid: da8bef1bbd834c31bb3362d7bf9ddfbc
+          name: 'Base MAC'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.14.11.5.1.1.6.0
+          key: hpe.baseMac
+          delay: 5m
+          history: 1w
+          value_type: CHAR
+          trends: '0'
+          inventory_link: MACADDRESS_A
+          tags:
+            - tag: Application
+              value: System
+        - uuid: b5c4eba3b14448ed92004c695e327a22
+          name: 'Chassis Temp'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.99.1.1.1.4.12001
+          key: hpe.chassisTemp
+          delay: 30s
+          history: 1w
+          units: C
+          description: 'Chassis temperature. The HP default over-temperature point is 55 C.'
+          tags:
+            - tag: Application
+              value: System
+          triggers:
+            - uuid: d987747a2a6042eb8c826551234ef878
+              expression: 'last(/Template Aruba 3810M/hpe.chassisTemp,#1:now-120s)>35'
+              name: 'Chassis Temperature too high on {HOST.NAME}'
+              priority: HIGH
+        - uuid: af2993aa8354482682b0dec88f48070d
+          name: 'Fan 1 Status'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.99.1.1.1.5.11001
+          key: hpe.fan1Status
+          history: 1w
+          value_type: FLOAT
+          trends: 100d
+          tags:
+            - tag: Application
+              value: System
+          triggers:
+            - uuid: 4f2498e241f74e91b355630ec5613e87
+              expression: 'last(/Template Aruba 3810M/hpe.fan1Status,#2)<>1'
+              name: 'Fan 1 Status on {HOST.NAME}'
+              priority: HIGH
+        - uuid: 46e3ac5abd0f4eeebfb6de9e1b4defe3
+          name: 'Fan 2 Status'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.99.1.1.1.5.11002
+          key: hpe.fan2Status
+          history: 1w
+          trends: 100d
+          tags:
+            - tag: Application
+              value: System
+          triggers:
+            - uuid: 52e549f5125c41bc821cb300064a162c
+              expression: 'last(/Template Aruba 3810M/hpe.fan2Status,#2)<>1'
+              name: 'Fan 2 Status on {HOST.NAME}'
+              priority: HIGH
+        - uuid: 17afe51c64664f68a0070d49e824c879
+          name: 'Fan 3 Status'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.99.1.1.1.5.11003
+          key: hpe.fan3Status
+          history: 1w
+          trends: 100d
+          tags:
+            - tag: Application
+              value: System
+          triggers:
+            - uuid: c3fc931c4b194f368f87303d3a4b0e88
+              expression: 'last(/Template Aruba 3810M/hpe.fan3Status,#2)<>1'
+              name: 'Fan 3 Status on {HOST.NAME}'
+              priority: HIGH
+        - uuid: 42714c9f8b0146b6b059d64e97a2a95d
+          name: 'Memory Free'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.6.1
+          key: hpe.memFree
+          history: 1w
+          trends: 100d
+          units: bytes
+          tags:
+            - tag: Application
+              value: Memory
+          triggers:
+            - uuid: fba3f7f9ea494cd7a9b1311eea256925
+              expression: 'last(/Template Aruba 3810M/hpe.memFree)<60M'
+              name: 'High Memory Usage on {HOST.NAME}'
+              priority: HIGH
+        - uuid: 87c1b06acb6a4e309d57b6e90c8bf8e0
+          name: 'Memory Total'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.14.11.5.1.1.2.2.1.1.5.1
+          key: hpe.memTotal
+          history: 1w
+          trends: 100d
+          units: bytes
+          tags:
+            - tag: Application
+              value: Memory
+        - uuid: 376ad48b7e0b4feaab384f89c6ca16a9
+          name: 'Memory Used'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.7.1
+          key: hpe.memUsed
+          history: 1w
+          trends: 100d
+          units: bytes
+          tags:
+            - tag: Application
+              value: Memory
+        - uuid: 326b20129e3d41daa6a9bd9fb7a98c93
+          name: 'Over Temperature Status'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.99.1.1.1.5.12001
+          key: hpe.overTempStatus
+          history: 1w
+          trends: 100d
+          tags:
+            - tag: Application
+              value: System
+          triggers:
+            - uuid: e1ead0fda45249b4a73179b3c45b5c13
+              expression: 'last(/Template Aruba 3810M/hpe.overTempStatus,#2)<>1'
+              name: 'Over Temperature on {HOST.NAME}'
+              priority: DISASTER
+        - uuid: 05227a0d8e7d426182dfb8e602661f5b
+          name: 'Switch Rom Version'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.47.1.1.1.1.9.1001
+          key: hpe.romVersion
+          delay: 5m
+          history: 1w
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: System
+        - uuid: 4633d1f3e98d4c28851fa605975cba00
+          name: 'Serial Number'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.36.1.1.2.9.0
+          key: hpe.serialNumber
+          delay: 5m
+          history: 1w
+          value_type: CHAR
+          trends: '0'
+          inventory_link: SERIALNO_A
+          tags:
+            - tag: Application
+              value: System
+        - uuid: 7369dfc31ed1421f94a7f08316c7f1f3
+          name: 'CPU Utilization'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.14.11.5.1.9.6.1.0
+          key: hpe.switchCpuStat
+          history: 1w
+          units: '%'
+          tags:
+            - tag: Application
+              value: CPU
+          triggers:
+            - uuid: 64dff0509f50455398b8df6d918937f2
+              expression: 'last(/Template Aruba 3810M/hpe.switchCpuStat,#1:now-60s)>90'
+              name: 'High CPU on {HOST.NAME}'
+              priority: HIGH
+        - uuid: 0c7c5b890c8e4630a575d10b547ecc71
+          name: 'Switch Model'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.47.1.1.1.1.2.1001
+          key: hpe.switchModel
+          delay: 5m
+          history: 1w
+          value_type: CHAR
+          trends: '0'
+          inventory_link: HARDWARE
+          tags:
+            - tag: Application
+              value: System
+        - uuid: 06cd97ba8bb440c3b8ad666217b961b2
+          name: 'Switch OS Version'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.14.11.5.1.1.3.0
+          key: hpe.switchOSVersion
+          delay: 5m
+          history: 1w
+          value_type: CHAR
+          trends: '0'
+          inventory_link: SOFTWARE
+          tags:
+            - tag: Application
+              value: System
+        - uuid: c0979688c4244013a585cb695733ef77
+          name: SysContact
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.1.4.0
+          key: hpe.sysContact
+          delay: 5m
+          history: 1w
+          value_type: TEXT
+          trends: '0'
+          inventory_link: CONTACT
+          tags:
+            - tag: Application
+              value: System
+        - uuid: 0ca552d6c4174b7ca38e0d86d61d2e15
+          name: SysLocation
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.1.6.0
+          key: hpe.sysLocation
+          delay: 5m
+          history: 1w
+          value_type: TEXT
+          trends: '0'
+          inventory_link: LOCATION
+          tags:
+            - tag: Application
+              value: System
+        - uuid: 18ea08499b4d45d28a0f0e40642877df
+          name: SysName
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.1.5.0
+          key: hpe.sysName
+          delay: 5m
+          history: 1w
+          value_type: TEXT
+          trends: '0'
+          inventory_link: NAME
+          tags:
+            - tag: Application
+              value: System
+        - uuid: d5dd4ea18a2b42799ce973cb092c8635
+          name: SysUptime
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.1.3.0
+          key: hpe.sysUptime
+          history: 1w
+          value_type: FLOAT
+          trends: 60d
+          units: uptime
+          preprocessing:
+            - type: MULTIPLIER
+              parameters:
+                - '0.01'
+          tags:
+            - tag: Application
+              value: System
+          triggers:
+            - uuid: 585a1592fec240b3b30c1e8afb14260f
+              expression: 'last(/Template Aruba 3810M/hpe.sysUptime)<1000'
+              name: '{HOST.NAME} Has been restarted'
+              priority: INFO
+      discovery_rules:
+        - uuid: 5b3793514c1444a18dd2aa20fc1b364d
+          name: 'Switch Inventory'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.2.1.47.1.1.1.1.2]'
+          key: hpe.inv
+          delay: 1h
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: a7101ce618e3410b876a529bfe68be18
+              name: 'Oper State - {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.2.1.131.1.1.1.3.{#SNMPINDEX}'
+              key: 'invEntityOperState[{#SNMPVALUE}.{#SNMPINDEX}]'
+              delay: 1h
+              history: 90d
+              tags:
+                - tag: Application
+                  value: Inventory
+            - uuid: 995b655dca1d466fbc82a2f18abf663d
+              name: 'Type - {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.2.1.47.1.1.1.1.5.{#SNMPINDEX}'
+              key: 'invEntPhysicalClass[{#SNMPVALUE}.{#SNMPINDEX}]'
+              delay: 1h
+              history: 90d
+              tags:
+                - tag: Application
+                  value: Inventory
+            - uuid: d28f0b87ee544f308d8bc87912b8e8d4
+              name: 'Model - {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.2.1.47.1.1.1.1.13.{#SNMPINDEX}'
+              key: 'invPhysicalModelName[{#SNMPVALUE}.{#SNMPINDEX}]'
+              delay: 1h
+              history: 90d
+              value_type: CHAR
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: Inventory
+            - uuid: c3d9846befcb4785a1bcaca90de37f71
+              name: 'Serial Num - {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.2.1.47.1.1.1.1.11.{#SNMPINDEX}'
+              key: 'invPhysicalSerialNum[{#SNMPVALUE}.{#SNMPINDEX}]'
+              delay: 1h
+              history: 90d
+              value_type: CHAR
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: Inventory
+            - uuid: a96d1d4d2ea2429fb7ce696e45ef71d0
+              name: 'Software Rev - {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.2.1.47.1.1.1.1.10.{#SNMPINDEX}'
+              key: 'invPhysicalSoftwareRev[{#SNMPVALUE}.{#SNMPINDEX}]'
+              delay: 1h
+              history: 90d
+              value_type: CHAR
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: Inventory
+      valuemaps:
+        - uuid: 3bc4c78411244dd481269a1ef9304cf4
+          name: 'Aruba 3810M EntityOperState'
+          mappings:
+            - value: '1'
+              newvalue: unknown
+            - value: '2'
+              newvalue: disabled
+            - value: '3'
+              newvalue: enabled
+            - value: '4'
+              newvalue: testing
+        - uuid: 2655d85556db48bea688c687c08a0541
+          name: 'Aruba 3810M EntitySensorStatus'
+          mappings:
+            - value: '1'
+              newvalue: ok
+            - value: '2'
+              newvalue: unavailable
+            - value: '3'
+              newvalue: nonoperational
+        - uuid: ac5eeb13b3194a4c8a1491ee95c62908
+          name: 'Aruba 3810M PhysicalClass'
+          mappings:
+            - value: '1'
+              newvalue: other
+            - value: '2'
+              newvalue: unknown
+            - value: '3'
+              newvalue: chassis
+            - value: '4'
+              newvalue: backplane
+            - value: '5'
+              newvalue: container
+            - value: '6'
+              newvalue: powerSupply
+            - value: '7'
+              newvalue: fan
+            - value: '8'
+              newvalue: sensor
+            - value: '9'
+              newvalue: module
+            - value: '10'
+              newvalue: port
+            - value: '11'
+              newvalue: stack
+  graphs:
+    - uuid: 20085c5cdfee40abbf68a07da506b8ba
+      name: 'Chassis Air Temp'
+      graph_items:
+        - drawtype: BOLD_LINE
+          color: C80000
+          calc_fnc: MAX
+          item:
+            host: 'Template Aruba 3810M'
+            key: hpe.chassisTemp
+    - uuid: 8df552873b06428a91bcd624617b4b31
+      name: CPU
+      graph_items:
+        - color: C80000
+          calc_fnc: MAX
+          item:
+            host: 'Template Aruba 3810M'
+            key: hpe.switchCpuStat

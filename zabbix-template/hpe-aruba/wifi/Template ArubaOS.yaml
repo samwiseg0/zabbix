@@ -1,0 +1,1024 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: b5f8039c90b944bcaa055e5c0e070ce9
+      template: 'Template ArubaOS'
+      name: 'Template ArubaOS'
+      description: 'This template monitors ArubaOS controllers and conductors over SNMP. Each host must set the host macros {$SNMP_COMMUNITY}, {$WLC_TOTAL_AP} and {$WLC_TOTAL_USER}. {$WLC_TOTAL_AP} is the AP capacity of the platform. {$WLC_TOTAL_USER} is the user capacity of the platform. Template ArubaOS cluster is an optional companion. See the README.'
+      groups:
+        - name: Templates
+      items:
+        - uuid: f9ad1194df2b4aeabe9cb2db84fdb03a
+          name: 'Base MAC'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.7.0
+          key: aos.baseMAC
+          delay: 1d
+          history: 90d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: 7e5ebe6b8ecc438bb2b5bac30ff1c4bc
+          name: 'Config ID'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.23.0
+          key: aos.configID
+          delay: 5m
+          history: 90d
+          tags:
+            - tag: Application
+              value: 'System Health'
+        - uuid: 0d4cf4315cc747cbbac73cfc7548029e
+          name: 'Hardware Version'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.27.0
+          key: aos.hardwareVer
+          delay: 1d
+          history: 90d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: 14646afdf49c48ada2c9e51c5d103fa5
+          name: Hostname
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.1.0
+          key: aos.hostName
+          delay: 1d
+          history: 90d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: 9141c98ed3764349b01af06c237c0776
+          name: 'IP Address'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.3.0
+          key: aos.ip
+          delay: 1d
+          history: 90d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: 52d7bc84825a4b66bd21db8e7f723fa9
+          name: 'IPv6 Address'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.13.0
+          key: aos.ipv6
+          delay: 1d
+          history: 90d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: eace3d888dc84d5b9f3813fee486c484
+          name: 'Switch Local License Count'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.7.0
+          key: aos.localLics
+          delay: 1d
+          history: 90d
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: e789d6eb7b6f4051aacaac3a0d8543ab
+          name: 'Memory Free'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.11.1.4.1
+          key: aos.memFree
+          delay: 5m
+          history: 90d
+          units: B
+          preprocessing:
+            - type: MULTIPLIER
+              parameters:
+                - '1000'
+          tags:
+            - tag: Application
+              value: Memory
+        - uuid: f6a5fc0fc57e4dcca4b87011b3c58e4f
+          name: 'Memory Total'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.11.1.2.1
+          key: aos.memTotal
+          delay: 5m
+          history: 90d
+          units: B
+          preprocessing:
+            - type: MULTIPLIER
+              parameters:
+                - '1000'
+          tags:
+            - tag: Application
+              value: Memory
+        - uuid: e529da2c2b3d4f7abe27221bc46fcadc
+          name: 'Memory Used'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.11.1.3.1
+          key: aos.memUsed
+          delay: 5m
+          history: 90d
+          units: B
+          preprocessing:
+            - type: MULTIPLIER
+              parameters:
+                - '1000'
+          tags:
+            - tag: Application
+              value: Memory
+        - uuid: d00f1f22022543368981b172970cd418
+          name: 'Memory Used Percent'
+          type: CALCULATED
+          key: aos.memUsedPer
+          delay: 5m
+          history: 90d
+          units: '%'
+          params: last(//aos.memUsed)/(last(//aos.memTotal)/100)
+          tags:
+            - tag: Application
+              value: Memory
+          triggers:
+            - uuid: 22f281addf574034acb1443bbeda0d5b
+              expression: 'avg(/Template ArubaOS/aos.memUsedPer,5m)>{$AOS.MEMORY.UTIL.MAX}'
+              name: 'High Memory Usage on {HOST.NAME}'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: WARNING
+        - uuid: 15c8b75b865a426f881462d498912aea
+          name: Model
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.2.0
+          key: aos.model
+          delay: 1d
+          history: 90d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: 55a5ffb483744bbb8567a99d2efcb973
+          name: 'Reboot Reason'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.25.0
+          key: aos.rebootReason
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Health'
+        - uuid: 2faa02c58fdd4113acc4d026af1b4924
+          name: 'Software Version'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.28.0
+          key: aos.softwareVer
+          delay: 1d
+          history: 90d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: 09bcdffcf969417495ecd39ede0a23a2
+          name: 'Switch Role'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.4.0
+          key: aos.switchRole
+          delay: 1d
+          history: 90d
+          valuemap:
+            name: 'AOS Switch Roles'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: ddc2f0b8de5944038c80080bbdd4c423
+          name: 'Switch Serial Number'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.12.0
+          key: aos.switchSerial
+          delay: 1d
+          history: 90d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Information'
+        - uuid: f5c26a521bd44179a61ff7d06eaef0be
+          name: 'Platform AP Usage Percentage'
+          type: CALCULATED
+          key: aos.sysAPUsage
+          history: 90d
+          units: '%'
+          params: 'last(//aos.sysTotalAPs)/({$WLC_TOTAL_AP}/100)'
+          tags:
+            - tag: Application
+              value: 'System Health'
+          triggers:
+            - uuid: 73d63a6fd91d467abe73f0246efefcae
+              expression: 'avg(/Template ArubaOS/aos.sysAPUsage,5m)>{$AOS.PLATFORM.PUSED.MAX.WARN}'
+              name: 'Platform AP Capacity Usage is High on {HOST.NAME}'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: WARNING
+              dependencies:
+                - name: 'Platform AP Capacity Usage is Very High on {HOST.NAME}'
+                  expression: 'avg(/Template ArubaOS/aos.sysAPUsage,5m)>{$AOS.PLATFORM.PUSED.MAX.CRIT}'
+            - uuid: 0d9bfe5313a24a5b94681a17c43516bc
+              expression: 'avg(/Template ArubaOS/aos.sysAPUsage,5m)>{$AOS.PLATFORM.PUSED.MAX.CRIT}'
+              name: 'Platform AP Capacity Usage is Very High on {HOST.NAME}'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: HIGH
+        - uuid: 43cb4e98f9664a68920a0ecf46122c2b
+          name: 'System Temperature'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.10.0
+          key: aos.sysTemp
+          delay: 5m
+          history: 300d
+          value_type: CHAR
+          trends: '0'
+          tags:
+            - tag: Application
+              value: 'System Health'
+          triggers:
+            - uuid: 5af0a1879c254052b4c852602b8b33f3
+              expression: 'find(/Template ArubaOS/aos.sysTemp,,"like","CRITICAL")'
+              name: 'Temperature Alert CRITICAL on {HOST.NAME}'
+              priority: DISASTER
+            - uuid: ee81a87b32704d21ac8bbac509908c93
+              expression: 'find(/Template ArubaOS/aos.sysTemp,,"like","MAJOR")'
+              name: 'Temperature Alert MAJOR on {HOST.NAME}'
+              priority: HIGH
+            - uuid: 9e68b9ea1d5f402595cc39c2fb38e10e
+              expression: 'find(/Template ArubaOS/aos.sysTemp,,"like","MINOR")'
+              name: 'Temperature Alert MINOR on {HOST.NAME}'
+              priority: WARNING
+        - uuid: b19306280d064667b006018de67c938e
+          name: 'System Temperature - Numeric'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.10.0
+          key: aos.sysTempNum
+          delay: 5m
+          history: 300d
+          value_type: FLOAT
+          units: C
+          preprocessing:
+            - type: REGEX
+              parameters:
+                - '(\d*\.?\d+)'
+                - \1
+          tags:
+            - tag: Application
+              value: 'System Health'
+        - uuid: d643df33bf5f433ea6452205148b6bf0
+          name: 'Total Number of APs'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.5.2.1.1.0
+          key: aos.sysTotalAPs
+          history: 90d
+          tags:
+            - tag: Application
+              value: 'System Health'
+        - uuid: b3b70cb018d644299bcf477a6720628e
+          name: 'Total Number of Associations'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.5.2.1.2.0
+          key: aos.sysTotalAssociations
+          history: 90d
+          tags:
+            - tag: Application
+              value: 'System Health'
+        - uuid: 58a44d32aa064dca89430ad300f9d1e8
+          name: 'Total Number of Users'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.14.1.1.0
+          key: aos.sysTotalUsers
+          history: 90d
+          tags:
+            - tag: Application
+              value: 'System Health'
+        - uuid: 8deabcc6d5c7407eadd0ebc38a025ad1
+          name: 'System Uptime'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.1.3.0
+          key: aos.sysUptime
+          history: 90d
+          value_type: FLOAT
+          units: s
+          preprocessing:
+            - type: MULTIPLIER
+              parameters:
+                - '0.01'
+          tags:
+            - tag: Application
+              value: 'System Health'
+        - uuid: bf7e48ed1c8c4c77acf567c66707f8a9
+          name: 'Platform User Usage Percentage'
+          type: CALCULATED
+          key: aos.sysUserUsage
+          history: 90d
+          units: '%'
+          params: 'last(//aos.sysTotalUsers)/({$WLC_TOTAL_USER}/100)'
+          tags:
+            - tag: Application
+              value: 'System Health'
+          triggers:
+            - uuid: 12cf626bec4b436db6ac8c52d5dda51f
+              expression: 'avg(/Template ArubaOS/aos.sysUserUsage,5m)>{$AOS.PLATFORM.PUSED.MAX.WARN}'
+              name: 'Platform User Capacity Usage is High on {HOST.NAME}'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: WARNING
+              dependencies:
+                - name: 'Platform User Capacity Usage is Very High on {HOST.NAME}'
+                  expression: 'avg(/Template ArubaOS/aos.sysUserUsage,5m)>{$AOS.PLATFORM.PUSED.MAX.CRIT}'
+            - uuid: 3f0c53d5a62a4ba4946119fe044fca1a
+              expression: 'avg(/Template ArubaOS/aos.sysUserUsage,5m)>{$AOS.PLATFORM.PUSED.MAX.CRIT}'
+              name: 'Platform User Capacity Usage is Very High on {HOST.NAME}'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: HIGH
+        - uuid: 98b59c287c684fa7ab17eb3063e2d245
+          name: 'Number of network interfaces'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.2.1.0
+          key: ifNumber
+          delay: '3600'
+          history: 7d
+          description: 'The number of network interfaces (regardless of their current state) present on this system.'
+          tags:
+            - tag: Application
+              value: Interfaces
+      discovery_rules:
+        - uuid: 2b105d6d52e2462c8cf3e591546e851d
+          name: 'Access Points'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#APNAME},.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.3]'
+          key: 'aos.ap.[{#APNAME}]'
+          delay: 1h
+          lifetime: 1h
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 7a6650e79d404781a4c744f42bd83e0d
+              name: 'AP Active/Standby - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.41.{#SNMPINDEX}'
+              key: 'aos.apAcStand.[{#APNAME}]'
+              delay: 2m
+              history: 90d
+              valuemap:
+                name: 'AOS AP Active'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: 8f2b77ceddc0499ab0547eba9fe91476
+              name: 'AP Bootstraps - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.20.{#SNMPINDEX}'
+              key: 'aos.apBootstraps.[{#APNAME}]'
+              delay: 2m
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: 176ebc869cd04feab75d78541d8005e6
+              name: 'Backup Switch IP Address - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.40.{#SNMPINDEX}'
+              key: 'aos.apBSWIP.[{#APNAME}]'
+              delay: 1h
+              history: 90d
+              value_type: TEXT
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: 7f94f48bb4bb47d9901eab1bcd980557
+              name: 'AP Group - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.4.{#SNMPINDEX}'
+              key: 'aos.apGroup.[{#APNAME}]'
+              delay: 6h
+              history: 90d
+              value_type: TEXT
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: 985dd9abde884ac1860eb918fec5133e
+              name: 'IP Address - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.2.{#SNMPINDEX}'
+              key: 'aos.apIP.[{#APNAME}]'
+              delay: 6h
+              history: 90d
+              value_type: TEXT
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: c22ae2f3b7b541be80a27ae5e3b671e9
+              name: 'AP Reboots - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.21.{#SNMPINDEX}'
+              key: 'aos.apReboots.[{#APNAME}]'
+              delay: 2m
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: 6e41845e48eb4b75ae76fea389ec4320
+              name: 'AP Serial - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.6.{#SNMPINDEX}'
+              key: 'aos.apSerial.[{#APNAME}]'
+              delay: 24h
+              history: 90d
+              value_type: TEXT
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: 4d571559de3f49b3bb4d1c89e2dd3ce6
+              name: 'AP Status - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.19.{#SNMPINDEX}'
+              key: 'aos.apStatus.[{#APNAME}]'
+              delay: 2m
+              history: 90d
+              valuemap:
+                name: 'AOS AP Status'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: dcbda287678149ad864ed986b68f64be
+              name: 'Switch IP Address - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.39.{#SNMPINDEX}'
+              key: 'aos.apSWIP.[{#APNAME}]'
+              delay: 1h
+              history: 10d
+              value_type: TEXT
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: 96ae7eb1b6dc4824b0bf2404655aa9f6
+              name: 'AP Type - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.13.{#SNMPINDEX}'
+              key: 'aos.apType.[{#APNAME}]'
+              delay: 24h
+              history: 90d
+              value_type: TEXT
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+            - uuid: c89435e1372147deb8f7a49e52b5bada
+              name: 'AP Uptime - {#APNAME}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.12.{#SNMPINDEX}'
+              key: 'aos.apUptime.[{#APNAME}]'
+              delay: 2m
+              history: 90d
+              value_type: FLOAT
+              units: uptime
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Access Points'
+          trigger_prototypes:
+            - uuid: e201bb198db64b659e4ed78a82724611
+              expression: '(last(/Template ArubaOS/aos.apBootstraps.[{#APNAME}],#1)<>last(/Template ArubaOS/aos.apBootstraps.[{#APNAME}],#2))=1 and last(/Template ArubaOS/aos.apAcStand.[{#APNAME}],#3)=1 and last(/Template ArubaOS/aos.apBootstraps.[{#APNAME}])<>0 and last(/Template ArubaOS/aos.apStatus.[{#APNAME}],#3)<>2 and count(/Template ArubaOS/aos.apStatus.[{#APNAME}],10m,"eq","2")=0 and last(/Template ArubaOS/aos.apUptime.[{#APNAME}])>=200 and last(/Template ArubaOS/aos.sysUptime)>30m and nodata(/Template ArubaOS/aos.sysUptime,3m)=0'
+              name: '{#APNAME} Bootstrap number has changed'
+              priority: WARNING
+              dependencies:
+                - name: '{#APNAME} is DOWN'
+                  expression: 'change(/Template ArubaOS/aos.apStatus.[{#APNAME}])>.5 and last(/Template ArubaOS/aos.apAcStand.[{#APNAME}],#3)=0 and nodata(/Template ArubaOS/aos.apIP.[{#APNAME}],120s)=1'
+                  recovery_expression: 'last(/Template ArubaOS/aos.apStatus.[{#APNAME}])=1'
+                - name: '{#APNAME} Uptime has changed'
+                  expression: 'last(/Template ArubaOS/aos.apUptime.[{#APNAME}])>0 and last(/Template ArubaOS/aos.apUptime.[{#APNAME}])<200 and count(/Template ArubaOS/aos.apStatus.[{#APNAME}],10m,"eq","2")=0 and nodata(/Template ArubaOS/aos.apStatus.[{#APNAME}],240s)=0 and last(/Template ArubaOS/aos.apAcStand.[{#APNAME}],#3)=1 and last(/Template ArubaOS/aos.apStatus.[{#APNAME}])<>2 and last(/Template ArubaOS/aos.sysUptime)>30m and nodata(/Template ArubaOS/aos.sysUptime,3m)=0'
+            - uuid: 2b7209bbcd0d467ea658b39af97d86a7
+              expression: 'change(/Template ArubaOS/aos.apStatus.[{#APNAME}])>.5 and last(/Template ArubaOS/aos.apAcStand.[{#APNAME}],#3)=0 and nodata(/Template ArubaOS/aos.apIP.[{#APNAME}],120s)=1'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Template ArubaOS/aos.apStatus.[{#APNAME}])=1'
+              name: '{#APNAME} is DOWN'
+              priority: HIGH
+              manual_close: 'YES'
+            - uuid: 60156415aa934790a5019e40dacbef3b
+              expression: 'last(/Template ArubaOS/aos.apUptime.[{#APNAME}])>0 and last(/Template ArubaOS/aos.apUptime.[{#APNAME}])<200 and count(/Template ArubaOS/aos.apStatus.[{#APNAME}],10m,"eq","2")=0 and nodata(/Template ArubaOS/aos.apStatus.[{#APNAME}],240s)=0 and last(/Template ArubaOS/aos.apAcStand.[{#APNAME}],#3)=1 and last(/Template ArubaOS/aos.apStatus.[{#APNAME}])<>2 and last(/Template ArubaOS/aos.sysUptime)>30m and nodata(/Template ArubaOS/aos.sysUptime,3m)=0'
+              name: '{#APNAME} Uptime has changed'
+              priority: WARNING
+              manual_close: 'YES'
+              dependencies:
+                - name: '{#APNAME} is DOWN'
+                  expression: 'change(/Template ArubaOS/aos.apStatus.[{#APNAME}])>.5 and last(/Template ArubaOS/aos.apAcStand.[{#APNAME}],#3)=0 and nodata(/Template ArubaOS/aos.apIP.[{#APNAME}],120s)=1'
+                  recovery_expression: 'last(/Template ArubaOS/aos.apStatus.[{#APNAME}])=1'
+        - uuid: 165d31714e564e53855f921171cb76fa
+          name: 'Auth Servers'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.3]'
+          key: 'aos.authServer.[{#SNMPVALUE}]'
+          delay: 1h
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: f03c2349fdb24b599f5b69f16fdd06d2
+              name: 'Server Failed Auths {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.11.{#SNMPINDEX}'
+              key: 'aos.authFailedAuths.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+              trigger_prototypes:
+                - uuid: 3563c0ab6bcc48048a076f81b28c6b0e
+                  expression: 'change(/Template ArubaOS/aos.authFailedAuths.[{#SNMPVALUE}-{#SNMPINDEX}])>{$AOS.AUTH.FAILED.MAX:"{#SNMPVALUE}"}'
+                  name: 'High Failed Auths {#SNMPVALUE} on {HOST.NAME}'
+                  priority: HIGH
+            - uuid: 21edf4f5fb5e4bc1a108979c9af5a362
+              name: 'Auth Server In Service {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.8.{#SNMPINDEX}'
+              key: 'aos.authInService.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              valuemap:
+                name: 'AOS Inservice'
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+              trigger_prototypes:
+                - uuid: 941871ed9fc74a44974a468671daf240
+                  expression: 'last(/Template ArubaOS/aos.authInService.[{#SNMPVALUE}-{#SNMPINDEX}])=2'
+                  name: 'Auth Server {#SNMPVALUE} out of service on {HOST.NAME}'
+                  priority: DISASTER
+            - uuid: 26b347d69af04c429f99c9c17dd3a985
+              name: 'Server Response Time {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.13.{#SNMPINDEX}'
+              key: 'aos.authResponseTime.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: 5m
+              history: 90d
+              value_type: FLOAT
+              units: ms
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+            - uuid: 74343c87246246a082477d68752d77f8
+              name: 'Auth Server State {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.7.{#SNMPINDEX}'
+              key: 'aos.authServerState.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: 10m
+              history: 90d
+              value_type: FLOAT
+              valuemap:
+                name: 'AOS Server State'
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+            - uuid: 89d58f5d93784a4f9bc2f6a4b956b2b7
+              name: 'Auth Server Type {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.2.{#SNMPINDEX}'
+              key: 'aos.authServerType.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: 1d
+              history: 90d
+              value_type: FLOAT
+              valuemap:
+                name: 'AOS Server Type'
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+            - uuid: d989b8498e7b4c6c99ab278a8680e169
+              name: 'Server Outstanding Requests {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.14.{#SNMPINDEX}'
+              key: 'aos.authSrvOutstandReq.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+              trigger_prototypes:
+                - uuid: b9e37645dbe24bb2845c114299b5018c
+                  expression: 'min(/Template ArubaOS/aos.authSrvOutstandReq.[{#SNMPVALUE}-{#SNMPINDEX}],5m)>{$AOS.AUTH.OUTSTANDING.MAX:"{#SNMPVALUE}"}'
+                  name: 'High Outstanding Requests {#SNMPVALUE} on {HOST.NAME}'
+                  priority: AVERAGE
+            - uuid: 58e5f62d4b5547f1a91995f1704b9eab
+              name: 'Server Timeouts {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.12.{#SNMPINDEX}'
+              key: 'aos.authSrvTimeouts.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+              trigger_prototypes:
+                - uuid: b022e25cb6bf41188bcedd84a701602b
+                  expression: 'change(/Template ArubaOS/aos.authSrvTimeouts.[{#SNMPVALUE}-{#SNMPINDEX}])>{$AOS.AUTH.TIMEOUTS.MAX:"{#SNMPVALUE}"}'
+                  name: 'Server {#SNMPVALUE} Timeouts on {HOST.NAME}'
+                  priority: HIGH
+            - uuid: e29ded2041664b29bb3d1fbe6890e76a
+              name: 'Server Uptime {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.15.{#SNMPINDEX}'
+              key: 'aos.authSrvUptime.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: 5m
+              history: 90d
+              value_type: FLOAT
+              units: s
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+            - uuid: 279e6cef718e4b86ab84a8f76394a802
+              name: 'Server Success Auths {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.10.{#SNMPINDEX}'
+              key: 'aos.authSuccessAuths.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: 5m
+              history: 90d
+              value_type: FLOAT
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '1'
+              tags:
+                - tag: Application
+                  value: 'Auth Servers'
+          trigger_prototypes:
+            - uuid: 345afc20e4c542ff99095fb0fcba788a
+              expression: 'last(/Template ArubaOS/aos.authSrvUptime.[{#SNMPVALUE}-{#SNMPINDEX}])<600 and last(/Template ArubaOS/aos.sysUptime)>{$AOS.RESTART.GRACE} and nodata(/Template ArubaOS/aos.sysUptime,3m)=0'
+              name: 'Server {#SNMPVALUE} Uptime Changed on {HOST.NAME}'
+              priority: WARNING
+              dependencies:
+                - name: '{HOST.NAME} has been restarted'
+                  expression: 'last(/Template ArubaOS/aos.sysUptime)<600 and nodata(/Template ArubaOS/aos.rebootReason,2m)=0'
+        - uuid: 7a95f127cf3e43b5b5a9eb9658ee18bf
+          name: CPU
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.1.1.9.1.2]'
+          key: 'aos.cpu.[{#SNMPVALUE}]'
+          delay: 1h
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: d05a1953b4b044b5a8c91561de35a091
+              name: 'CPU Utilization {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.1.1.9.1.3.{#SNMPINDEX}'
+              key: 'aos.cpuUtil.[{#SNMPVALUE}]'
+              delay: 30s
+              history: 90d
+              units: '%'
+              tags:
+                - tag: Application
+                  value: CPU
+              trigger_prototypes:
+                - uuid: dfbdafd1495e484ba65be8af5f559019
+                  expression: 'avg(/Template ArubaOS/aos.cpuUtil.[{#SNMPVALUE}],5m)>{$AOS.CPU.UTIL.MAX.WARN}'
+                  name: 'High CPU on {HOST.NAME}, {#SNMPVALUE}'
+                  opdata: 'Current: {ITEM.LASTVALUE1}'
+                  priority: WARNING
+                  dependencies:
+                    - name: 'Very High CPU on {HOST.NAME}, {#SNMPVALUE}'
+                      expression: 'avg(/Template ArubaOS/aos.cpuUtil.[{#SNMPVALUE}],5m)>{$AOS.CPU.UTIL.MAX.CRIT}'
+                - uuid: 193238da3215435f854cd93dee027b8b
+                  expression: 'avg(/Template ArubaOS/aos.cpuUtil.[{#SNMPVALUE}],5m)>{$AOS.CPU.UTIL.MAX.CRIT}'
+                  name: 'Very High CPU on {HOST.NAME}, {#SNMPVALUE}'
+                  opdata: 'Current: {ITEM.LASTVALUE1}'
+                  priority: HIGH
+        - uuid: 0761d134d21649be9018f5dd5de68614
+          name: Fans
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2]'
+          key: 'aos.fan.[{#SNMPINDEX}]'
+          delay: 1h
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 90ec77a7e7d64d778f7608d69664ca80
+              name: 'Fan {#SNMPINDEX} Status'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2.{#SNMPINDEX}'
+              key: 'aos.fanStatus.[{#SNMPINDEX}]'
+              delay: 5m
+              history: 90d
+              valuemap:
+                name: 'AOS Device Status'
+              tags:
+                - tag: Application
+                  value: 'System Health'
+              trigger_prototypes:
+                - uuid: 4e70f2b1dc4348d5863b382578aa5fac
+                  expression: 'last(/Template ArubaOS/aos.fanStatus.[{#SNMPINDEX}])=2'
+                  name: 'Failed Fan {#SNMPINDEX} on {HOST.NAME}'
+                  priority: HIGH
+        - uuid: 791368cfa3c0437d95c3704cc55e72e8
+          name: Licenses
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.6]'
+          key: 'aos.lics.[{#SNMPVALUE}]'
+          delay: 1h
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 1316267db94b477e8be0acbdaf231725
+              name: 'License {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.2.{#SNMPINDEX}'
+              key: 'aos.lic.[{#SNMPINDEX}-{#SNMPVALUE}]'
+              delay: 1d
+              history: 90d
+              value_type: TEXT
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: Licenses
+            - uuid: df6265c9cfd649fc8cb514823820217c
+              name: 'License Expire {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.4.{#SNMPINDEX}'
+              key: 'aos.licExpire.[{#SNMPINDEX}-{#SNMPVALUE}]'
+              delay: 1d
+              history: 90d
+              value_type: CHAR
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: Licenses
+            - uuid: e86e0b7f123a4828bdaffce3e840ffa9
+              name: 'License Flags {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.5.{#SNMPINDEX}'
+              key: 'aos.licFlags.[{#SNMPINDEX}-{#SNMPVALUE}]'
+              delay: 1d
+              history: 90d
+              value_type: CHAR
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: Licenses
+            - uuid: d4fb854eed8b4b1fb243cc9fc9e626f0
+              name: 'License Installed Date {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.3.{#SNMPINDEX}'
+              key: 'aos.licsInstalled.[{#SNMPINDEX}-{#SNMPVALUE}]'
+              delay: 1d
+              history: 90d
+              value_type: CHAR
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: Licenses
+        - uuid: a6c806ea8a6a48a5a520b00aaa99a09b
+          name: PSU
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2]'
+          key: 'aos.psu.[{#SNMPINDEX}]'
+          delay: 1h
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: ff844c1c2d43458f9427b6c2feaca497
+              name: 'PSU {#SNMPINDEX} Status'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2.{#SNMPINDEX}'
+              key: 'aos.psuStatus.[{#SNMPINDEX}]'
+              delay: 5m
+              history: 90d
+              value_type: FLOAT
+              valuemap:
+                name: 'AOS Device Status'
+              tags:
+                - tag: Application
+                  value: 'System Health'
+              trigger_prototypes:
+                - uuid: 254ddfd73bf540eca88d2071bdfa2c36
+                  expression: 'last(/Template ArubaOS/aos.psuStatus.[{#SNMPINDEX}])=2'
+                  name: 'Failed/Missing PSU {#SNMPINDEX} on {HOST.NAME}'
+                  priority: HIGH
+        - uuid: 9d4210f553754fb78e9ecc5582ffac9d
+          name: Storage
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.5]'
+          key: 'aos.storage.[{#SNMPVALUE}]'
+          delay: 1h
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 17fa304701b14ef189cb73eb4e4f4524
+              name: 'Storage Size {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.3.{#SNMPINDEX}'
+              key: 'aos.storageSize.[{#SNMPVALUE}]'
+              delay: 1h
+              history: 90d
+              units: B
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+              tags:
+                - tag: Application
+                  value: Storage
+            - uuid: 85da5229f8b44aa6a78196bdf1008204
+              name: 'Storage Type {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.2.{#SNMPINDEX}'
+              key: 'aos.storageType.[{#SNMPVALUE}]'
+              delay: 1h
+              history: 90d
+              valuemap:
+                name: 'AOS Storage Type'
+              tags:
+                - tag: Application
+                  value: Storage
+            - uuid: b55386493fb346d19f22d2fafa4968ed
+              name: 'Storage Used {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.4.{#SNMPINDEX}'
+              key: 'aos.storageUsed.[{#SNMPVALUE}]'
+              delay: 1h
+              history: 90d
+              units: B
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+              tags:
+                - tag: Application
+                  value: Storage
+            - uuid: a400a6abee4b4cb19b0e89dfa6ae8443
+              name: 'Storage Used Percentage {#SNMPVALUE}'
+              type: CALCULATED
+              key: 'aos.storageUsedPer.[{#SNMPVALUE}]'
+              delay: 1h
+              history: 90d
+              units: '%'
+              params: 'last(//aos.storageUsed.[{#SNMPVALUE}])/(last(//aos.storageSize.[{#SNMPVALUE}])/100)'
+              tags:
+                - tag: Application
+                  value: Storage
+              trigger_prototypes:
+                - uuid: a9fb16282301466eadb58c5a1e1baa59
+                  expression: 'last(/Template ArubaOS/aos.storageUsedPer.[{#SNMPVALUE}])>{$AOS.STORAGE.PUSED.MAX.WARN:"{#SNMPVALUE}"}'
+                  name: 'High Storage Usage on {HOST.NAME}, {#SNMPVALUE}'
+                  opdata: 'Used: {ITEM.LASTVALUE1}'
+                  priority: WARNING
+                  dependencies:
+                    - name: 'Very High Storage Usage on {HOST.NAME}, {#SNMPVALUE}'
+                      expression: 'last(/Template ArubaOS/aos.storageUsedPer.[{#SNMPVALUE}])>{$AOS.STORAGE.PUSED.MAX.CRIT:"{#SNMPVALUE}"}'
+                - uuid: bac5b5ce476742419e9b8dfde1e1b6f3
+                  expression: 'last(/Template ArubaOS/aos.storageUsedPer.[{#SNMPVALUE}])>{$AOS.STORAGE.PUSED.MAX.CRIT:"{#SNMPVALUE}"}'
+                  name: 'Very High Storage Usage on {HOST.NAME}, {#SNMPVALUE}'
+                  opdata: 'Used: {ITEM.LASTVALUE1}'
+                  priority: HIGH
+          overrides:
+            - name: 'Boot image partitions'
+              step: '1'
+              filter:
+                conditions:
+                  - macro: '{#SNMPVALUE}'
+                    value: '{$AOS.STORAGE.IMAGE.MATCHES}'
+                    formulaid: A
+              operations:
+                - operationobject: TRIGGER_PROTOTYPE
+                  operator: LIKE
+                  value: 'Storage Usage'
+                  discover: NO_DISCOVER
+      macros:
+        - macro: '{$AOS.AUTH.FAILED.MAX}'
+          value: '20'
+          description: 'The trigger fires when failed authentications on a server grow by more than this between two polls.'
+        - macro: '{$AOS.AUTH.OUTSTANDING.MAX}'
+          value: '20'
+          description: 'The trigger fires when a server keeps more outstanding requests than this for 5 minutes.'
+        - macro: '{$AOS.AUTH.TIMEOUTS.MAX}'
+          value: '10'
+          description: 'The trigger fires when timeouts on a server grow by more than this between two polls.'
+        - macro: '{$AOS.CPU.UTIL.MAX.CRIT}'
+          value: '90'
+          description: 'High threshold for the 5 minute average CPU utilization, in percent.'
+        - macro: '{$AOS.CPU.UTIL.MAX.WARN}'
+          value: '80'
+          description: 'Warning threshold for the 5 minute average CPU utilization, in percent.'
+        - macro: '{$AOS.MEMORY.UTIL.MAX}'
+          value: '90'
+          description: 'Warning threshold for the 5 minute average memory utilization, in percent.'
+        - macro: '{$AOS.PLATFORM.PUSED.MAX.CRIT}'
+          value: '90'
+          description: 'High threshold for AP and user capacity usage, in percent of the platform limit.'
+        - macro: '{$AOS.PLATFORM.PUSED.MAX.WARN}'
+          value: '80'
+          description: 'Warning threshold for AP and user capacity usage, in percent of the platform limit.'
+        - macro: '{$AOS.RESTART.GRACE}'
+          value: 30m
+          description: 'Triggers caused by a controller reboot stay quiet until the controller has been up this long. Keep this value equal to the same macro in Template ArubaOS cluster.'
+        - macro: '{$AOS.STORAGE.IMAGE.MATCHES}'
+          value: '^/mnt/disk[0-9]+$'
+          description: 'Mounts that match this regex hold boot images. Keep it equal to the regex in the boot image context macros.'
+        - macro: '{$AOS.STORAGE.PUSED.MAX.CRIT}'
+          value: '90'
+          description: 'High threshold for storage usage, in percent. Set a context macro to change one mount.'
+        - macro: '{$AOS.STORAGE.PUSED.MAX.CRIT:regex:"^/mnt/disk[0-9]+$"}'
+          value: '100'
+          description: 'Boot image mounts never alert. The image size is fixed.'
+        - macro: '{$AOS.STORAGE.PUSED.MAX.WARN}'
+          value: '80'
+          description: 'Warning threshold for storage usage, in percent. Set a context macro to change one mount.'
+        - macro: '{$AOS.STORAGE.PUSED.MAX.WARN:regex:"^/mnt/disk[0-9]+$"}'
+          value: '100'
+          description: 'Boot image mounts never alert. The image size is fixed.'
+      valuemaps:
+        - uuid: a4c57645f125431797d6338f62ba8da4
+          name: 'AOS AP Active'
+          mappings:
+            - value: '0'
+              newvalue: active
+            - value: '1'
+              newvalue: standby
+        - uuid: 0f29073e149a46ddbd2654118a300b7f
+          name: 'AOS AP Status'
+          mappings:
+            - value: '1'
+              newvalue: Up
+            - value: '2'
+              newvalue: Down
+        - uuid: 874f3220df90422b8652cdca32df1091
+          name: 'AOS Device Status'
+          mappings:
+            - value: '1'
+              newvalue: active
+            - value: '2'
+              newvalue: inactive
+        - uuid: bb21e9e919c04c9db77e88d1b1e351f4
+          name: 'AOS Inservice'
+          mappings:
+            - value: '1'
+              newvalue: 'true'
+            - value: '2'
+              newvalue: 'false'
+        - uuid: 6b19cd5968be4748831ba021fcbb7afc
+          name: 'AOS Server State'
+          mappings:
+            - value: '1'
+              newvalue: enabled
+            - value: '2'
+              newvalue: disabled
+        - uuid: 227220abd6b84fff82ec479c24452400
+          name: 'AOS Server Type'
+          mappings:
+            - value: '1'
+              newvalue: internaldb
+            - value: '2'
+              newvalue: radius
+            - value: '3'
+              newvalue: ldap
+            - value: '4'
+              newvalue: kerberos
+            - value: '5'
+              newvalue: tacacs
+        - uuid: 9791a929601042cab50bc85b5fefcc67
+          name: 'AOS Storage Type'
+          mappings:
+            - value: '1'
+              newvalue: ram
+            - value: '2'
+              newvalue: flashMemory
+        - uuid: ed933223819f4ad19b4a94f3c3aa3940
+          name: 'AOS Switch Roles'
+          mappings:
+            - value: '1'
+              newvalue: master
+            - value: '2'
+              newvalue: local
+            - value: '3'
+              newvalue: standbymaster
+            - value: '4'
+              newvalue: branch
+            - value: '5'
+              newvalue: md
+  triggers:
+    - uuid: 821568a468584115bb9ed01c06cc8ca9
+      expression: 'last(/Template ArubaOS/aos.sysUptime)<600 and nodata(/Template ArubaOS/aos.rebootReason,2m)=0'
+      name: '{HOST.NAME} has been restarted'
+      event_name: '{HOST.NAME} has been restarted: {?last(//aos.rebootReason)}'
+      opdata: 'Reason: {ITEM.LASTVALUE2}'
+      priority: AVERAGE

@@ -1,7 +1,72 @@
 # Custom Zabbix Templates
+
+The templates are Zabbix 7.0 exports in YAML. Zabbix 7.0 and later can import them. Import each
+file under **Data collection > Templates > Import**.
+
+The old XML templates for Zabbix 3.2 to 5.0 are kept at the
+[`legacy-xml`](https://github.com/samwiseg0/zabbix/tree/legacy-xml) tag. They are unmaintained.
+
+## ArubaOS controllers
+
+`zabbix-template/hpe-aruba/wifi/Template ArubaOS.yaml` monitors ArubaOS 8 mobility controllers and
+conductors over SNMP.
+
+* LLD for Access Points, Auth Servers, CPU, Fans, Licenses, PSU and Storage
+* Uptime and reboot reason
+* Config ID, model, hostname, hardware and software version, serial, switch role
+* IPv4 and IPv6 address
+* Temperature and memory
+* Total APs, associations and users, and the AP and user share of the platform limit
+
+Set these macros on each controller host:
+
+* `{$SNMP_COMMUNITY}` is the SNMP community.
+* `{$WLC_TOTAL_AP}` is the AP limit of the platform, for example 16 for a 7005 or 1024 for a 7220.
+* `{$WLC_TOTAL_USER}` is the user limit of the platform, for example 1024 for a 7005 or 24576 for a
+  7220.
+
+`show license limits` on the controller prints both limits. Most thresholds are template
+macros that start with `{$AOS.`. Override them on a host to tune one controller.
+
+The template polls the controller. Point the host at the controller's IP, never at an AP.
+
+The template links no other templates. Link Zabbix's `ICMP Ping` template and an SNMP interface
+template to the controller hosts yourself.
+
+An AP reboot raises one problem, "is DOWN", on the AP's active controller. The standby
+controller's "Uptime has changed" and "Bootstrap number has changed" stay quiet for 10 minutes
+after it sees the AP down. A bootstrap change alerts only when the AP did not reboot.
+
+### ArubaOS cluster (optional)
+
+`zabbix-template/hpe-aruba/wifi/Template ArubaOS cluster.yaml` watches all controllers of one
+cluster together. It alerts on a config ID mismatch across the cluster, on a controller that stops
+reporting, and on a recent controller restart. The config ID mismatch catches a managed device that
+lost its tunnel to the conductor and stays on an old config.
+
+1. Import `Template ArubaOS.yaml` first. The cluster template reads its items.
+2. Put the controllers in one host group.
+3. Create a host with no interface and link `Template ArubaOS cluster`.
+4. Set `{$AOS.CLUSTER.GROUP}` to the host group name and `{$AOS.CLUSTER.MEMBERS}` to the number of
+   controllers.
+
+A controller restart makes the APs and auth servers on its peers flap. To keep those alerts quiet
+during a restart, add a dependency on the cluster host's trigger "An Aruba controller restarted
+recently" to these trigger prototypes in `Template ArubaOS`:
+
+* `{#APNAME} Uptime has changed`
+* `{#APNAME} Bootstrap number has changed`
+* `Server {#SNMPVALUE} Uptime Changed on {HOST.NAME}`
+
+The dependency names the cluster host. Renaming that host breaks a later re-import of
+`Template ArubaOS`.
+
 ## Aruba ClearPass Policy Manager
+
+`zabbix-template/hpe-aruba/cppm/Template Aruba ClearPass Policy Manager.yaml`
+
 * LLD for Apps/Protocols
-  * Throughput for Apps/Protocols (db,RADIUS,tacacs,etc.)
+  * Throughput for Apps/Protocols (db, RADIUS, TACACS, etc.)
   * Listening port for Apps/Protocols
 * LLD for Policy server authz table
 * LLD for Protocol policy evaluation
@@ -16,151 +81,42 @@
 * System Role
 * System MAC
 * System Type
-* System Serial
 * System Version
 * Time taken for all policies
 * Number of evaluations performed
 * RADIUS specific metrics
 
-In order for many of the triggers to work there are several macros that need to be set per host. This decision was made to be able to further tailor to each box since the load may not be the same across all subscribers or pulisher.
-Host Specific Macros:
+The triggers read these template macros. The load differs between a publisher and its subscribers,
+so override them on each host as needed.
 
-{$AUTHZ_TIME} #Time in ms for authorizations to complete for each source
+* `{$AUTHZ_TIME}`, default 200, alerts when the 3 minute average authorization time for one source
+  reaches this many ms.
+* `{$HIGH_FAILED_AUTHZ}`, default 10, alerts when failed authorizations for one source grow by this
+  many between two polls.
+* `{$POLICY_EVAL_TIME}`, default 300, alerts when the 3 minute average policy evaluation time for
+  one protocol reaches this many ms.
+* `{$RAD_TIME}`, default 300, alerts when the 3 minute average RADIUS authentication time for one
+  source reaches this many ms.
+* `{$HIGH_FAILED_RAD}`, default 10, alerts when failed RADIUS authentications for one source grow
+  by this many between two polls.
+* `{$SYS_TOTAL_FAILED}`, default 10, alerts when system wide failed authentications grow by this
+  many between two polls.
 
-{$HIGH_FAILED_AUTHZ} #Number of failed authorization requests
+Link Zabbix's `Linux by SNMP` template as well for CPU, memory and disk.
 
-{$POLICY_EVAL_TIME} #Time in ms for a policy evaluation to complete for each source
+## HP ProCurve Aruba 3810M
 
-{$RAD_TIME} #Time in ms for RADIUS to complete for each source
+`zabbix-template/hpe-aruba/switches/Template Aruba 3810M.yaml`
 
-{$HIGH_FAILED_RAD} #Number of failed RADIUS requests
-
-{$SYS_TOTAL_FAILED} #Number of failed system wide requests
-
-NOTE:
-Template SNMP OS Linux UCD-SNMP-MIB.xml is optional as it provides some additional memory and CPU info
-
-```
-Template/Supporting Files:
-https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/hpe-aruba/cppm
-```
-
-## Ubound DNS
-* Histogram as queries per second
-* Histogram as total queries
-* AAAA queries	 	
-* AD flag	 	
-*	ANY queries	 	
-*	A queries	 	
-*	Cache hits	 	
-*	CD flag	 	
-*	CHAOS class	 	
-*	CNAME queries	 	
-*	DNSSEC OK	 	
-*	EDNS OPT present
-* IN class	 		
-*	IPv6 queries	 		
-*	Iterator module memory	 	
-*	Message cache memory	 	
-*	MX queries	 	
-*	nodata rcode	 	
-*	NOERROR rcode	 	
-*	NS queries	 	
-*	NXDOMAIN rcode	 		
-*	PTR queries	 	
-*	QR flag	 		
-*	RA flag
-*	RD flag	 	
-*	RRset cache memory	 	
-*	SERVFAIL rcode	 
-* Service	status
-*	SOA queries	 
-*	SPF queries	 
-*	SRV queries
-*	TC flag	 		
-*	TCP queries	 	
-*	Total memory	 	
-*	Total queries	 	
-*	TXT queries	 	
-*	Uptime	 	
-*	Validator module and key cache memory
-*	Z flag	 	
-
-```
-Template/Supporting Files:
-https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/unbound
-```
-
-## Aruba OS WLC 6.5+
-* LLD for Storage
-* LLD for Fans
-* LLD for PSU
-* LLD for Licences
-* LLD for CPU
-* LLD for Auth Servers
+* LLD for switch inventory
+* CPU, memory, temperature and fans
+* Model, serial, ROM and OS version
 * Uptime
-* Reboot Cause
-* Linked Template for Interfaces
-* Linked Template for ICMP
-* ConfigID
-* Base MAC
-* License Count
-* Memory
-* Model
-* Hostname
-* Hardware Version
-* Serial
-* Switch Role
-* Temperature
-* Uptime
-* IP Address
-* IPv6 Address (Requires 8.x)
-* Total APs
-* Total Associations
-* Total Users
 
-NOTE: For AP and User calculations to work properly the following Macros need to be added (This should be the total number of items supported by the platform):
+Link Zabbix's `ICMP Ping` template and an SNMP interface template for ping and interface discovery.
 
-{$WLC_TOTAL_AP} ie. 16 for 7005, 1024 for 7220
+## Retired templates
 
-{$WLC_TOTAL_USER} ie. 1024 for 7005, 24576 for 7220
-
-```
-Template/Supporting Files:
-https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/hpe-aruba/wifi
-```
-
-## APC UPS (Updated)
-Updated version of https://share.zabbix.com/power-ups/apc/apc-ups     
-Temperature, battery status, output load and more.
-
-```
-Template/Supporting Files:
-https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/apc_ups
-```
-
-## HP Procurve Aruba 3810M
-Basic Monitoring including:
-* Dynamic Interface Discovery
-* Dynamic Inventory Discovery
-* CPU, Mem, Temp, Fans
-
-```
-Template/Supporting Files:
-https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/hpe-aruba/switches
-```
-
-## Synology DSM 5+ (Updated)
-Cleaned Up template that is originally from https://share.zabbix.com/storage-devices/synology/synology-dsm-5
-
-Basic Monitoring including:
-* CPU load average
-* Template for each CPU discovery
-* Template for Interface discovery
-* Trigger for Updates
-* Template for Disk Discovery
-
-```
-Template/Supporting Files:
-https://github.com/samwiseg00/zabbix/tree/master/zabbix-template/synology
-```
+The APC UPS, Synology DSM, Unbound and UCD-SNMP-MIB templates are no longer maintained. They
+remain at the [`legacy-xml`](https://github.com/samwiseg0/zabbix/tree/legacy-xml) tag. Zabbix 7.0
+ships `APC UPS by SNMP` and `Linux by SNMP`.

@@ -1,0 +1,772 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: b39eb1d1fc1e41ea87a505e470ffeb74
+      template: 'Template Aruba ClearPass Policy Manager'
+      name: 'Template Aruba ClearPass Policy Manager'
+      groups:
+        - name: Templates
+      items:
+        - uuid: b8e6834da0af4bbfa019d0afa62db186
+          name: 'Total system wide authentications'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.16.0
+          key: aruba.cppm.auth.sys.total
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Auth Totals'
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 89803c814f604c60b1d4f2e4586fbcb4
+          name: 'Total successful system wide authentications'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.14.0
+          key: aruba.cppm.auth.sys.total.suc
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Auth Totals'
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: d0bb72a8e7214f84bf2fa4581285c720
+          name: 'Total failed system wide authentications'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.15.0
+          key: aruba.cppm.auth.sys.total.tailed
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Auth Totals'
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+          triggers:
+            - uuid: c00c7ed3fef14db3ac295bd09ba0b466
+              expression: 'change(/Template Aruba ClearPass Policy Manager/aruba.cppm.auth.sys.total.tailed)>={$SYS_TOTAL_FAILED}'
+              name: 'System wide failed requests is high on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 7be50d32b664462cb0ba0476ab23b685
+          name: 'Cluster size'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.7.0
+          key: aruba.cppm.cluster.size
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: General
+          triggers:
+            - uuid: 7e14afc20e144b9e9870af8874165822
+              expression: 'change(/Template Aruba ClearPass Policy Manager/aruba.cppm.cluster.size)=1'
+              name: 'Cluster size has been changed on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 9c752abf40a845c29ffec2258f56764b
+          name: 'Number of CPUs'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.16.0
+          key: aruba.cppm.sys.cpu.num
+          delay: 1h
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: CPU
+        - uuid: c2aedfd41d0a4611b778d51fb64e67d5
+          name: 'System data ip address'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.10.0
+          key: aruba.cppm.sys.data.ip
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: General
+          triggers:
+            - uuid: d4c52d9bf77e45aba6f8d0b6f1455b5b
+              expression: 'change(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.data.ip)=1'
+              name: 'Data port ip has been changed on {HOST.NAME}'
+              priority: INFO
+        - uuid: dcbb6259120047ae905e4dd6d55d887b
+          name: 'System data mac address'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.11.0
+          key: aruba.cppm.sys.data.mac
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: General
+        - uuid: 1f1e770c91314fbabb930cd4557321e2
+          name: 'System hostname'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.4.0
+          key: aruba.cppm.sys.hostname
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: General
+        - uuid: a14f712202eb4579801788959ad9c54c
+          name: 'Free memory'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.13.0
+          key: aruba.cppm.sys.mem.free
+          history: 90d
+          value_type: FLOAT
+          units: B
+          tags:
+            - tag: Application
+              value: Memory
+        - uuid: 72efbab41b0c493385a5ced9e7cdb5ab
+          name: 'Total memory'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.12.0
+          key: aruba.cppm.sys.mem.total
+          history: 90d
+          value_type: FLOAT
+          units: B
+          tags:
+            - tag: Application
+              value: Memory
+        - uuid: 742f1ece6e1c4465b422927226ffcc9a
+          name: 'Memory used percentage'
+          type: CALCULATED
+          key: aruba.cppm.sys.mem.used.per
+          history: 90d
+          units: '%'
+          params: (last(//aruba.cppm.sys.mem.total)-(last(//aruba.cppm.sys.mem.free)))/(last(//aruba.cppm.sys.mem.total)/100)
+          tags:
+            - tag: Application
+              value: Memory
+          triggers:
+            - uuid: 40290f25a8154f258ebc5408e7bbb18a
+              expression: 'last(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.mem.used.per)>90'
+              name: 'Available memory is less than 10% on {HOST.NAME}'
+              priority: HIGH
+              dependencies:
+                - name: 'Available memory is less than 20% on {HOST.NAME}'
+                  expression: 'last(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.mem.used.per)>80'
+            - uuid: b01313b818044c5d9ff2959048a7eb4e
+              expression: 'last(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.mem.used.per)>80'
+              name: 'Available memory is less than 20% on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 2d2b78ad61454994a9ee7411d92f0e11
+          name: 'System mgmt ip address'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.8.0
+          key: aruba.cppm.sys.mgmt.ip
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: General
+          triggers:
+            - uuid: 52cc8ac200e94703ba8f86ada7288f4c
+              expression: 'change(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.mgmt.ip)=1'
+              name: 'Management port ip has been changed on {HOST.NAME}'
+              priority: INFO
+        - uuid: d4777882c221471d9a8a342b0f5482d6
+          name: 'System mgmt mac address'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.9.0
+          key: aruba.cppm.sys.mgmt.mac
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: General
+        - uuid: 2e0db1afb88c4a49aab310b371484567
+          name: 'Total RADIUS request count'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.1.1.5.0
+          key: aruba.cppm.sys.rad.total
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Auth Totals'
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 7104e0320d7748f1bc5a15f2cbbd4c37
+          name: 'Failed RADIUS request count'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.1.1.4.0
+          key: aruba.cppm.sys.rad.total.fail
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Auth Totals'
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 4d6652e183464353a021a8fd68b550ce
+          name: 'Successful RADIUS request count'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.1.1.3.0
+          key: aruba.cppm.sys.rad.total.req
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Auth Totals'
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 76755f1a26ec4512a1387e818cc68c41
+          name: 'System role'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.5.0
+          key: aruba.cppm.sys.role
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: General
+          triggers:
+            - uuid: 66657d2c4c5c46d9b3c521eda8e6a1fd
+              expression: 'change(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.role)=1'
+              name: 'System role has been changed on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 5f5e0124e11a43f39ede03f7647727d9
+          name: 'Free storage'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.15.0
+          key: aruba.cppm.sys.stor.free
+          history: 90d
+          value_type: FLOAT
+          units: B
+          tags:
+            - tag: Application
+              value: Storage
+        - uuid: 5fba7985c83f41169f0acde855a257e1
+          name: 'Total storage'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.14.0
+          key: aruba.cppm.sys.stor.total
+          history: 90d
+          value_type: FLOAT
+          units: B
+          tags:
+            - tag: Application
+              value: Storage
+        - uuid: 33a3733b5fdd401a8a5133dea5680efc
+          name: 'Storage used percentage'
+          type: CALCULATED
+          key: aruba.cppm.sys.stor.used.per
+          history: 90d
+          units: '%'
+          params: (last(//aruba.cppm.sys.stor.total)-(last(//aruba.cppm.sys.stor.free)))/(last(//aruba.cppm.sys.stor.total)/100)
+          tags:
+            - tag: Application
+              value: Storage
+          triggers:
+            - uuid: cc171555bb77492d97897234f16c3c33
+              expression: 'last(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.stor.used.per)>90'
+              name: 'Available storage is less than 10% on {HOST.NAME}'
+              priority: HIGH
+              dependencies:
+                - name: 'Available storage is less than 20% on {HOST.NAME}'
+                  expression: 'last(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.stor.used.per)>80'
+            - uuid: 374e08828a6d48e6b000f9b95c9860b9
+              expression: 'last(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.stor.used.per)>80'
+              name: 'Available storage is less than 20% on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 36131dadcb554f2283e9b5345d5add6a
+          name: 'Total number of audit policies evaluated'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.4.0
+          key: aruba.cppm.sys.total.audit
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 3ad29b86b7ec403fa56cd4ad638f1500
+          name: 'Time taken (ms) for the evaluation of audit policies'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.10.0
+          key: aruba.cppm.sys.total.audit.time
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          units: ms
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 191fd2201a0149708a3ce24e16f66949
+          name: 'Time taken (ms) for the evaluation of enforcement policies'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.12.0
+          key: aruba.cppm.sys.total.enf.time
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          units: ms
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: fa7b4cf1c8e7468a9322fb6df0e84c3d
+          name: 'Total number of enforcement policies evaluated'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.6.0
+          key: aruba.cppm.sys.total.enforcement
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: b560d83119484c869596e15138c33611
+          name: 'Total number of posture policies evaluated'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.3.0
+          key: aruba.cppm.sys.total.pos
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 576cff69de3241e893132c409e5813f5
+          name: 'Time taken (ms) for the evaluation of posture policies'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.9.0
+          key: aruba.cppm.sys.total.pos.time
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          units: ms
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: c9f0eb3b2a414308bbcf4d54222a4e72
+          name: 'Total time taken (ms) for RADIUS request end-to-end'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.1.1.2.0
+          key: aruba.cppm.sys.total.rad.policy.time
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          units: ms
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: a7e2d0efd0d54d68813be598de6786ed
+          name: 'Total number of restriction policies evaluated'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.5.0
+          key: aruba.cppm.sys.total.restriction
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: d6ab78d160d84fa19eea8bba7aab5743
+          name: 'Time taken (ms) for the evaluation of restriction policies'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.11.0
+          key: aruba.cppm.sys.total.restriction.time
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          units: ms
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 0bea7dbdf3af41689f4d5e4c2edce76f
+          name: 'Total number of role mapping policies evaluated'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.2.0
+          key: aruba.cppm.sys.total.role
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 6b5d4367cf654b14a7536313659563f7
+          name: 'Time taken (ms) for the evaluation of role mapping policies'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.8.0
+          key: aruba.cppm.sys.total.role.time
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          units: ms
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: ce22ee6ff92a44bdbb5d796650a43de2
+          name: 'Total number of service policies evaluated'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.1.0
+          key: aruba.cppm.sys.total.service
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: fa68bacb2b7d45aea4c87fc0973d1c0f
+          name: 'Time taken (ms) for the evaluation of service policies'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.7.0
+          key: aruba.cppm.sys.total.service.time
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          units: ms
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 6644116ead6f4b89abfe4807a776e0cd
+          name: 'Time taken (ms) for session logging'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.2.3.1.13.0
+          key: aruba.cppm.sys.total.session.time
+          delay: 5m
+          history: 90d
+          value_type: FLOAT
+          units: ms
+          tags:
+            - tag: Application
+              value: 'ClearPass Sytem Totals'
+        - uuid: 50f94f5240204b0c8e3a69a4ac87a633
+          name: 'System type'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.1.0
+          key: aruba.cppm.sys.type
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          inventory_link: TYPE
+          tags:
+            - tag: Application
+              value: General
+        - uuid: 66f651bf0bc741b0a048effa8952a2f0
+          name: 'System uptime'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.17.0
+          key: aruba.cppm.sys.uptime
+          history: 90d
+          value_type: FLOAT
+          units: uptime
+          tags:
+            - tag: Application
+              value: General
+          triggers:
+            - uuid: c57cc8f737db44fd86c438b0635eadd1
+              expression: 'last(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.uptime)<1000'
+              name: 'System uptime has changed on {HOST.NAME}'
+              priority: INFO
+        - uuid: f2967bf27c7d44cd9f18ae1430a2e5c6
+          name: 'System version'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.3.0
+          key: aruba.cppm.sys.version
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          inventory_link: SOFTWARE
+          tags:
+            - tag: Application
+              value: General
+        - uuid: 68a2e8871623455c8926407429be1197
+          name: 'System zone'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.14823.1.6.1.1.1.1.1.6.0
+          key: aruba.cppm.sys.zone
+          delay: 1h
+          history: 90d
+          value_type: TEXT
+          trends: '0'
+          tags:
+            - tag: Application
+              value: General
+          triggers:
+            - uuid: 6341b245cf3746c089db0eb56118a790
+              expression: 'change(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.zone)=1'
+              name: 'System zone has been changed on {HOST.NAME}'
+              priority: INFO
+      discovery_rules:
+        - uuid: 7f810c8daa754780b7c5501e749e57df
+          name: Apps-Protocols
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.1.6.1.1.3.1.1.2]'
+          key: aruba.cppm.app
+          delay: 1h
+          lifetime: '3600'
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 702ab5c283074f9f8c5e743b1043bcb9
+              name: 'Application Port for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.3.1.1.3.{#SNMPINDEX}'
+              key: 'aruba.cppm.app.port[{#SNMPVALUE}{#SNMPINDEX}]'
+              delay: 1h
+              history: 90d
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'ClearPass Apps'
+              trigger_prototypes:
+                - uuid: cf74a2d261f04363a86ebb8eb6294009
+                  expression: '(last(/Template Aruba ClearPass Policy Manager/aruba.cppm.app.port[{#SNMPVALUE}{#SNMPINDEX}],#1)<>last(/Template Aruba ClearPass Policy Manager/aruba.cppm.app.port[{#SNMPVALUE}{#SNMPINDEX}],#2))=1'
+                  name: 'Application {#SNMPVALUE} port has been changed on {HOST.NAME}'
+                  priority: INFO
+            - uuid: 86282d9606d24fcbbdfd9d4043f47bad
+              name: 'Application Traffic for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.3.1.1.4.{#SNMPINDEX}'
+              key: 'aruba.cppm.app.traffic[{#SNMPVALUE}{#SNMPINDEX}]'
+              delay: 2m
+              history: 90d
+              value_type: FLOAT
+              trends: '0'
+              units: Bps
+              preprocessing:
+                - type: CHANGE_PER_SECOND
+                  parameters:
+                    - ''
+              tags:
+                - tag: Application
+                  value: 'ClearPass Apps'
+        - uuid: 0bf5167581654dab930f49684c254070
+          name: 'Policy server authz table'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.1.6.1.1.2.5.1.2]'
+          key: aruba.cppm.authz.dis
+          delay: 1h
+          lifetime: '3600'
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 8d0db564c6144ef387cb8cd8d218ee76
+              name: 'Policy server failed authorization for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.5.1.4.{#SNMPINDEX}'
+              key: 'aruba.cppm.ps.authz.fail[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'ClearPass Authz'
+              trigger_prototypes:
+                - uuid: 08d41580ba4941f994e62b96ac5771d7
+                  expression: 'change(/Template Aruba ClearPass Policy Manager/aruba.cppm.ps.authz.fail[{#SNMPVALUE}{#SNMPINDEX}])>={$HIGH_FAILED_AUTHZ}'
+                  name: 'Failed authorizations from {#SNMPVALUE} is high on {HOST.NAME}'
+                  priority: HIGH
+            - uuid: 53f3300d84354faea6caa1f9d909c97f
+              name: 'Policy server successful authorization for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.5.1.3.{#SNMPINDEX}'
+              key: 'aruba.cppm.ps.authz.suc[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'ClearPass Authz'
+            - uuid: 570a93f9cfac4af5a818a4f521b16ccd
+              name: 'Policy server time taken for {#SNMPVALUE} authorizations'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.5.1.6.{#SNMPINDEX}'
+              key: 'aruba.cppm.ps.authz.time[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              units: ms
+              description: 'Time taken (ms) for Policy authorizations.'
+              tags:
+                - tag: Application
+                  value: 'ClearPass Authz'
+            - uuid: 36cf4ebd07374c0495c8cf11ee9ae543
+              name: 'Policy server total Authentications for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.5.1.5.{#SNMPINDEX}'
+              key: 'aruba.cppm.ps.authz.total[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'ClearPass Authz'
+          trigger_prototypes:
+            - uuid: df893d7afc994ac1a32a9d3a9f33c8f9
+              expression: 'avg(/Template Aruba ClearPass Policy Manager/aruba.cppm.ps.authz.time[{#SNMPVALUE}{#SNMPINDEX}],3m)>="{$AUTHZ_TIME}" and change(/Template Aruba ClearPass Policy Manager/aruba.cppm.ps.authz.suc[{#SNMPVALUE}{#SNMPINDEX}])>0'
+              name: 'Authorization response time from {#SNMPVALUE} is high on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 9aca84f4ab1c4d1da809f9f6747907df
+          name: 'Protocol policy evaluation'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.1.6.1.1.2.4.1.2]'
+          key: aruba.cppm.ppe
+          delay: 1h
+          lifetime: '3600'
+          enabled_lifetime_type: DISABLE_NEVER
+          description: 'Protocol name used in the policy evaluation.'
+          item_prototypes:
+            - uuid: 252bd895a9d14c1d92a0b63800636f14
+              name: 'Protocol policy evaluation time for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.4.1.3.{#SNMPINDEX}'
+              key: 'aruba.cppm.ppe.time[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              units: ms
+              tags:
+                - tag: Application
+                  value: 'ClearPass Protocol Evaluation'
+              trigger_prototypes:
+                - uuid: 85fe12d4d0ac4998a92dd259831732b8
+                  expression: 'avg(/Template Aruba ClearPass Policy Manager/aruba.cppm.ppe.time[{#SNMPVALUE}{#SNMPINDEX}],3m)>={$POLICY_EVAL_TIME}'
+                  name: 'Policy evaluation for {#SNMPVALUE} is high on {HOST.NAME}'
+                  priority: WARNING
+        - uuid: 2a3c85f98d184b61a6156423fde489c7
+          name: 'Radius server auth table'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.1.6.1.1.2.2.1.2]'
+          key: aruba.cppm.rad.auth
+          delay: 1h
+          lifetime: '3600'
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: a8717107138e472fadb6e4191c532b08
+              name: 'Radius server failed authentications for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.2.1.4.{#SNMPINDEX}'
+              key: 'aruba.cppm.rad.auth.fail[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'ClearPass Radius Auth'
+              trigger_prototypes:
+                - uuid: d334f06fb516486ea9bd555f1506c0f2
+                  expression: 'change(/Template Aruba ClearPass Policy Manager/aruba.cppm.rad.auth.fail[{#SNMPVALUE}{#SNMPINDEX}])>={$HIGH_FAILED_RAD}'
+                  name: 'Failed RADIUS Auth from {#SNMPVALUE} is high on {HOST.NAME}'
+                  priority: HIGH
+            - uuid: 327292abcd524ac2bdcdbb0d01effc9d
+              name: 'Radius server successful authentications for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.2.1.3.{#SNMPINDEX}'
+              key: 'aruba.cppm.rad.auth.suc[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'ClearPass Radius Auth'
+            - uuid: 511fa5c418ce4e8c90df86aa0ac15898
+              name: 'Radius server time authentications for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.2.1.6.{#SNMPINDEX}'
+              key: 'aruba.cppm.rad.auth.time[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              value_type: FLOAT
+              units: ms
+              tags:
+                - tag: Application
+                  value: 'ClearPass Radius Auth'
+              trigger_prototypes:
+                - uuid: 6ba47e0333ed42a88a82aa5ec070ae9f
+                  expression: 'avg(/Template Aruba ClearPass Policy Manager/aruba.cppm.rad.auth.time[{#SNMPVALUE}{#SNMPINDEX}],3m)>={$RAD_TIME}'
+                  name: 'RADIUS auth response time from {#SNMPVALUE} is high on {HOST.NAME}'
+                  priority: WARNING
+            - uuid: 5e4151147dd242abbee2c8dc2cd25fe6
+              name: 'Radius server total authentications for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.14823.1.6.1.1.2.2.1.5.{#SNMPINDEX}'
+              key: 'aruba.cppm.rad.auth.total[{#SNMPVALUE}{#SNMPINDEX}]'
+              history: 90d
+              tags:
+                - tag: Application
+                  value: 'ClearPass Radius Auth'
+        - uuid: f46df967971248b7b892774694390a8d
+          name: 'System Services'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.2021.8.1.2]'
+          key: aruba.cppm.sys.serv
+          delay: 1h
+          lifetime: '3600'
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 53b1668c12f6446b8630f350dde92fe4
+              name: 'Service command output for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2021.8.1.101.{#SNMPINDEX}'
+              key: 'aruba.cppm.sys.serv.cmd.out[{#SNMPVALUE}{#SNMPINDEX}]'
+              delay: 5m
+              history: 90d
+              value_type: TEXT
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'ClearPass Services'
+              trigger_prototypes:
+                - uuid: f47cdc41c9b449f2b69e8fb885dbe6ba
+                  expression: 'find(/Template Aruba ClearPass Policy Manager/aruba.cppm.sys.serv.cmd.out[{#SNMPVALUE}{#SNMPINDEX}],,"regexp","running")=0'
+                  name: 'Service state {#SNMPVALUE} has changed on {HOST.NAME}'
+                  priority: HIGH
+            - uuid: 0310baa05d0d446e8c1670a915bc1427
+              name: 'Service status command for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2021.8.1.3.{#SNMPINDEX}'
+              key: 'aruba.cppm.sys.serv.cmd[{#SNMPVALUE}{#SNMPINDEX}]'
+              delay: 1d
+              history: 90d
+              value_type: LOG
+              trends: '0'
+              tags:
+                - tag: Application
+                  value: 'ClearPass Services'
+            - uuid: 285e8a5450014f28a646a441a5996c55
+              name: 'Service exit status for {#SNMPVALUE}'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2021.8.1.100.{#SNMPINDEX}'
+              key: 'aruba.cppm.sys.serv.exstat[{#SNMPVALUE}{#SNMPINDEX}]'
+              delay: 5m
+              history: 90d
+              value_type: FLOAT
+              tags:
+                - tag: Application
+                  value: 'ClearPass Services'
+      macros:
+        - macro: '{$AUTHZ_TIME}'
+          value: '200'
+          description: 'The trigger fires when the 3 minute average authorization time for one source reaches this, in ms.'
+        - macro: '{$HIGH_FAILED_AUTHZ}'
+          value: '10'
+          description: 'The trigger fires when failed authorizations for one source grow by this many or more between two polls.'
+        - macro: '{$HIGH_FAILED_RAD}'
+          value: '10'
+          description: 'The trigger fires when failed RADIUS authentications for one source grow by this many or more between two polls.'
+        - macro: '{$POLICY_EVAL_TIME}'
+          value: '300'
+          description: 'The trigger fires when the 3 minute average policy evaluation time for one protocol reaches this, in ms.'
+        - macro: '{$RAD_TIME}'
+          value: '300'
+          description: 'The trigger fires when the 3 minute average RADIUS authentication time for one source reaches this, in ms.'
+        - macro: '{$SYS_TOTAL_FAILED}'
+          value: '10'
+          description: 'The trigger fires when system wide failed authentications grow by this many or more between two polls.'

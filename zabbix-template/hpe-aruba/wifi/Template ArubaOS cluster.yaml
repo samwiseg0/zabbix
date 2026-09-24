@@ -1,0 +1,99 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 983bcba7789a4725934f1412f8284407
+      template: 'Template ArubaOS cluster'
+      name: 'Template ArubaOS cluster'
+      description: 'This template watches the ArubaOS controllers in one host group. It compares their config IDs and reports recent restarts. Link it to one virtual host with no interface. Set {$AOS.CLUSTER.GROUP} to the host group of the controllers and {$AOS.CLUSTER.MEMBERS} to their number.'
+      groups:
+        - name: Templates
+      items:
+        - uuid: 06aa6e7bb628449b8bca09f576a065ce
+          name: 'Cluster config ID'
+          type: CALCULATED
+          key: aos.cluster.configID.max
+          delay: 5m
+          history: 90d
+          params: 'max(last_foreach(/*/aos.configID?[group="{$AOS.CLUSTER.GROUP}"],10m))'
+          description: 'The highest config ID in the cluster. A member counts only while its item is supported and has a value from the last 10 minutes.'
+          tags:
+            - tag: Application
+              value: Cluster
+          triggers:
+            - uuid: 786e121cfded47e68aab8a12ed3efc0f
+              expression: 'change(/Template ArubaOS cluster/aos.cluster.configID.max)<>0'
+              name: 'Aruba cluster config changed (ID {ITEM.LASTVALUE1})'
+              priority: INFO
+              description: 'A new config ID reached the cluster.'
+        - uuid: d4f4e30e3e264abf9f96142fee1fbc98
+          name: 'Cluster config ID spread'
+          type: CALCULATED
+          key: aos.cluster.configID.spread
+          delay: 5m
+          history: 90d
+          params: 'max(last_foreach(/*/aos.configID?[group="{$AOS.CLUSTER.GROUP}"],10m))-min(last_foreach(/*/aos.configID?[group="{$AOS.CLUSTER.GROUP}"],10m))'
+          description: 'The highest config ID minus the lowest config ID in the cluster. The value is 0 when all counted members agree. A member counts only while its item is supported and has a value from the last 10 minutes.'
+          tags:
+            - tag: Application
+              value: Cluster
+          triggers:
+            - uuid: fcb623055acb4fecbb3358bec589a14c
+              expression: 'min(/Template ArubaOS cluster/aos.cluster.configID.spread,{$AOS.CONFIG.MISMATCH.WINDOW})>0 and count(/Template ArubaOS cluster/aos.cluster.configID.spread,{$AOS.CONFIG.MISMATCH.WINDOW})>={$AOS.CONFIG.MISMATCH.SAMPLES}'
+              name: 'Aruba config ID mismatch across the cluster'
+              opdata: 'Spread: {ITEM.LASTVALUE1}'
+              priority: AVERAGE
+              description: 'One or more controllers report an older config ID. An MD with a dead conductor tunnel stays on the old config ID. Run `show switches` on the conductor to find the member that is behind.'
+        - uuid: 452eb9b46bda4d8a8b744112de301756
+          name: 'Cluster members reporting'
+          type: CALCULATED
+          key: aos.cluster.members
+          delay: 5m
+          history: 90d
+          params: 'count(last_foreach(/*/aos.configID?[group="{$AOS.CLUSTER.GROUP}"],10m))'
+          description: 'The number of controllers that count toward the cluster config ID items. A member counts only while its item is supported and has a value from the last 10 minutes.'
+          tags:
+            - tag: Application
+              value: Cluster
+          triggers:
+            - uuid: bdd23a0d3a7f4ab8b9e64a2a88dc7795
+              expression: 'max(/Template ArubaOS cluster/aos.cluster.members,{$AOS.CONFIG.MISMATCH.WINDOW})<{$AOS.CLUSTER.MEMBERS} and count(/Template ArubaOS cluster/aos.cluster.members,{$AOS.CONFIG.MISMATCH.WINDOW})>={$AOS.CONFIG.MISMATCH.SAMPLES}'
+              name: 'Aruba cluster member stopped reporting its config ID'
+              priority: WARNING
+              description: 'Fewer controllers than expected reported a config ID for the whole window. Find the controller whose Config ID item is unsupported or silent.'
+        - uuid: 4daae777d49c43a3b3f779006c1ca482
+          name: 'Cluster minimum uptime'
+          type: CALCULATED
+          key: aos.cluster.uptime.min
+          history: 90d
+          value_type: FLOAT
+          units: s
+          params: 'min(last_foreach(/*/aos.sysUptime?[group="{$AOS.CLUSTER.GROUP}"],10m))'
+          description: 'The lowest system uptime in the cluster. A member counts only while its uptime item is supported and has a value from the last 10 minutes.'
+          tags:
+            - tag: Application
+              value: Cluster
+          triggers:
+            - uuid: a79e202715f84e009c62505ada582210
+              expression: 'last(/Template ArubaOS cluster/aos.cluster.uptime.min)<{$AOS.RESTART.GRACE}'
+              name: 'An Aruba controller restarted recently'
+              priority: INFO
+              description: 'A controller in the cluster has been up for less than the restart grace time. Make the AP and auth server flap triggers in Template ArubaOS depend on this trigger to keep them quiet while it is active. See the README.'
+      macros:
+        - macro: '{$AOS.CLUSTER.GROUP}'
+          value: 'Aruba controllers'
+          description: 'The host group that holds the ArubaOS controllers of the cluster.'
+        - macro: '{$AOS.CLUSTER.MEMBERS}'
+          value: '2'
+          description: 'The number of controllers in the cluster. The member trigger fires when fewer controllers report.'
+        - macro: '{$AOS.CONFIG.MISMATCH.SAMPLES}'
+          value: '3'
+          description: 'The mismatch and member triggers need this many values in the window before they can fire. Use the number of 5 minute values in the window, less one.'
+        - macro: '{$AOS.CONFIG.MISMATCH.WINDOW}'
+          value: 20m
+          description: 'The mismatch and member triggers look at this window. Keep it longer than the 10 minute period of the cluster config ID items.'
+        - macro: '{$AOS.RESTART.GRACE}'
+          value: 30m
+          description: 'Triggers caused by a controller reboot stay quiet until the controller has been up this long. Keep this value equal to the same macro in Template ArubaOS.'
