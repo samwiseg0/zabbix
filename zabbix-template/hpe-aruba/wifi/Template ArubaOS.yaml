@@ -11,10 +11,126 @@ zabbix_export:
       groups:
         - name: Templates
       items:
+        - uuid: 43f233bfb0f34c488e958335e973219a
+          name: 'SNMP walk: AP table (1h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.3,1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.40,1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.39]'
+          key: 'aos.ap.walk[1h]'
+          delay: 1h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the AP table items that poll every 1h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: fd937d4a057b4a3585626a1edd3a90cc
+          name: 'SNMP walk: AP table (2m)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.41,1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.20,1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.21,1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.19,1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.12]'
+          key: 'aos.ap.walk[2m]'
+          delay: 2m
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the AP table items that poll every 2m. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 231ee4fa608447d5ab1ca9c8be30a4a7
+          name: 'SNMP walk: AP table (6h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.4,1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.2]'
+          key: 'aos.ap.walk[6h]'
+          delay: 6h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the AP table items that poll every 6h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 1876ea9b366944a99bf3a51fcd27acf0
+          name: 'SNMP walk: AP table (24h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.6,1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.13]'
+          key: 'aos.ap.walk[24h]'
+          delay: 24h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the AP table items that poll every 24h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 3e548ebbdc7b445881a6606fe56f0dd9
+          name: 'SNMP walk: auth server table (1d)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.8.1.1.1.2]'
+          key: 'aos.auth.walk[1d]'
+          delay: 1d
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the auth server table items that poll every 1d. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: b72fdd6615404aca97d9fa205021f6db
+          name: 'SNMP walk: auth server table (1h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.8.1.1.1.3]'
+          key: 'aos.auth.walk[1h]'
+          delay: 1h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the auth server table items that poll every 1h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: add172b336ce4280bf10ed23a058c3f0
+          name: 'SNMP walk: auth server table (1m)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.8.1.1.1.11,1.3.6.1.4.1.14823.2.2.1.8.1.1.1.8,1.3.6.1.4.1.14823.2.2.1.8.1.1.1.14,1.3.6.1.4.1.14823.2.2.1.8.1.1.1.12]'
+          key: 'aos.auth.walk[1m]'
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the auth server table items that poll every 1m. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 3381125f7101486ebfff9ba4df9b9946
+          name: 'SNMP walk: auth server table (5m)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.8.1.1.1.13,1.3.6.1.4.1.14823.2.2.1.8.1.1.1.15,1.3.6.1.4.1.14823.2.2.1.8.1.1.1.10]'
+          key: 'aos.auth.walk[5m]'
+          delay: 5m
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the auth server table items that poll every 5m. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 8cee54f01f4149f9b7453c4f627463b9
+          name: 'SNMP walk: auth server table (10m)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.8.1.1.1.7]'
+          key: 'aos.auth.walk[10m]'
+          delay: 10m
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the auth server table items that poll every 10m. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
         - uuid: f9ad1194df2b4aeabe9cb2db84fdb03a
           name: 'Base MAC'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.7.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.2.1.7.0]'
           key: aos.baseMAC
           delay: 1d
           history: 90d
@@ -26,17 +142,69 @@ zabbix_export:
         - uuid: 7e5ebe6b8ecc438bb2b5bac30ff1c4bc
           name: 'Config ID'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.23.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.2.1.23.0]'
           key: aos.configID
           delay: 5m
           history: 90d
           tags:
             - tag: Application
               value: 'System Health'
+        - uuid: 0ea827e0175f43dfb55b2786a7d1e048
+          name: 'SNMP walk: CPU table (1h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.1.1.9.1.2]'
+          key: 'aos.cpu.walk[1h]'
+          delay: 1h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the CPU table items that poll every 1h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 42b802b56cf84572be3109d8dfc5b877
+          name: 'SNMP walk: CPU table (30s)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.1.1.9.1.3]'
+          key: 'aos.cpu.walk[30s]'
+          delay: 30s
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the CPU table items that poll every 30s. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 51d35a9fb56c463d9b1ff7ae2626e547
+          name: 'SNMP walk: fan table (1h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2]'
+          key: 'aos.fan.walk[1h]'
+          delay: 1h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the fan table items that poll every 1h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 7d794f21cc914145a02a43391b240dfb
+          name: 'SNMP walk: fan table (5m)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2]'
+          key: 'aos.fan.walk[5m]'
+          delay: 5m
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the fan table items that poll every 5m. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
         - uuid: 0d4cf4315cc747cbbac73cfc7548029e
           name: 'Hardware Version'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.27.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.2.1.27.0]'
           key: aos.hardwareVer
           delay: 1d
           history: 90d
@@ -48,7 +216,7 @@ zabbix_export:
         - uuid: 14646afdf49c48ada2c9e51c5d103fa5
           name: Hostname
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.1.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.1.1.1.0]'
           key: aos.hostName
           delay: 1d
           history: 90d
@@ -60,7 +228,7 @@ zabbix_export:
         - uuid: 9141c98ed3764349b01af06c237c0776
           name: 'IP Address'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.3.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.1.1.3.0]'
           key: aos.ip
           delay: 1d
           history: 90d
@@ -72,7 +240,7 @@ zabbix_export:
         - uuid: 52d7bc84825a4b66bd21db8e7f723fa9
           name: 'IPv6 Address'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.13.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.1.1.13.0]'
           key: aos.ipv6
           delay: 1d
           history: 90d
@@ -81,58 +249,112 @@ zabbix_export:
           tags:
             - tag: Application
               value: 'System Information'
+        - uuid: 0d8f444903354e2cbf4247a0aacd4aa7
+          name: 'SNMP walk: license table (1d)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.2.1.20.1.2,1.3.6.1.4.1.14823.2.2.1.2.1.20.1.4,1.3.6.1.4.1.14823.2.2.1.2.1.20.1.5,1.3.6.1.4.1.14823.2.2.1.2.1.20.1.3]'
+          key: 'aos.lic.walk[1d]'
+          delay: 1d
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the license table items that poll every 1d. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: 8529606369ea44b7b01eaab2eb009252
+          name: 'SNMP walk: license table (1h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.2.1.20.1.6]'
+          key: 'aos.lic.walk[1h]'
+          delay: 1h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the license table items that poll every 1h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
         - uuid: eace3d888dc84d5b9f3813fee486c484
           name: 'Switch Local License Count'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.7.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.1.1.7.0]'
           key: aos.localLics
           delay: 1d
           history: 90d
           tags:
             - tag: Application
               value: 'System Information'
+        - uuid: 4c2b2474df50489a99d232c0e22ca51a
+          name: 'SNMP walk: memory table (5m)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.1.1.11]'
+          key: 'aos.mem.walk[5m]'
+          delay: 5m
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the memory table items that poll every 5m. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
         - uuid: e789d6eb7b6f4051aacaac3a0d8543ab
           name: 'Memory Free'
-          type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.11.1.4.1
+          type: DEPENDENT
           key: aos.memFree
-          delay: 5m
+          delay: '0'
           history: 90d
           units: B
           preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.14823.2.2.1.1.1.11.1.4.1
+                - '0'
             - type: MULTIPLIER
               parameters:
                 - '1000'
+          master_item:
+            key: 'aos.mem.walk[5m]'
           tags:
             - tag: Application
               value: Memory
         - uuid: f6a5fc0fc57e4dcca4b87011b3c58e4f
           name: 'Memory Total'
-          type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.11.1.2.1
+          type: DEPENDENT
           key: aos.memTotal
-          delay: 5m
+          delay: '0'
           history: 90d
           units: B
           preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.14823.2.2.1.1.1.11.1.2.1
+                - '0'
             - type: MULTIPLIER
               parameters:
                 - '1000'
+          master_item:
+            key: 'aos.mem.walk[5m]'
           tags:
             - tag: Application
               value: Memory
         - uuid: e529da2c2b3d4f7abe27221bc46fcadc
           name: 'Memory Used'
-          type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.11.1.3.1
+          type: DEPENDENT
           key: aos.memUsed
-          delay: 5m
+          delay: '0'
           history: 90d
           units: B
           preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.14823.2.2.1.1.1.11.1.3.1
+                - '0'
             - type: MULTIPLIER
               parameters:
                 - '1000'
+          master_item:
+            key: 'aos.mem.walk[5m]'
           tags:
             - tag: Application
               value: Memory
@@ -156,7 +378,7 @@ zabbix_export:
         - uuid: 15c8b75b865a426f881462d498912aea
           name: Model
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.2.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.1.1.2.0]'
           key: aos.model
           delay: 1d
           history: 90d
@@ -165,10 +387,36 @@ zabbix_export:
           tags:
             - tag: Application
               value: 'System Information'
+        - uuid: 305ac16809f54b5abdd4987b7c0f7b48
+          name: 'SNMP walk: PSU table (1h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2]'
+          key: 'aos.psu.walk[1h]'
+          delay: 1h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the PSU table items that poll every 1h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
+        - uuid: c40cd4ed328945afa78a94b72ab4a0f0
+          name: 'SNMP walk: PSU table (5m)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2]'
+          key: 'aos.psu.walk[5m]'
+          delay: 5m
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the PSU table items that poll every 5m. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
         - uuid: 55a5ffb483744bbb8567a99d2efcb973
           name: 'Reboot Reason'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.25.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.2.1.25.0]'
           key: aos.rebootReason
           history: 90d
           value_type: TEXT
@@ -179,7 +427,7 @@ zabbix_export:
         - uuid: 2faa02c58fdd4113acc4d026af1b4924
           name: 'Software Version'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.28.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.2.1.28.0]'
           key: aos.softwareVer
           delay: 1d
           history: 90d
@@ -188,10 +436,23 @@ zabbix_export:
           tags:
             - tag: Application
               value: 'System Information'
+        - uuid: 98d7333ea0924c3390ebe15b387e9bc5
+          name: 'SNMP walk: storage table (1h)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.14823.2.2.1.1.1.10.1.5,1.3.6.1.4.1.14823.2.2.1.1.1.10.1.3,1.3.6.1.4.1.14823.2.2.1.1.1.10.1.2,1.3.6.1.4.1.14823.2.2.1.1.1.10.1.4]'
+          key: 'aos.storage.walk[1h]'
+          delay: 1h
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk for the storage table items that poll every 1h. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
         - uuid: 09bcdffcf969417495ecd39ede0a23a2
           name: 'Switch Role'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.4.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.1.1.4.0]'
           key: aos.switchRole
           delay: 1d
           history: 90d
@@ -203,7 +464,7 @@ zabbix_export:
         - uuid: ddc2f0b8de5944038c80080bbdd4c423
           name: 'Switch Serial Number'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.1.1.12.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.1.1.12.0]'
           key: aos.switchSerial
           delay: 1d
           history: 90d
@@ -239,7 +500,7 @@ zabbix_export:
         - uuid: 43cb4e98f9664a68920a0ecf46122c2b
           name: 'System Temperature'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.10.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.2.1.10.0]'
           key: aos.sysTemp
           delay: 5m
           history: 300d
@@ -263,10 +524,9 @@ zabbix_export:
               priority: WARNING
         - uuid: b19306280d064667b006018de67c938e
           name: 'System Temperature - Numeric'
-          type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.2.1.10.0
+          type: DEPENDENT
           key: aos.sysTempNum
-          delay: 5m
+          delay: '0'
           history: 300d
           value_type: FLOAT
           units: C
@@ -275,13 +535,15 @@ zabbix_export:
               parameters:
                 - '(\d*\.?\d+)'
                 - \1
+          master_item:
+            key: aos.sysTemp
           tags:
             - tag: Application
               value: 'System Health'
         - uuid: d643df33bf5f433ea6452205148b6bf0
           name: 'Total Number of APs'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.5.2.1.1.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.5.2.1.1.0]'
           key: aos.sysTotalAPs
           history: 90d
           tags:
@@ -290,7 +552,7 @@ zabbix_export:
         - uuid: b3b70cb018d644299bcf477a6720628e
           name: 'Total Number of Associations'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.5.2.1.2.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.5.2.1.2.0]'
           key: aos.sysTotalAssociations
           history: 90d
           tags:
@@ -299,7 +561,7 @@ zabbix_export:
         - uuid: 58a44d32aa064dca89430ad300f9d1e8
           name: 'Total Number of Users'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.14823.2.2.1.14.1.1.0
+          snmp_oid: 'get[1.3.6.1.4.1.14823.2.2.1.14.1.1.0]'
           key: aos.sysTotalUsers
           history: 90d
           tags:
@@ -308,7 +570,7 @@ zabbix_export:
         - uuid: 8deabcc6d5c7407eadd0ebc38a025ad1
           name: 'System Uptime'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.2.1.1.3.0
+          snmp_oid: 'get[1.3.6.1.2.1.1.3.0]'
           key: aos.sysUptime
           history: 90d
           value_type: FLOAT
@@ -347,7 +609,7 @@ zabbix_export:
         - uuid: 98b59c287c684fa7ab17eb3063e2d245
           name: 'Number of network interfaces'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.2.1.2.1.0
+          snmp_oid: 'get[1.3.6.1.2.1.2.1.0]'
           key: ifNumber
           delay: '3600'
           history: 7d
@@ -358,144 +620,208 @@ zabbix_export:
       discovery_rules:
         - uuid: 2b105d6d52e2462c8cf3e591546e851d
           name: 'Access Points'
-          type: SNMP_AGENT
-          snmp_oid: 'discovery[{#APNAME},.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.3]'
+          type: DEPENDENT
           key: 'aos.ap.[{#APNAME}]'
-          delay: 1h
+          delay: '0'
           lifetime: 1h
           enabled_lifetime_type: DISABLE_NEVER
           item_prototypes:
             - uuid: 7a6650e79d404781a4c744f42bd83e0d
               name: 'AP Active/Standby - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.41.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apAcStand.[{#APNAME}]'
-              delay: 2m
+              delay: '0'
               history: 90d
               valuemap:
                 name: 'AOS AP Active'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.41.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[2m]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: 8f2b77ceddc0499ab0547eba9fe91476
               name: 'AP Bootstraps - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.20.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apBootstraps.[{#APNAME}]'
-              delay: 2m
+              delay: '0'
               history: 90d
               value_type: FLOAT
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.20.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[2m]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: 176ebc869cd04feab75d78541d8005e6
               name: 'Backup Switch IP Address - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.40.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apBSWIP.[{#APNAME}]'
-              delay: 1h
+              delay: '0'
               history: 90d
               value_type: TEXT
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.40.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[1h]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: 7f94f48bb4bb47d9901eab1bcd980557
               name: 'AP Group - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.4.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apGroup.[{#APNAME}]'
-              delay: 6h
+              delay: '0'
               history: 90d
               value_type: TEXT
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.4.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[6h]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: 985dd9abde884ac1860eb918fec5133e
               name: 'IP Address - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.2.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apIP.[{#APNAME}]'
-              delay: 6h
+              delay: '0'
               history: 90d
               value_type: TEXT
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.2.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[6h]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: c22ae2f3b7b541be80a27ae5e3b671e9
               name: 'AP Reboots - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.21.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apReboots.[{#APNAME}]'
-              delay: 2m
+              delay: '0'
               history: 90d
               value_type: FLOAT
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.21.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[2m]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: 6e41845e48eb4b75ae76fea389ec4320
               name: 'AP Serial - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.6.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apSerial.[{#APNAME}]'
-              delay: 24h
+              delay: '0'
               history: 90d
               value_type: TEXT
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.6.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[24h]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: 4d571559de3f49b3bb4d1c89e2dd3ce6
               name: 'AP Status - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.19.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apStatus.[{#APNAME}]'
-              delay: 2m
+              delay: '0'
               history: 90d
               valuemap:
                 name: 'AOS AP Status'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.19.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[2m]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: dcbda287678149ad864ed986b68f64be
               name: 'Switch IP Address - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.39.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apSWIP.[{#APNAME}]'
-              delay: 1h
+              delay: '0'
               history: 10d
               value_type: TEXT
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.39.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[1h]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: 96ae7eb1b6dc4824b0bf2404655aa9f6
               name: 'AP Type - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.13.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apType.[{#APNAME}]'
-              delay: 24h
+              delay: '0'
               history: 90d
               value_type: TEXT
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.13.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.ap.walk[24h]'
               tags:
                 - tag: Application
                   value: 'Access Points'
             - uuid: c89435e1372147deb8f7a49e52b5bada
               name: 'AP Uptime - {#APNAME}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.12.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.apUptime.[{#APNAME}]'
-              delay: 2m
+              delay: '0'
               history: 90d
               value_type: FLOAT
               units: uptime
               preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.12.{#SNMPINDEX}'
+                    - '0'
                 - type: MULTIPLIER
                   parameters:
                     - '0.01'
+              master_item:
+                key: 'aos.ap.walk[2m]'
               tags:
                 - tag: Application
                   value: 'Access Points'
@@ -526,22 +852,36 @@ zabbix_export:
                 - name: '{#APNAME} is DOWN'
                   expression: 'change(/Template ArubaOS/aos.apStatus.[{#APNAME}])>.5 and last(/Template ArubaOS/aos.apAcStand.[{#APNAME}],#3)=0 and nodata(/Template ArubaOS/aos.apIP.[{#APNAME}],120s)=1'
                   recovery_expression: 'last(/Template ArubaOS/aos.apStatus.[{#APNAME}])=1'
+          master_item:
+            key: 'aos.ap.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#APNAME}'
+                - 1.3.6.1.4.1.14823.2.2.1.5.2.1.4.1.3
+                - '0'
         - uuid: 165d31714e564e53855f921171cb76fa
           name: 'Auth Servers'
-          type: SNMP_AGENT
-          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.3]'
+          type: DEPENDENT
           key: 'aos.authServer.[{#SNMPVALUE}]'
-          delay: 1h
+          delay: '0'
           lifetime: 30d
           enabled_lifetime_type: DISABLE_NEVER
           item_prototypes:
             - uuid: f03c2349fdb24b599f5b69f16fdd06d2
               name: 'Server Failed Auths {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.11.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authFailedAuths.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: '0'
               history: 90d
               value_type: FLOAT
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.11.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.auth.walk[1m]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
@@ -552,13 +892,20 @@ zabbix_export:
                   priority: HIGH
             - uuid: 21edf4f5fb5e4bc1a108979c9af5a362
               name: 'Auth Server In Service {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.8.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authInService.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: '0'
               history: 90d
               value_type: FLOAT
               valuemap:
                 name: 'AOS Inservice'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.8.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.auth.walk[1m]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
@@ -569,49 +916,74 @@ zabbix_export:
                   priority: DISASTER
             - uuid: 26b347d69af04c429f99c9c17dd3a985
               name: 'Server Response Time {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.13.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authResponseTime.[{#SNMPVALUE}-{#SNMPINDEX}]'
-              delay: 5m
+              delay: '0'
               history: 90d
               value_type: FLOAT
               units: ms
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.13.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.auth.walk[5m]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
             - uuid: 74343c87246246a082477d68752d77f8
               name: 'Auth Server State {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.7.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authServerState.[{#SNMPVALUE}-{#SNMPINDEX}]'
-              delay: 10m
+              delay: '0'
               history: 90d
               value_type: FLOAT
               valuemap:
                 name: 'AOS Server State'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.7.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.auth.walk[10m]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
             - uuid: 89d58f5d93784a4f9bc2f6a4b956b2b7
               name: 'Auth Server Type {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.2.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authServerType.[{#SNMPVALUE}-{#SNMPINDEX}]'
-              delay: 1d
+              delay: '0'
               history: 90d
               value_type: FLOAT
               valuemap:
                 name: 'AOS Server Type'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.2.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.auth.walk[1d]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
             - uuid: d989b8498e7b4c6c99ab278a8680e169
               name: 'Server Outstanding Requests {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.14.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authSrvOutstandReq.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: '0'
               history: 90d
               value_type: FLOAT
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.14.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.auth.walk[1m]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
@@ -622,11 +994,18 @@ zabbix_export:
                   priority: AVERAGE
             - uuid: 58e5f62d4b5547f1a91995f1704b9eab
               name: 'Server Timeouts {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.12.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authSrvTimeouts.[{#SNMPVALUE}-{#SNMPINDEX}]'
+              delay: '0'
               history: 90d
               value_type: FLOAT
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.12.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.auth.walk[1m]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
@@ -637,28 +1016,39 @@ zabbix_export:
                   priority: HIGH
             - uuid: e29ded2041664b29bb3d1fbe6890e76a
               name: 'Server Uptime {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.15.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authSrvUptime.[{#SNMPVALUE}-{#SNMPINDEX}]'
-              delay: 5m
+              delay: '0'
               history: 90d
               value_type: FLOAT
               units: s
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.15.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.auth.walk[5m]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
             - uuid: 279e6cef718e4b86ab84a8f76394a802
               name: 'Server Success Auths {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.8.1.1.1.10.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.authSuccessAuths.[{#SNMPVALUE}-{#SNMPINDEX}]'
-              delay: 5m
+              delay: '0'
               history: 90d
               value_type: FLOAT
               preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.8.1.1.1.10.{#SNMPINDEX}'
+                    - '0'
                 - type: MULTIPLIER
                   parameters:
                     - '1'
+              master_item:
+                key: 'aos.auth.walk[5m]'
               tags:
                 - tag: Application
                   value: 'Auth Servers'
@@ -670,23 +1060,36 @@ zabbix_export:
               dependencies:
                 - name: '{HOST.NAME} has been restarted'
                   expression: 'last(/Template ArubaOS/aos.sysUptime)<600 and nodata(/Template ArubaOS/aos.rebootReason,2m)=0'
+          master_item:
+            key: 'aos.auth.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#SNMPVALUE}'
+                - 1.3.6.1.4.1.14823.2.2.1.8.1.1.1.3
+                - '0'
         - uuid: 7a95f127cf3e43b5b5a9eb9658ee18bf
           name: CPU
-          type: SNMP_AGENT
-          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.1.1.9.1.2]'
+          type: DEPENDENT
           key: 'aos.cpu.[{#SNMPVALUE}]'
-          delay: 1h
+          delay: '0'
           lifetime: 30d
           enabled_lifetime_type: DISABLE_NEVER
           item_prototypes:
             - uuid: d05a1953b4b044b5a8c91561de35a091
               name: 'CPU Utilization {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.1.1.9.1.3.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.cpuUtil.[{#SNMPVALUE}]'
-              delay: 30s
+              delay: '0'
               history: 90d
               units: '%'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.1.1.9.1.3.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.cpu.walk[30s]'
               tags:
                 - tag: Application
                   value: CPU
@@ -704,24 +1107,37 @@ zabbix_export:
                   name: 'Very High CPU on {HOST.NAME}, {#SNMPVALUE}'
                   opdata: 'Current: {ITEM.LASTVALUE1}'
                   priority: HIGH
+          master_item:
+            key: 'aos.cpu.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#SNMPVALUE}'
+                - 1.3.6.1.4.1.14823.2.2.1.1.1.9.1.2
+                - '0'
         - uuid: 0761d134d21649be9018f5dd5de68614
           name: Fans
-          type: SNMP_AGENT
-          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2]'
+          type: DEPENDENT
           key: 'aos.fan.[{#SNMPINDEX}]'
-          delay: 1h
+          delay: '0'
           lifetime: 30d
           enabled_lifetime_type: DISABLE_NEVER
           item_prototypes:
             - uuid: 90ec77a7e7d64d778f7608d69664ca80
               name: 'Fan {#SNMPINDEX} Status'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.fanStatus.[{#SNMPINDEX}]'
-              delay: 5m
+              delay: '0'
               history: 90d
               valuemap:
                 name: 'AOS Device Status'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.fan.walk[5m]'
               tags:
                 - tag: Application
                   value: 'System Health'
@@ -730,82 +1146,126 @@ zabbix_export:
                   expression: 'last(/Template ArubaOS/aos.fanStatus.[{#SNMPINDEX}])=2'
                   name: 'Failed Fan {#SNMPINDEX} on {HOST.NAME}'
                   priority: HIGH
+          master_item:
+            key: 'aos.fan.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#SNMPVALUE}'
+                - 1.3.6.1.4.1.14823.2.2.1.2.1.17.1.2
+                - '0'
         - uuid: 791368cfa3c0437d95c3704cc55e72e8
           name: Licenses
-          type: SNMP_AGENT
-          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.6]'
+          type: DEPENDENT
           key: 'aos.lics.[{#SNMPVALUE}]'
-          delay: 1h
+          delay: '0'
           lifetime: 30d
           enabled_lifetime_type: DISABLE_NEVER
           item_prototypes:
             - uuid: 1316267db94b477e8be0acbdaf231725
               name: 'License {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.2.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.lic.[{#SNMPINDEX}-{#SNMPVALUE}]'
-              delay: 1d
+              delay: '0'
               history: 90d
               value_type: TEXT
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.2.1.20.1.2.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.lic.walk[1d]'
               tags:
                 - tag: Application
                   value: Licenses
             - uuid: df6265c9cfd649fc8cb514823820217c
               name: 'License Expire {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.4.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.licExpire.[{#SNMPINDEX}-{#SNMPVALUE}]'
-              delay: 1d
+              delay: '0'
               history: 90d
               value_type: CHAR
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.2.1.20.1.4.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.lic.walk[1d]'
               tags:
                 - tag: Application
                   value: Licenses
             - uuid: e86e0b7f123a4828bdaffce3e840ffa9
               name: 'License Flags {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.5.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.licFlags.[{#SNMPINDEX}-{#SNMPVALUE}]'
-              delay: 1d
+              delay: '0'
               history: 90d
               value_type: CHAR
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.2.1.20.1.5.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.lic.walk[1d]'
               tags:
                 - tag: Application
                   value: Licenses
             - uuid: d4fb854eed8b4b1fb243cc9fc9e626f0
               name: 'License Installed Date {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.20.1.3.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.licsInstalled.[{#SNMPINDEX}-{#SNMPVALUE}]'
-              delay: 1d
+              delay: '0'
               history: 90d
               value_type: CHAR
               trends: '0'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.2.1.20.1.3.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.lic.walk[1d]'
               tags:
                 - tag: Application
                   value: Licenses
+          master_item:
+            key: 'aos.lic.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#SNMPVALUE}'
+                - 1.3.6.1.4.1.14823.2.2.1.2.1.20.1.6
+                - '0'
         - uuid: a6c806ea8a6a48a5a520b00aaa99a09b
           name: PSU
-          type: SNMP_AGENT
-          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2]'
+          type: DEPENDENT
           key: 'aos.psu.[{#SNMPINDEX}]'
-          delay: 1h
+          delay: '0'
           lifetime: 30d
           enabled_lifetime_type: DISABLE_NEVER
           item_prototypes:
             - uuid: ff844c1c2d43458f9427b6c2feaca497
               name: 'PSU {#SNMPINDEX} Status'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.psuStatus.[{#SNMPINDEX}]'
-              delay: 5m
+              delay: '0'
               history: 90d
               value_type: FLOAT
               valuemap:
                 name: 'AOS Device Status'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.psu.walk[5m]'
               tags:
                 - tag: Application
                   value: 'System Health'
@@ -814,54 +1274,77 @@ zabbix_export:
                   expression: 'last(/Template ArubaOS/aos.psuStatus.[{#SNMPINDEX}])=2'
                   name: 'Failed/Missing PSU {#SNMPINDEX} on {HOST.NAME}'
                   priority: HIGH
+          master_item:
+            key: 'aos.psu.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#SNMPVALUE}'
+                - 1.3.6.1.4.1.14823.2.2.1.2.1.18.1.2
+                - '0'
         - uuid: 9d4210f553754fb78e9ecc5582ffac9d
           name: Storage
-          type: SNMP_AGENT
-          snmp_oid: 'discovery[{#SNMPVALUE},.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.5]'
+          type: DEPENDENT
           key: 'aos.storage.[{#SNMPVALUE}]'
-          delay: 1h
+          delay: '0'
           lifetime: 30d
           enabled_lifetime_type: DISABLE_NEVER
           item_prototypes:
             - uuid: 17fa304701b14ef189cb73eb4e4f4524
               name: 'Storage Size {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.3.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.storageSize.[{#SNMPVALUE}]'
-              delay: 1h
+              delay: '0'
               history: 90d
               units: B
               preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.1.1.10.1.3.{#SNMPINDEX}'
+                    - '0'
                 - type: MULTIPLIER
                   parameters:
                     - '1000000'
+              master_item:
+                key: 'aos.storage.walk[1h]'
               tags:
                 - tag: Application
                   value: Storage
             - uuid: 85da5229f8b44aa6a78196bdf1008204
               name: 'Storage Type {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.2.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.storageType.[{#SNMPVALUE}]'
-              delay: 1h
+              delay: '0'
               history: 90d
               valuemap:
                 name: 'AOS Storage Type'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.1.1.10.1.2.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'aos.storage.walk[1h]'
               tags:
                 - tag: Application
                   value: Storage
             - uuid: b55386493fb346d19f22d2fafa4968ed
               name: 'Storage Used {#SNMPVALUE}'
-              type: SNMP_AGENT
-              snmp_oid: '.1.3.6.1.4.1.14823.2.2.1.1.1.10.1.4.{#SNMPINDEX}'
+              type: DEPENDENT
               key: 'aos.storageUsed.[{#SNMPVALUE}]'
-              delay: 1h
+              delay: '0'
               history: 90d
               units: B
               preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.14823.2.2.1.1.1.10.1.4.{#SNMPINDEX}'
+                    - '0'
                 - type: MULTIPLIER
                   parameters:
                     - '1000000'
+              master_item:
+                key: 'aos.storage.walk[1h]'
               tags:
                 - tag: Application
                   value: Storage
@@ -890,6 +1373,14 @@ zabbix_export:
                   name: 'Very High Storage Usage on {HOST.NAME}, {#SNMPVALUE}'
                   opdata: 'Used: {ITEM.LASTVALUE1}'
                   priority: HIGH
+          master_item:
+            key: 'aos.storage.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#SNMPVALUE}'
+                - 1.3.6.1.4.1.14823.2.2.1.1.1.10.1.5
+                - '0'
           overrides:
             - name: 'Boot image partitions'
               step: '1'
