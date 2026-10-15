@@ -23,79 +23,16 @@ zabbix_export:
           tags:
             - tag: Application
               value: System
-        - uuid: b5c4eba3b14448ed92004c695e327a22
-          name: 'Chassis Temp'
-          type: SNMP_AGENT
-          snmp_oid: 'get[1.3.6.1.2.1.99.1.1.1.4.12001]'
-          key: hpe.chassisTemp
-          delay: 30s
-          history: 1w
-          units: C
-          description: 'Chassis temperature. The HP default over-temperature point is 55 C.'
-          tags:
-            - tag: Application
-              value: System
-          triggers:
-            - uuid: d987747a2a6042eb8c826551234ef878
-              expression: 'last(/Template Aruba 3810M/hpe.chassisTemp,#1:now-120s)>35'
-              name: 'Chassis Temperature too high on {HOST.NAME}'
-              priority: HIGH
-        - uuid: af2993aa8354482682b0dec88f48070d
-          name: 'Fan 1 Status'
-          type: SNMP_AGENT
-          snmp_oid: 'get[1.3.6.1.2.1.99.1.1.1.5.11001]'
-          key: hpe.fan1Status
-          history: 1w
-          value_type: FLOAT
-          trends: 100d
-          tags:
-            - tag: Application
-              value: System
-          triggers:
-            - uuid: 4f2498e241f74e91b355630ec5613e87
-              expression: 'last(/Template Aruba 3810M/hpe.fan1Status,#2)<>1'
-              name: 'Fan 1 Status on {HOST.NAME}'
-              priority: HIGH
-        - uuid: 46e3ac5abd0f4eeebfb6de9e1b4defe3
-          name: 'Fan 2 Status'
-          type: SNMP_AGENT
-          snmp_oid: 'get[1.3.6.1.2.1.99.1.1.1.5.11002]'
-          key: hpe.fan2Status
-          history: 1w
-          trends: 100d
-          tags:
-            - tag: Application
-              value: System
-          triggers:
-            - uuid: 52e549f5125c41bc821cb300064a162c
-              expression: 'last(/Template Aruba 3810M/hpe.fan2Status,#2)<>1'
-              name: 'Fan 2 Status on {HOST.NAME}'
-              priority: HIGH
-        - uuid: 17afe51c64664f68a0070d49e824c879
-          name: 'Fan 3 Status'
-          type: SNMP_AGENT
-          snmp_oid: 'get[1.3.6.1.2.1.99.1.1.1.5.11003]'
-          key: hpe.fan3Status
-          history: 1w
-          trends: 100d
-          tags:
-            - tag: Application
-              value: System
-          triggers:
-            - uuid: c3fc931c4b194f368f87303d3a4b0e88
-              expression: 'last(/Template Aruba 3810M/hpe.fan3Status,#2)<>1'
-              name: 'Fan 3 Status on {HOST.NAME}'
-              priority: HIGH
         - uuid: 9341783194f346ff864f4cdb75a70a7d
           name: 'SNMP walk: entity table (1h)'
           type: SNMP_AGENT
-          snmp_oid: 'walk[1.3.6.1.2.1.47.1.1.1.1.2,1.3.6.1.2.1.47.1.1.1.1.5,1.3.6.1.2.1.47.1.1.1.1.13,1.3.6.1.2.1.47.1.1.1.1.11,1.3.6.1.2.1.47.1.1.1.1.10]'
+          snmp_oid: 'walk[1.3.6.1.2.1.47.1.1.1.1.2,1.3.6.1.2.1.47.1.1.1.1.5,1.3.6.1.2.1.47.1.1.1.1.13,1.3.6.1.2.1.47.1.1.1.1.11,1.3.6.1.2.1.47.1.1.1.1.10,1.3.6.1.2.1.47.1.1.1.1.7,1.3.6.1.2.1.47.1.1.1.1.9]'
           key: 'hpe.inv.walk[1h]'
           delay: 1h
           history: '0'
           value_type: TEXT
           trends: '0'
-          description: 'Raw SNMP walk for the entity table items that poll every 1h. It stores no history.'
+          description: 'Raw SNMP walk of the entity table for the three LLD rules, Switch Model and Switch Rom Version. It stores no history.'
           tags:
             - tag: Application
               value: 'SNMP walk'
@@ -137,33 +74,49 @@ zabbix_export:
           tags:
             - tag: Application
               value: Memory
-        - uuid: 326b20129e3d41daa6a9bd9fb7a98c93
-          name: 'Over Temperature Status'
-          type: SNMP_AGENT
-          snmp_oid: 'get[1.3.6.1.2.1.99.1.1.1.5.12001]'
-          key: hpe.overTempStatus
-          history: 1w
-          trends: 100d
-          tags:
-            - tag: Application
-              value: System
-          triggers:
-            - uuid: e1ead0fda45249b4a73179b3c45b5c13
-              expression: 'last(/Template Aruba 3810M/hpe.overTempStatus,#2)<>1'
-              name: 'Over Temperature on {HOST.NAME}'
-              priority: DISASTER
         - uuid: 05227a0d8e7d426182dfb8e602661f5b
           name: 'Switch Rom Version'
-          type: SNMP_AGENT
-          snmp_oid: 'get[1.3.6.1.2.1.47.1.1.1.1.9.1001]'
+          type: DEPENDENT
           key: hpe.romVersion
-          delay: 5m
+          delay: '0'
           history: 1w
           value_type: CHAR
           trends: '0'
+          description: 'entPhysicalFirmwareRev of the lowest chassis row. That row is 1001 on a single switch and 101001, member 1, on a stack.'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#CLASS}'
+                - 1.3.6.1.2.1.47.1.1.1.1.5
+                - '0'
+                - '{#VALUE}'
+                - 1.3.6.1.2.1.47.1.1.1.1.9
+                - '0'
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  var rows = JSON.parse(value).filter(function (r) { return r['{#CLASS}'] === '3'; });
+                  if (!rows.length) throw 'No chassis row in the entity table';
+                  rows.sort(function (a, b) { return a['{#SNMPINDEX}'] - b['{#SNMPINDEX}']; });
+                  return rows[0]['{#VALUE}'];
+          master_item:
+            key: 'hpe.inv.walk[1h]'
           tags:
             - tag: Application
               value: System
+        - uuid: 22cbd9687ba0455093deea690c8e1a60
+          name: 'SNMP walk: sensor tables (30s)'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.2.1.99.1.1.1.4,1.3.6.1.2.1.99.1.1.1.5,1.3.6.1.4.1.11.2.14.11.1.2.8.1.1.6]'
+          key: 'hpe.sensor.walk[30s]'
+          delay: 30s
+          history: '0'
+          value_type: TEXT
+          trends: '0'
+          description: 'Raw SNMP walk of entPhySensorValue, entPhySensorOperStatus and hpSystemAirOverTemp for the fan and temperature prototypes. It stores no history.'
+          tags:
+            - tag: Application
+              value: 'SNMP walk'
         - uuid: 4633d1f3e98d4c28851fa605975cba00
           name: 'Serial Number'
           type: SNMP_AGENT
@@ -194,14 +147,32 @@ zabbix_export:
               priority: HIGH
         - uuid: 0c7c5b890c8e4630a575d10b547ecc71
           name: 'Switch Model'
-          type: SNMP_AGENT
-          snmp_oid: 'get[1.3.6.1.2.1.47.1.1.1.1.2.1001]'
+          type: DEPENDENT
           key: hpe.switchModel
-          delay: 5m
+          delay: '0'
           history: 1w
           value_type: CHAR
           trends: '0'
+          description: 'entPhysicalDescr of the lowest chassis row. That row is 1001 on a single switch and 101001, member 1, on a stack.'
           inventory_link: HARDWARE
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#CLASS}'
+                - 1.3.6.1.2.1.47.1.1.1.1.5
+                - '0'
+                - '{#VALUE}'
+                - 1.3.6.1.2.1.47.1.1.1.1.2
+                - '0'
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  var rows = JSON.parse(value).filter(function (r) { return r['{#CLASS}'] === '3'; });
+                  if (!rows.length) throw 'No chassis row in the entity table';
+                  rows.sort(function (a, b) { return a['{#SNMPINDEX}'] - b['{#SNMPINDEX}']; });
+                  return rows[0]['{#VALUE}'];
+          master_item:
+            key: 'hpe.inv.walk[1h]'
           tags:
             - tag: Application
               value: System
@@ -279,6 +250,73 @@ zabbix_export:
               name: '{HOST.NAME} Has been restarted'
               priority: INFO
       discovery_rules:
+        - uuid: 3c892519d6824ce08ed133e3d89a7c6a
+          name: 'Fan discovery'
+          type: DEPENDENT
+          key: hpe.fan.discovery
+          delay: '0'
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#ENT_CLASS}'
+                value: ^7$
+                formulaid: A
+              - macro: '{#ENT_NAME}'
+                value: '{$HPE.FAN.NAME.MATCHES}'
+                formulaid: B
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          description: 'Chassis fans from the entity table. The default {$HPE.FAN.NAME.MATCHES} leaves out Fan 4 and Fan 5, the power supply fans. A stack numbers each row member x 100000 + local index. A single switch has no member part, so {#MEMBER_PREFIX} is empty there.'
+          item_prototypes:
+            - uuid: 50ce4c5649cf450096015b3640040a68
+              name: '{#MEMBER_PREFIX}{#ENT_NAME} Status'
+              type: DEPENDENT
+              key: 'hpe.fan.status[{#SNMPINDEX}]'
+              delay: '0'
+              history: 1w
+              trends: 100d
+              description: 'entPhySensorOperStatus. 1 is ok. A row missing from the walk reads 0, shown as missing.'
+              valuemap:
+                name: 'Aruba 3810M EntitySensorStatus'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.99.1.1.1.5.{#SNMPINDEX}'
+                    - '0'
+                  error_handler: CUSTOM_VALUE
+                  error_handler_params: '0'
+              master_item:
+                key: 'hpe.sensor.walk[30s]'
+              tags:
+                - tag: Application
+                  value: System
+              trigger_prototypes:
+                - uuid: 192c13140a424677b36de279c2d89593
+                  expression: 'min(/Template Aruba 3810M/hpe.fan.status[{#SNMPINDEX}],#2)>1 or count(/Template Aruba 3810M/hpe.fan.status[{#SNMPINDEX}],#20,"eq","0")=20'
+                  name: '{#MEMBER_PREFIX}{#ENT_NAME} Status on {HOST.NAME}'
+                  priority: HIGH
+                  description: 'Status 2 or 3 on two polls in a row opens the problem. A missing row reads 0 and opens the problem after 20 polls in a row, about 10 minutes. A member reboot should stay quiet, but no reboot has been watched yet.'
+          master_item:
+            key: 'hpe.inv.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#ENT_CLASS}'
+                - 1.3.6.1.2.1.47.1.1.1.1.5
+                - '0'
+                - '{#ENT_NAME}'
+                - 1.3.6.1.2.1.47.1.1.1.1.7
+                - '0'
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  var rows = JSON.parse(value);
+                  rows.forEach(function (r) {
+                      var member = Math.floor(parseInt(r['{#SNMPINDEX}'], 10) / 100000);
+                      r['{#MEMBER_PREFIX}'] = member > 0 ? 'Member ' + member + ' ' : '';
+                      r['{#AIR_ROW}'] = String(Math.max(member - 1, 0));
+                  });
+                  return JSON.stringify(rows);
         - uuid: 5b3793514c1444a18dd2aa20fc1b364d
           name: 'Switch Inventory'
           type: DEPENDENT
@@ -375,6 +413,134 @@ zabbix_export:
                 - '{#SNMPVALUE}'
                 - 1.3.6.1.2.1.47.1.1.1.1.2
                 - '0'
+        - uuid: a6dfb255940c4823a71c6f2e6dc6636a
+          name: 'Temperature discovery'
+          type: DEPENDENT
+          key: hpe.temp.discovery
+          delay: '0'
+          filter:
+            conditions:
+              - macro: '{#ENT_CLASS}'
+                value: ^8$
+                formulaid: A
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          description: 'Temperature sensors from the entity table, one per switch or stack member. {#AIR_ROW} is the member''s row in hpSystemAirTempTable, which starts at 0. A stack can report entity index 0 for its row 1, so the template cannot use that column.'
+          item_prototypes:
+            - uuid: d36af422e18640298a87d2b770af9531
+              name: '{#MEMBER_PREFIX}Over Temperature Status'
+              type: DEPENDENT
+              key: 'hpe.temp.overtemp[{#SNMPINDEX}]'
+              delay: '0'
+              history: 1w
+              trends: 100d
+              description: 'hpSystemAirOverTemp. 1 (true) means the air temperature is over the switch threshold, 45 C by default.'
+              valuemap:
+                name: 'Aruba 3810M TruthValue'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.11.2.14.11.1.2.8.1.1.6.{#AIR_ROW}'
+                    - '0'
+              master_item:
+                key: 'hpe.sensor.walk[30s]'
+              tags:
+                - tag: Application
+                  value: System
+              trigger_prototypes:
+                - uuid: e3a0f1df917e448ab6a8bcfea5b67aae
+                  expression: 'max(/Template Aruba 3810M/hpe.temp.overtemp[{#SNMPINDEX}],#2)=1'
+                  name: '{#MEMBER_PREFIX}Over Temperature on {HOST.NAME}'
+                  priority: DISASTER
+            - uuid: d65473bd67c3482f947c3408252cac65
+              name: '{#MEMBER_PREFIX}{#ENT_NAME} Sensor Status'
+              type: DEPENDENT
+              key: 'hpe.temp.status[{#SNMPINDEX}]'
+              delay: '0'
+              history: 1w
+              trends: 100d
+              description: 'entPhySensorOperStatus. 1 is ok. A row missing from the walk reads 0, shown as missing.'
+              valuemap:
+                name: 'Aruba 3810M EntitySensorStatus'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.99.1.1.1.5.{#SNMPINDEX}'
+                    - '0'
+                  error_handler: CUSTOM_VALUE
+                  error_handler_params: '0'
+              master_item:
+                key: 'hpe.sensor.walk[30s]'
+              tags:
+                - tag: Application
+                  value: System
+              trigger_prototypes:
+                - uuid: 2978f9562dd84645a6478866488b8783
+                  expression: 'min(/Template Aruba 3810M/hpe.temp.status[{#SNMPINDEX}],#2)>1 or count(/Template Aruba 3810M/hpe.temp.status[{#SNMPINDEX}],#20,"eq","0")=20'
+                  name: '{#MEMBER_PREFIX}{#ENT_NAME} Sensor Status on {HOST.NAME}'
+                  priority: AVERAGE
+                  description: 'Status 2 or 3 on two polls in a row opens the problem. A missing row reads 0 and opens the problem after 20 polls in a row, about 10 minutes. A member reboot should stay quiet, but no reboot has been watched yet.'
+            - uuid: 8cfb652f961446c5805bc51f05d5c745
+              name: '{#MEMBER_PREFIX}{#ENT_NAME}'
+              type: DEPENDENT
+              key: 'hpe.temp.value[{#SNMPINDEX}]'
+              delay: '0'
+              history: 1w
+              units: C
+              description: 'entPhySensorValue in degrees C.'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.99.1.1.1.4.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'hpe.sensor.walk[30s]'
+              tags:
+                - tag: Application
+                  value: System
+              trigger_prototypes:
+                - uuid: 9891c67dbe994a14ac741aa789b6ed7b
+                  expression: 'last(/Template Aruba 3810M/hpe.temp.value[{#SNMPINDEX}],#1:now-120s)>{$HPE.TEMP.MAX}'
+                  name: '{#MEMBER_PREFIX}{#ENT_NAME} too high on {HOST.NAME}'
+                  priority: HIGH
+          graph_prototypes:
+            - uuid: 1e0d82bb7c0449b2be06d28a4cfd77db
+              name: '{#MEMBER_PREFIX}{#ENT_NAME}'
+              graph_items:
+                - drawtype: BOLD_LINE
+                  color: C80000
+                  calc_fnc: MAX
+                  item:
+                    host: 'Template Aruba 3810M'
+                    key: 'hpe.temp.value[{#SNMPINDEX}]'
+          master_item:
+            key: 'hpe.inv.walk[1h]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#ENT_CLASS}'
+                - 1.3.6.1.2.1.47.1.1.1.1.5
+                - '0'
+                - '{#ENT_NAME}'
+                - 1.3.6.1.2.1.47.1.1.1.1.7
+                - '0'
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  var rows = JSON.parse(value);
+                  rows.forEach(function (r) {
+                      var member = Math.floor(parseInt(r['{#SNMPINDEX}'], 10) / 100000);
+                      r['{#MEMBER_PREFIX}'] = member > 0 ? 'Member ' + member + ' ' : '';
+                      r['{#AIR_ROW}'] = String(Math.max(member - 1, 0));
+                  });
+                  return JSON.stringify(rows);
+      macros:
+        - macro: '{$HPE.FAN.NAME.MATCHES}'
+          value: '^Fan [1-3]$'
+          description: 'Fan names the fan discovery keeps.'
+        - macro: '{$HPE.TEMP.MAX}'
+          value: '35'
+          description: 'Chassis temperature in C above which the temperature trigger fires.'
       valuemaps:
         - uuid: 3bc4c78411244dd481269a1ef9304cf4
           name: 'Aruba 3810M EntityOperState'
@@ -390,6 +556,8 @@ zabbix_export:
         - uuid: 2655d85556db48bea688c687c08a0541
           name: 'Aruba 3810M EntitySensorStatus'
           mappings:
+            - value: '0'
+              newvalue: missing
             - value: '1'
               newvalue: ok
             - value: '2'
@@ -421,16 +589,14 @@ zabbix_export:
               newvalue: port
             - value: '11'
               newvalue: stack
+        - uuid: 70f4ece78a2b48f9993bb6a058703a44
+          name: 'Aruba 3810M TruthValue'
+          mappings:
+            - value: '1'
+              newvalue: 'true'
+            - value: '2'
+              newvalue: 'false'
   graphs:
-    - uuid: 20085c5cdfee40abbf68a07da506b8ba
-      name: 'Chassis Air Temp'
-      graph_items:
-        - drawtype: BOLD_LINE
-          color: C80000
-          calc_fnc: MAX
-          item:
-            host: 'Template Aruba 3810M'
-            key: hpe.chassisTemp
     - uuid: 8df552873b06428a91bcd624617b4b31
       name: CPU
       graph_items:
